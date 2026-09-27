@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Dev blog posts from the making of '90s Magic.">
+  <title>'90s Magic | Dev Blog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+</head>
+<body>
+  <nav class="site-nav site-nav--page" aria-label="Main navigation">
+    <a class="site-nav__brand" href="index.html#top" aria-label="90s Magic home">'90s<span>MAGIC</span></a>
+    <div class="site-nav__links">
+      <a href="index.html#about">About</a>
+      <a href="blog.html">Dev blog</a>
+      <a href="index.html#media">Media</a>
+      <a href="https://90smagic.proboards.com/" target="_blank" rel="noopener">Forum</a>
+      <a href="https://discord.gg/#" target="_blank" rel="noopener">Discord</a>
+    </div>
+    <a class="site-nav__status" href="blog.html"><span></span> Build 0.4.2</a>
+  </nav>
+
+  <main class="blog-page page-width">
+    <header class="blog-page__header">
+      <p class="section__label">02 / From the workbench</p>
+      <h1>
+        <span>Notes from</span>
+        <span>The back room.</span>
+      </h1>
+      <p class="lede">The odd little details behind the shop, the cards, and the rules we’re trying to preserve.</p>
+    </header>
+
+    <section class="blog-entries" aria-label="Development blog posts">
+      <details class="blog-entry blog-entry--featured">
+        <summary>
+          <div class="blog-entry__meta"><span>Dev log 024</span><span>09.10.26</span></div>
+          <h2>Making a booster pack feel like a tiny miracle</h2>
+          <p>Under the hood: historical collation, Ice Age land odds, and the beautiful chaos of opening cardboard.</p>
+          <span class="blog-entry__toggle" aria-hidden="true">Read entry</span>
+        </summary>
+        <div class="blog-entry__content">
+          <p>Every card shop had its own rhythm, and the booster pack felt like a tiny ceremony before the real game even began. You’d lean over the counter, hear the hiss of foil in the light, and feel the tension of whether the next rare was the one you’d been waiting for.</p>
+          <p>We wanted that energy in the game, so the pack-opening flow had to feel less like a UI and more like a moment. That means keeping the reveal timing deliberate, the card spacing readable, and the odds legible without ruining the drama. A bad rarity spread can flatten the whole ritual, which is why the backing data matters as much as the visual polish.</p>
+          <p>For a game rooted in the early '90s, there’s also a lot of weird charm in the old product logic: equalized openings, older set structures, and the odd collisions between collector culture and tournament culture. We’re leaning into those quirks instead of smoothing them away, because the moment a pack opens is one of the purest expressions of the era.</p>
+        </div>
+      </details>
+
+      <details class="blog-entry blog-entry--blue">
+        <summary>
+          <div class="blog-entry__meta"><span>Dev log 023</span><span>09.08.26</span></div>
+          <h2>Welcome to the shop</h2>
+          <p>Building a place that feels lived in, one shelf and suspiciously shiny floor at a time.</p>
+          <span class="blog-entry__toggle" aria-hidden="true">Read entry</span>
+        </summary>
+        <div class="blog-entry__content">
+          <p>The first step in making a card shop feel real is not the sign over the door or the display cases. It’s the little pauses: the dust in the corners, the stickers on the counter, the weirdly bright carpet, and the feeling that someone has been here long enough to leave a personality behind.</p>
+          <p>We’re treating the shop as a character itself. The layout is meant to create a sense of familiarity, with a few obstacles and landmarks you learn to navigate over time. It should feel like the place where everybody knows your name and no one can quite explain how a strange local rules debate started.</p>
+          <p>That’s what gives the world life when the actual card game isn’t active. Not just a stage for gameplay, but a hangout with memories and stories already baked into the floorboards.</p>
+        </div>
+      </details>
+
+      <details class="blog-entry blog-entry--pink">
+        <summary>
+          <div class="blog-entry__meta"><span>Dev log 022</span><span>08.26.26</span></div>
+          <h2>Why the stack wins</h2>
+          <p>Choosing the rules we remember, the rules we simplify, and the rules we absolutely refuse to explain.</p>
+          <span class="blog-entry__toggle" aria-hidden="true">Read entry</span>
+        </summary>
+        <div class="blog-entry__content">
+          <p>There are two versions of Magic most people remember: the one they learned at a kitchen table, and the one they watched on tournament streams years later. The real job is not to model every edge case perfectly — it is to keep the feeling of the game intact while making the act of playing feel readable.</p>
+          <p>That means we’re favoring the stack and timing cues that make combat feel obvious, even when the rules are complex. We want players to understand why a spell matters without needing a rulebook the size of an encyclopedia in their lap. The stack is the secret ingredient because it makes decisions feel consequential and layered, which is exactly what makes a match memorable.</p>
+          <p>We’re also being selective about which rules we simplify and which we preserve. The goal is not a perfect rules engine — it’s a game that feels like a magical memory of playing in a cramped room with too much cardboard, too much caffeine, and way too much joy.</p>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="footer page-width">
+    <div class="footer__logo">'90s<span>MAGIC</span></div>
+    <p>Made with lots of love, support, and many sleepless nights.</p>
+    <a href="index.html#top" class="footer__top">Back to top ↑</a>
+  </footer>
+
+  <script src="site.js"></script>
+</body>
+</html>
