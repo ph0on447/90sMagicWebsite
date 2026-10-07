@@ -293,6 +293,9 @@ h2 span { color: var(--red); }
 .text-link, .footer__top, .site-nav__links a, .site-nav__status, .site-nav__brand, .footer__logo, .forum-row strong { transition: color .2s, transform .2s, opacity .2s; }
 .text-link:is(:hover, :focus-visible), .footer__top:is(:hover, :focus-visible), .site-nav__links a:is(:hover, :focus-visible), .site-nav__status:is(:hover, :focus-visible), .site-nav__brand:is(:hover, :focus-visible), .site-nav__brand:is(:hover, :focus-visible) span, .footer__logo:is(:hover, :focus-visible), .footer__logo:is(:hover, :focus-visible) span, .forum-row:is(:hover, :focus-visible) strong { color: var(--blue); opacity: 1; }
 .text-link:is(:hover, :focus-visible), .footer__top:is(:hover, :focus-visible), .site-nav__links a:is(:hover, :focus-visible), .site-nav__status:is(:hover, :focus-visible), .site-nav__brand:is(:hover, :focus-visible), .footer__logo:is(:hover, :focus-visible), .forum-row:is(:hover, :focus-visible) strong { transform: translate(3px, -3px); }
+/* Brand colors for the social icons */
+.site-nav__links a.site-nav__icon[href*="youtube.com"]:is(:hover, :focus-visible) { color: #ff0000; }
+.site-nav__links a.site-nav__icon[href*="discord.gg"]:is(:hover, :focus-visible) { color: #5865f2; }
 @media (prefers-reduced-motion: reduce) { .text-link, .footer__top, .site-nav__links a, .site-nav__status, .site-nav__brand, .footer__logo, .forum-row strong { transition: color .2s; transform: none !important; } }
 
 /* About page: "About the game" dark section */
