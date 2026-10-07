@@ -23,3 +23,15 @@ document.querySelectorAll('[data-youtube]').forEach((link) => {
     link.replaceWith(frame);
   });
 });
+
+const storyBlocks = document.querySelector('.story-blocks');
+if (storyBlocks && 'IntersectionObserver' in window) {
+  storyBlocks.classList.add('is-armed');
+  const observer = new IntersectionObserver((entries) => {
+    if (entries.some((entry) => entry.isIntersecting)) {
+      storyBlocks.classList.add('is-visible');
+      observer.disconnect();
+    }
+  }, { threshold: 0.25 });
+  observer.observe(storyBlocks);
+}

@@ -136,7 +136,7 @@ h2 span { color: var(--red); }
 .blog-entries { display: grid; gap: 18px; margin-top: 56px; }
 .story-blocks {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
   margin-top: 56px;
 }
@@ -144,6 +144,14 @@ h2 span { color: var(--red); }
   min-height: 240px;
   padding: 24px 26px 22px;
 }
+/* Scroll-in reveal: cards rise from below, staggered left to right */
+.story-blocks.is-armed .story-block { opacity: 0; transform: translateY(48px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+.story-blocks.is-armed.is-visible .story-block { opacity: 1; transform: none; }
+.story-blocks.is-armed .story-block:nth-child(2) { transition-delay: .15s; }
+.story-blocks.is-armed .story-block:nth-child(3) { transition-delay: .3s; }
+.story-blocks.is-armed .story-block:nth-child(4) { transition-delay: .45s; }
+@media (prefers-reduced-motion: reduce) { .story-blocks.is-armed .story-block { opacity: 1; transform: none; transition: none; } }
+@media (min-width: 721px) and (max-width: 960px) { .story-blocks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .story-block--ink { background: var(--ink); color: #fff; }
 .story-block--yellow { background: var(--yellow); }
 .story-block--blue { background: var(--blue); }
