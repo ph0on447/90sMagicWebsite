@@ -144,6 +144,17 @@ h2 span { color: var(--red); }
   min-height: 240px;
   padding: 24px 26px 22px;
 }
+/* About page hero */
+.hero--story { display: flex; align-items: flex-end; }
+.hero--story .hero__image { background: linear-gradient(0deg, rgba(7, 12, 23, .92) 0%, rgba(7, 12, 23, .55) 45%, rgba(7, 12, 23, .2) 100%), linear-gradient(90deg, rgba(7, 12, 23, .6) 0%, rgba(7, 12, 23, 0) 70%), url("Assets/Screenshots/about-hero.webp") 50% center / cover; }
+.hero--story .hero__content { width: min(1180px, calc(100% - 48px)); padding: 0 0 calc(84px + 56px); }
+.hero--story .story-page__header { padding-top: 0; }
+.hero--story .section__label { color: var(--yellow); }
+.hero--story h1 span { color: #fff; }
+.hero--story h1 span:last-child { color: var(--red); }
+.hero--story .lede { color: #fff; }
+.story-page { padding-top: clamp(64px, 9vw, 120px); }
+
 /* Scroll-in reveal: cards rise from below, staggered left to right */
 .story-blocks.is-armed .story-block { opacity: 0; transform: translateY(48px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
 .story-blocks.is-armed.is-visible .story-block { opacity: 1; transform: none; }
