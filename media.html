@@ -51,23 +51,34 @@
         <div class="media-section__head">
           <h2 id="image-gallery-title">Image gallery</h2>
         </div>
-        <div class="media-gallery">
-          <figure class="media-tile media-tile--large">
-            <img loading="lazy" decoding="async" src="Assets/Screenshots/pack_shop_active.webp" alt="The in-game card shop with a booster pack menu open">
-            <figcaption><span>SHOP / 001</span> Basic purchase system</figcaption>
-          </figure>
-          <figure class="media-tile">
-            <img loading="lazy" decoding="async" src="Assets/Screenshots/shop_hud_default.webp" alt="The in-game card shop interior">
-            <figcaption><span>SHOP / 002</span> Singles counters</figcaption>
-          </figure>
-          <figure class="media-tile media-tile--offset">
-            <img loading="lazy" decoding="async" src="Assets/Screenshots/screenshot-20260910-230535.webp" alt="A work-in-progress view of the shop environment">
-            <figcaption><span>SHOP / 003</span> Shop floor plan</figcaption>
-          </figure>
+        <div class="gallery" data-gallery>
+          <div class="gallery__stage">
+            <div class="gallery__frame">
+              <a class="gallery__open" href="Assets/Gallery/gallery-01.webp" target="_blank" rel="noopener" aria-label="Open full-size image"><img src="Assets/Gallery/gallery-01.webp" alt="Screenshot: Shop floor" width="2400" height="1427"></a>
+            </div>
+            <p class="gallery__caption"><strong>Shop floor</strong><span>The shop as it stands today, shelves stocked and the counter in view.</span></p>
+          </div>
+          <div class="gallery__side">
+            <ul class="gallery__thumbs" aria-label="Image gallery thumbnails">
+          <li><button type="button" class="gallery__thumb" aria-current="true" data-full="Assets/Gallery/gallery-01.webp" data-w="2400" data-h="1427" data-title="Shop floor" data-desc="The shop as it stands today, shelves stocked and the counter in view." aria-label="Show: Shop floor"><img loading="lazy" decoding="async" src="Assets/Gallery/gallery-01-thumb.webp" alt="" width="2400" height="1427"></button></li>
+          <li><button type="button" class="gallery__thumb" data-full="Assets/Gallery/gallery-02.webp" data-w="2092" data-h="1452" data-title="Singles terminal" data-desc="Browse and buy single cards by set, rarity and price." aria-label="Show: Singles terminal"><img loading="lazy" decoding="async" src="Assets/Gallery/gallery-02-thumb.webp" alt="" width="2092" height="1452"></button></li>
+          <li><button type="button" class="gallery__thumb" data-full="Assets/Gallery/gallery-03.webp" data-w="2400" data-h="1351" data-title="Collection" data-desc="The set picker for your collection, showing what you own and what you're missing." aria-label="Show: Collection"><img loading="lazy" decoding="async" src="Assets/Gallery/gallery-03-thumb.webp" alt="" width="2400" height="1351"></button></li>
+          <li><button type="button" class="gallery__thumb" data-full="Assets/Gallery/gallery-04.webp" data-w="2082" data-h="1442" data-title="Deckbuilding" data-desc="Build a deck from your collection and check it against the format." aria-label="Show: Deckbuilding"><img loading="lazy" decoding="async" src="Assets/Gallery/gallery-04-thumb.webp" alt="" width="2082" height="1442"></button></li>
+          <li><button type="button" class="gallery__thumb" data-full="Assets/Gallery/gallery-05.webp" data-w="2294" data-h="1304" data-title="Challenging a regular" data-desc="Marcus, a regular, with a readout of his deck and play style before you sit down." aria-label="Show: Challenging a regular"><img loading="lazy" decoding="async" src="Assets/Gallery/gallery-05-thumb.webp" alt="" width="2294" height="1304"></button></li>
+          <li><button type="button" class="gallery__thumb" data-full="Assets/Gallery/gallery-06.webp" data-w="1234" data-h="1024" data-title="A yearly boss" data-desc="Each year brings a boss. This one is Derek &quot;The Dominator&quot; Voss." aria-label="Show: A yearly boss"><img loading="lazy" decoding="async" src="Assets/Gallery/gallery-06-thumb.webp" alt="" width="1234" height="1024"></button></li>
+          <li><button type="button" class="gallery__thumb" data-full="Assets/Gallery/gallery-07.webp" data-w="1592" data-h="1594" data-title="Card markers" data-desc="Markers for common, uncommon, rare, mythic, new cards, deck recipes and trade interest." aria-label="Show: Card markers"><img loading="lazy" decoding="async" src="Assets/Gallery/gallery-07-thumb.webp" alt="" width="1592" height="1594"></button></li>
+          <li><button type="button" class="gallery__thumb" data-full="Assets/Gallery/gallery-08.webp" data-w="2400" data-h="1340" data-title="InQuest page by page" data-desc="The flippable in-game magazine, sitting in the shop in 3D." aria-label="Show: InQuest page by page"><img loading="lazy" decoding="async" src="Assets/Gallery/gallery-08-thumb.webp" alt="" width="2400" height="1340"></button></li>
+          <li><button type="button" class="gallery__thumb" data-full="Assets/Gallery/gallery-09.webp" data-w="1910" data-h="1038" data-title="On the shop floor" data-desc="A first-person look along the cabinets." aria-label="Show: On the shop floor"><img loading="lazy" decoding="async" src="Assets/Gallery/gallery-09-thumb.webp" alt="" width="1910" height="1038"></button></li>
+          <li><button type="button" class="gallery__thumb" data-full="Assets/Gallery/gallery-10.webp" data-w="1794" data-h="1100" data-title="Behind the counter" data-desc="The shop owner at work behind the counter." aria-label="Show: Behind the counter"><img loading="lazy" decoding="async" src="Assets/Gallery/gallery-10-thumb.webp" alt="" width="1794" height="1100"></button></li>
+          <li><button type="button" class="gallery__thumb" data-full="Assets/Gallery/gallery-11.webp" data-w="804" data-h="1248" data-title="Taking a seat" data-desc="An NPC seated and ready to play." aria-label="Show: Taking a seat"><img loading="lazy" decoding="async" src="Assets/Gallery/gallery-11-thumb.webp" alt="" width="804" height="1248"></button></li>
+            </ul>
+          </div>
         </div>
       </section>
     </div>
   </div>
+
+  <dialog class="lightbox" data-lightbox aria-label="Full-size image"><button type="button" class="lightbox__close" aria-label="Close">×</button><img alt=""></dialog>
 
   <div class="media-band media-band--ink">
     <div class="page-width">
@@ -88,7 +99,7 @@
               <span>Clip 001</span>
               <span>01:08</span>
             </div>
-            <h3><a href="https://www.youtube.com/watch?v=CjXb2kz7kWs" target="_blank" rel="noopener">Singles shopping screen</a></h3>
+            <h3><a href="https://www.youtube.com/watch?v=CjXb2kz7kWs" target="_blank" rel="noopener">Singles shopping screen <span aria-hidden="true">↗</span></a></h3>
             <p>An early look at the singles shopping screen.</p>
           </article>
   
@@ -103,7 +114,7 @@
               <span>Clip 002</span>
               <span>00:31</span>
             </div>
-            <h3><a href="https://www.youtube.com/watch?v=GtIUeS-ae0o" target="_blank" rel="noopener">Player, animation and NPC models</a></h3>
+            <h3><a href="https://www.youtube.com/watch?v=GtIUeS-ae0o" target="_blank" rel="noopener">Player, animation and NPC models <span aria-hidden="true">↗</span></a></h3>
             <p>The player model, its animations, and the first NPC models.</p>
           </article>
   
@@ -118,11 +129,11 @@
               <span>Clip 003</span>
               <span>01:02</span>
             </div>
-            <h3><a href="https://www.youtube.com/watch?v=aLEgcilq1-A" target="_blank" rel="noopener">Dialogue barking test</a></h3>
+            <h3><a href="https://www.youtube.com/watch?v=aLEgcilq1-A" target="_blank" rel="noopener">Dialogue barking test <span aria-hidden="true">↗</span></a></h3>
             <p>Testing NPC barks in the new dialogue system.</p>
           </article>
   
-          <article class="video-card">
+          <article class="video-card video-card--yellow">
             <div class="video-card__frame">
               <a class="video-card__link" href="https://www.youtube.com/watch?v=G3nN97naDVs" data-youtube="G3nN97naDVs" data-title="NPC spawning and store wandering" aria-label="Play clip: NPC spawning and store wandering" target="_blank" rel="noopener">
                 <img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/G3nN97naDVs/hqdefault.jpg" alt="" width="480" height="360">
@@ -133,11 +144,11 @@
               <span>Clip 004</span>
               <span>01:33</span>
             </div>
-            <h3><a href="https://www.youtube.com/watch?v=G3nN97naDVs" target="_blank" rel="noopener">NPC spawning and store wandering</a></h3>
+            <h3><a href="https://www.youtube.com/watch?v=G3nN97naDVs" target="_blank" rel="noopener">NPC spawning and store wandering <span aria-hidden="true">↗</span></a></h3>
             <p>NPCs spawning with visual variety and wandering the shop.</p>
           </article>
   
-          <article class="video-card video-card--blue">
+          <article class="video-card">
             <div class="video-card__frame">
               <a class="video-card__link" href="https://www.youtube.com/watch?v=MGDgedNvdjk" data-youtube="MGDgedNvdjk" data-title="Flippable InQuest magazine" aria-label="Play clip: Flippable InQuest magazine" target="_blank" rel="noopener">
                 <img loading="lazy" decoding="async" src="https://i.ytimg.com/vi/MGDgedNvdjk/hqdefault.jpg" alt="" width="480" height="360">
@@ -148,7 +159,7 @@
               <span>Clip 005</span>
               <span>01:03</span>
             </div>
-            <h3><a href="https://www.youtube.com/watch?v=MGDgedNvdjk" target="_blank" rel="noopener">Flippable InQuest magazine</a></h3>
+            <h3><a href="https://www.youtube.com/watch?v=MGDgedNvdjk" target="_blank" rel="noopener">Flippable InQuest magazine <span aria-hidden="true">↗</span></a></h3>
             <p>The flippable magazine reader prototype.</p>
           </article>
         </div>
