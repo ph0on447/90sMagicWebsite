@@ -211,6 +211,9 @@ h2 span { color: var(--red); }
 }
 .media-section { margin-top: 72px; }
 .media-section__head { margin-bottom: 36px; }
+#dev-updates-title { color: var(--blue); }
+.status-note { display: flex; align-items: center; gap: 8px; margin: 0; font: 12px var(--mono); color: var(--yellow); white-space: nowrap; pointer-events: none; user-select: none; }
+.status-note span { width: 7px; height: 7px; background: #43df7b; border-radius: 50%; }
 .media-section__head h2 {
   margin: 0;
   font-size: clamp(38px, 6vw, 76px);
