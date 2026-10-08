@@ -297,10 +297,16 @@ h2 span { color: var(--red); }
 .blog-entry--paper { background: var(--paper); }
 .blog-entry summary { display: grid; gap: 14px; padding: 24px 28px 20px; cursor: pointer; list-style: none; }
 .blog-entry summary::-webkit-details-marker { display: none; }
-.blog-entry__meta { display: flex; justify-content: space-between; gap: 20px; font: 10px var(--mono); text-transform: uppercase; opacity: .8; }
+.blog-entry__row { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; padding-bottom: 12px; border-bottom: 2px solid currentColor; transition: color .2s, transform .2s; }
+.blog-entry summary:is(:hover, :focus-visible) .blog-entry__row { color: var(--blue); transform: translate(3px, -3px); }
+.blog-entry--blue summary:is(:hover, :focus-visible) .blog-entry__row { color: #fff; }
+.blog-entry--pink summary:is(:hover, :focus-visible) .blog-entry__row { color: var(--yellow); }
+.blog-entry--featured summary:is(:hover, :focus-visible) .blog-entry__row { color: var(--pink); }
+@media (prefers-reduced-motion: reduce) { .blog-entry__row { transition: color .2s; } .blog-entry summary:is(:hover, :focus-visible) .blog-entry__row { transform: none; } }
+.blog-entry__meta { display: flex; justify-content: space-between; gap: 20px; font: 700 10px var(--mono); text-transform: uppercase; opacity: .8; }
 .blog-entry h2 { margin: 0; color: inherit; max-width: 760px; font-size: clamp(36px, 4vw, 58px); line-height: .86; }
 .blog-entry p { margin: 0; max-width: 720px; font-size: 12px; line-height: 1.7; }
-.blog-entry__toggle { display: inline-flex; align-items: center; justify-content: flex-end; margin-top: 6px; font: 700 10px var(--mono); text-transform: uppercase; letter-spacing: .12em; }
+.blog-entry__toggle { display: inline-flex; align-items: center; justify-content: flex-end; flex: none; padding-bottom: .5em; font: 700 13px var(--mono); text-transform: uppercase; letter-spacing: .12em; white-space: nowrap; }
 .blog-entry__toggle::before { content: "+"; margin-right: 10px; font-size: 18px; }
 .blog-entry[open] .blog-entry__toggle::before { content: "−"; }
 .blog-entry__content { padding: 0 28px 28px; }
