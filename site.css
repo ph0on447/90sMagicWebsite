@@ -85,6 +85,7 @@ h2 span { color: var(--red); }
 .post-card { position: relative; min-height: 310px; padding: 24px; color: var(--ink); background: var(--yellow); }
 .post-card--blue { background: var(--blue); }
 .post-card--pink { color: var(--white); background: var(--pink); }
+.post-grid__status { grid-column: 1 / -1; margin: 0; color: var(--white); font: 13px/1.7 var(--mono); }
 .post-card__meta { display: flex; justify-content: space-between; font: 10px var(--mono); text-transform: uppercase; opacity: .74; }
 .post-card h3 { max-width: 330px; margin-top: 72px; font-size: clamp(30px, 3.4vw, 47px); line-height: .86; }
 .post-card p { max-width: 340px; margin-bottom: 0; font-size: 11px; line-height: 1.65; }
