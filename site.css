@@ -224,11 +224,6 @@ h2 span { color: var(--red); }
 .media-section__head { margin-bottom: 36px; }
 .status-note { display: flex; align-items: center; gap: 8px; margin: 0; font: 12px var(--mono); color: var(--yellow); white-space: nowrap; pointer-events: none; user-select: none; }
 .status-note span { width: 7px; height: 7px; background: var(--green); border-radius: 50%; }
-.media-section__head h2:not(.Carolingia) {
-  margin: 0;
-  font-size: clamp(38px, 6vw, 76px);
-  line-height: .82;
-}
 .media-gallery {
   display: grid;
   grid-template-columns: 1.35fr .8fr .8fr;
