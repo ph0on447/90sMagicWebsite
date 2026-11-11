@@ -16,8 +16,8 @@
 
 @font-face {
   font-family: 'Carolingia';
-  src: url('/assets/fonts/carolingia.woff') format('woff'),
-       url('/assets/fonts/carolingia.ttf') format('truetype');
+  src: url('Assets/Fonts/carolingia.woff') format('woff'),
+       url('Assets/Fonts/carolingia.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
