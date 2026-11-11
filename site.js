@@ -47,7 +47,6 @@ if (gallery) {
   const capTitle = gallery.querySelector('.gallery__caption strong');
   const capDesc = gallery.querySelector('.gallery__caption span');
   const thumbs = gallery.querySelectorAll('.gallery__thumb');
-  const lightbox = document.querySelector('[data-lightbox]');
   thumbs.forEach((thumb) => {
     thumb.addEventListener('click', () => {
       thumbs.forEach((t) => t.removeAttribute('aria-current'));
@@ -61,14 +60,18 @@ if (gallery) {
       capDesc.textContent = thumb.dataset.desc;
     });
   });
-  if (lightbox && lightbox.showModal) {
-    const lbImg = lightbox.querySelector('img');
-    mainLink.addEventListener('click', (event) => {
+}
+
+const lightbox = document.querySelector('[data-lightbox]');
+if (lightbox && lightbox.showModal) {
+  const lbImg = lightbox.querySelector('img');
+  document.querySelectorAll('[data-lightbox-image]').forEach((link) => {
+    link.addEventListener('click', (event) => {
       event.preventDefault();
-      lbImg.src = mainLink.getAttribute('href');
-      lbImg.alt = mainImg.alt;
+      lbImg.src = link.href;
+      lbImg.alt = link.querySelector('img').alt;
       lightbox.showModal();
     });
-    lightbox.addEventListener('click', () => lightbox.close());
-  }
+  });
+  lightbox.addEventListener('click', () => lightbox.close());
 }
