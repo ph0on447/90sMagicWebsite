@@ -1,5 +1,5 @@
 // Site-wide "Updated" date. Change it here; every [data-updated] element picks it up.
-const SITE_UPDATED = '11.10.26';
+const SITE_UPDATED = '11.11.26';
 document.querySelectorAll('[data-updated]').forEach((el) => { el.textContent = SITE_UPDATED; });
 
 const navigation = document.querySelector('.site-nav');

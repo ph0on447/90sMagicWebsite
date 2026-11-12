@@ -86,10 +86,10 @@ h2 span { color: var(--red); }
 .post-card--blue { background: var(--blue); }
 .post-card--pink { color: var(--white); background: var(--pink); }
 .post-grid__status { grid-column: 1 / -1; margin: 0; color: var(--white); font: 13px/1.7 var(--mono); }
-.post-card__meta { display: flex; justify-content: space-between; font: 10px var(--mono); text-transform: uppercase; opacity: .74; }
-.post-card h3 { max-width: 330px; margin-top: 72px; font-size: clamp(30px, 3.4vw, 47px); line-height: .86; }
-.post-card p { max-width: 340px; margin-bottom: 0; font-size: 11px; line-height: 1.65; }
-.post-card__arrow { position: absolute; right: 22px; bottom: 17px; font-size: 28px; }
+.post-card__meta { display: flex; justify-content: space-between; font: 12px var(--mono); text-transform: uppercase; opacity: .74; }
+.post-card h3 { max-width: 330px; margin-top: 20px; font-size: clamp(30px, 3.4vw, 47px); line-height: .86; }
+.post-card p { max-width: 340px; margin-bottom: 0; font-size: 12px; line-height: 1.65; }
+.post-card__arrow { position: absolute; right: 22px; bottom: 17px; font-size: 34px; }
 
 .media { background: var(--paper); }
 .media__intro { display: grid; grid-template-columns: 1fr .5fr; align-items: end; gap: 10%; margin-top: 44px; }
@@ -295,7 +295,7 @@ h2 span { color: var(--red); }
 .blog-entry--pink summary:is(:hover, :focus-visible) .blog-entry__row { color: var(--yellow); }
 .blog-entry--featured summary:is(:hover, :focus-visible) .blog-entry__row { color: var(--pink); }
 @media (prefers-reduced-motion: reduce) { .blog-entry__row { transition: color .2s; } .blog-entry summary:is(:hover, :focus-visible) .blog-entry__row { transform: none; } }
-.blog-entry__meta { display: flex; justify-content: space-between; gap: 20px; font: 700 10px var(--mono); text-transform: uppercase; opacity: .8; }
+.blog-entry__meta { display: flex; justify-content: space-between; gap: 20px; font: 700 12px var(--mono); text-transform: uppercase; opacity: .8; }
 .blog-entry h2 { margin: 0; color: inherit; max-width: 760px; font-size: clamp(36px, 4vw, 58px); line-height: .86; }
 .blog-entry p { margin: 0; font-size: 13px; line-height: 1.7; }
 .blog-entry__toggle { display: inline-flex; align-items: center; justify-content: flex-end; flex: none; padding-bottom: .5em; font: 700 13px var(--mono); text-transform: uppercase; letter-spacing: .12em; white-space: nowrap; }
