@@ -418,37 +418,91 @@ select.db-input {
   padding: 12px 14px 14px;
 }
 
+/* Styled after the game's own Collection inspector (CollectionScreen.uss
+   .cs-inspector-*): blue bold name, italic white type line, a plain divider
+   rule above and below the oracle text, body copy at a single readable size. */
+
 .db-focus__name {
   margin: 0 0 4px;
   font-family: var(--display);
-  font-size: 19px;
+  font-size: 22px;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .01em;
+  color: var(--db-blue);
+}
+
+.db-focus__typeline {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-style: italic;
   color: var(--db-white);
 }
 
-.db-focus__line {
-  margin: 0 0 4px;
-  font-size: 12px;
-  color: color-mix(in srgb, var(--db-white) 75%, transparent);
+.db-focus__manacost {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  min-height: 20px;
+  margin: 0 0 6px;
+  font-size: 15px;
+  color: var(--db-white);
+}
+
+.db-focus__pt {
+  margin: 0 0 6px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--db-white);
+}
+
+.db-focus__divider {
+  height: 2px;
+  margin: 8px 0;
+  background: color-mix(in srgb, var(--db-white) 55%, transparent);
 }
 
 .db-focus__text {
-  margin: 8px 0;
-  font-size: 12px;
+  margin: 0;
+  font-size: 15px;
   line-height: 1.5;
-  color: color-mix(in srgb, var(--db-white) 85%, transparent);
+  color: var(--db-white);
   white-space: pre-line;
 }
 
 .db-focus__meta {
-  margin: 8px 0 0;
-  padding-top: 8px;
-  border-top: 1px solid color-mix(in srgb, var(--db-white) 10%, transparent);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: .03em;
-  color: color-mix(in srgb, var(--db-white) 50%, transparent);
+  margin: 0;
+  font-size: 13px;
+  font-style: italic;
+  color: var(--db-blue);
+}
+
+/* Mana/tap/generic-cost symbols - real Scryfall art, same as the game. */
+.db-symbol {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  vertical-align: -3px;
+  margin: 0 1px;
+}
+
+.db-focus__manacost .db-symbol { width: 20px; height: 20px; vertical-align: -4px; }
+.db-focus__text .db-symbol { width: 16px; height: 16px; vertical-align: -3px; }
+
+/* If a symbol's SVG fails to load (offline, CDN hiccup), fall back to its
+   plain code in a small badge instead of leaving a broken-image icon. */
+.db-symbol-fallback {
+  display: inline-block;
+  min-width: 15px;
+  padding: 0 3px;
+  background: var(--db-blue-dark-hover);
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 15px;
+  text-align: center;
+  vertical-align: 1px;
 }
 
 /* ---------------------------------- Mana curve ---------------------------------- */

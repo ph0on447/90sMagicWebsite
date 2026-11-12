@@ -268,8 +268,48 @@
     return tile;
   }
 
-  function formatManaCost(manaCost) {
-    return (manaCost || '').replace(/[{}]/g, '');
+  function escapeHtml(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  // Scryfall's own symbol CDN - the same real artwork the game pulls for
+  // mana/tap/generic-cost icons (see CollectionScreen.uss .cs-mana-symbol).
+  function symbolSvgUrl(code) {
+    return 'https://svgs.scryfall.io/card-symbols/' + encodeURIComponent(code) + '.svg';
+  }
+
+  // Turns a Scryfall-style string ("{2}{U}{U}", "{T}: Add {G}.") into HTML,
+  // replacing each {CODE} token with an <img> placeholder (wired up to the
+  // real symbol image, with a text-badge fallback, by wireSymbolImages).
+  function renderWithSymbols(text, cls) {
+    if (!text) return '';
+    const re = /\{([^}]+)\}/g;
+    let out = '';
+    let last = 0;
+    let m;
+    while ((m = re.exec(text))) {
+      out += escapeHtml(text.slice(last, m.index));
+      const code = m[1];
+      out += '<img class="' + cls + '" data-symbol-code="' + escapeHtml(code) + '" alt="{' + escapeHtml(code) + '}" loading="lazy">';
+      last = re.lastIndex;
+    }
+    out += escapeHtml(text.slice(last));
+    return out;
+  }
+
+  // Actually points each placeholder <img> at Scryfall's CDN, and swaps in a
+  // plain-text badge instead of a broken-image icon if that fetch fails.
+  function wireSymbolImages(container) {
+    container.querySelectorAll('img[data-symbol-code]').forEach((img) => {
+      const code = img.getAttribute('data-symbol-code');
+      img.addEventListener('error', () => {
+        const span = document.createElement('span');
+        span.className = 'db-symbol-fallback';
+        span.textContent = '{' + code + '}';
+        img.replaceWith(span);
+      }, { once: true });
+      img.src = symbolSvgUrl(code);
+    });
   }
 
   function setFocusedCard(card) {
@@ -294,8 +334,16 @@
     el.focusInfo.hidden = false;
     el.focusName.textContent = card.name;
     el.focusTypeline.textContent = card.typeLine || '';
-    el.focusManacost.textContent = formatManaCost(card.manaCost) || '—';
-    el.focusOracle.textContent = card.oracleText || '';
+
+    if (card.manaCost) {
+      el.focusManacost.innerHTML = renderWithSymbols(card.manaCost, 'db-symbol');
+      wireSymbolImages(el.focusManacost);
+    } else {
+      el.focusManacost.textContent = '—';
+    }
+
+    el.focusOracle.innerHTML = renderWithSymbols(card.oracleText || '', 'db-symbol');
+    wireSymbolImages(el.focusOracle);
 
     if (card.power != null || card.toughness != null) {
       el.focusPt.textContent = (card.power || '0') + ' / ' + (card.toughness || '0');
