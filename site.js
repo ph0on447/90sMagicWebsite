@@ -52,8 +52,10 @@ if (blogList) {
           throw new Error(`A blog entry is missing its title, excerpt, or metadata.`);
         }
 
-        const card = document.createElement('article');
+        const card = document.createElement('a');
         card.className = `post-card ${postCardClasses[index % postCardClasses.length]}`;
+        card.href = blogList.dataset.blogSource;
+        card.setAttribute('aria-label', `Read ${title}`);
 
         const meta = document.createElement('div');
         meta.className = 'post-card__meta';
@@ -69,13 +71,12 @@ if (blogList) {
         const description = document.createElement('p');
         description.textContent = excerpt;
 
-        const link = document.createElement('a');
-        link.className = 'post-card__arrow';
-        link.href = blogList.dataset.blogSource;
-        link.setAttribute('aria-label', `Read ${title}`);
-        link.textContent = '↗';
+        const arrow = document.createElement('span');
+        arrow.className = 'post-card__arrow';
+        arrow.setAttribute('aria-hidden', 'true');
+        arrow.textContent = '↗';
 
-        card.append(meta, heading, description, link);
+        card.append(meta, heading, description, arrow);
         return card;
       });
 
