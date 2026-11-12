@@ -109,7 +109,6 @@
     filterType: document.getElementById('db-filter-type'),
     sort: document.getElementById('db-sort'),
     deckList: document.getElementById('db-deck-list'),
-    deckEmpty: document.getElementById('db-deck-empty'),
     curve: document.getElementById('db-curve'),
     deckName: document.getElementById('db-deck-name'),
     tabMain: document.getElementById('db-tab-main'),
@@ -518,7 +517,6 @@
 
     const map = zoneMap(activeZone);
     el.deckList.innerHTML = '';
-    el.deckEmpty.hidden = map.size !== 0;
 
     const entries = [...map.values()];
     const frag = document.createDocumentFragment();
@@ -559,7 +557,15 @@
 
         const setEl = document.createElement('span');
         setEl.className = 'db-deck-row__set';
-        setEl.textContent = card.set;
+        // Symbol first, then the code. If the set has no symbol (or it
+        // fails to load) the icon is dropped and only the code remains.
+        const symEl = document.createElement('img');
+        symEl.className = 'db-deck-row__set-symbol';
+        symEl.alt = '';
+        symEl.addEventListener('error', () => symEl.remove(), { once: true });
+        symEl.src = 'https://svgs.scryfall.io/sets/' + encodeURIComponent((card.set || '').toLowerCase()) + '.svg';
+        setEl.appendChild(symEl);
+        setEl.appendChild(document.createTextNode(card.set));
         row.appendChild(setEl);
 
         const moveBtn = document.createElement('button');
