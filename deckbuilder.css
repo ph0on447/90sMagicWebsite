@@ -223,19 +223,19 @@ select.db-input {
 }
 
 /* Sits just under where a real card's mana cost prints (top right), poking
-   out past the card's own right edge rather than hugging the left side. */
+   out past the card's own right edge, point aimed back in at the card. */
 .db-marker {
   position: absolute;
   top: 13%;
-  right: -6px;
-  height: 20px;
-  padding: 0 10px 0 7px;
+  right: -7px;
+  height: 25px; /* ~25% larger than the original 20px */
+  padding: 0 9px 0 13px;
   display: flex;
   align-items: center;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--db-white);
-  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%);
+  clip-path: polygon(100% 0, 10px 0, 0 50%, 10px 100%, 100% 100%);
   box-shadow: 0 1px 2px rgba(0,0,0,.5);
 }
 
@@ -261,11 +261,14 @@ select.db-input {
   padding: 18px 18px 14px;
 }
 
-.db-deck__name-row { margin-bottom: 10px; }
+.db-deck__name-row {
+  position: relative;
+  margin-bottom: 10px;
+}
 
 .db-input--deckname {
   width: 100%;
-  font-size: 18px;
+  font-size: 26px;
   font-family: var(--display);
   text-transform: uppercase;
   letter-spacing: .02em;
@@ -273,10 +276,21 @@ select.db-input {
   border: none;
   border-bottom: 2px solid var(--db-blue-dark-hover);
   border-radius: 0;
-  padding: 4px 2px;
+  padding: 4px 26px 4px 2px; /* leaves room for the pencil icon */
 }
 
 .db-input--deckname:focus { border-bottom-color: var(--db-blue); outline: none; }
+
+.db-deck__name-row__icon {
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: color-mix(in srgb, var(--db-white) 55%, transparent);
+  pointer-events: none;
+}
 
 .db-deck__tabs {
   display: flex;
@@ -450,19 +464,43 @@ select.db-input {
   min-height: 0;
 }
 
+.db-deck-category {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 2px 6px;
+  font-family: var(--display);
+  font-size: 15px;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--db-white) 70%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--db-white) 12%, transparent);
+}
+
+.db-deck-category__count {
+  color: var(--db-blue);
+  font-weight: 700;
+  width: 24px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
 .db-deck-row {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 2px;
+  gap: 10px;
+  padding: 10px 2px;
   border-bottom: 1px solid color-mix(in srgb, var(--db-white) 6%, transparent);
-  font-size: 13px;
+  font-size: 15px;
+  cursor: pointer;
 }
+
+.db-deck-row:hover { background: color-mix(in srgb, var(--db-red) 35%, transparent); }
 
 .db-deck-row__qty {
   color: var(--db-blue);
   font-weight: 700;
-  width: 22px;
+  width: 26px;
   text-align: right;
   flex-shrink: 0;
 }
@@ -473,12 +511,11 @@ select.db-input {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  cursor: default;
 }
 
 .db-deck-row__set {
   color: color-mix(in srgb, var(--db-white) 45%, transparent);
-  font-size: 11px;
+  font-size: 13px;
   text-transform: uppercase;
   flex-shrink: 0;
 }
@@ -489,14 +526,13 @@ select.db-input {
   color: var(--db-white);
   opacity: .55;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 17px;
   line-height: 1;
-  padding: 2px 4px;
+  padding: 4px 6px;
   flex-shrink: 0;
 }
 
-.db-deck-row__btn:hover { opacity: 1; color: var(--db-red-hover); }
-.db-deck-row__btn--add:hover { color: var(--db-green-hover); }
+.db-deck-row__btn:hover { opacity: 1; color: var(--db-blue-hover); }
 
 .db-deck__empty {
   color: color-mix(in srgb, var(--db-white) 45%, transparent);

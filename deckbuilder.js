@@ -59,6 +59,17 @@
     return (card.typeLine || '').startsWith('Basic Land');
   }
 
+  // Deck-list grouping categories, in the fixed display order the panel uses.
+  const DECK_CATEGORIES = ['Land', 'Creature', 'Spell', 'Enchantment', 'Artifact', 'Other'];
+  const DECK_CATEGORY_LABELS = { Land: 'Lands', Creature: 'Creatures', Spell: 'Spells', Enchantment: 'Enchantments', Artifact: 'Artifacts', Other: 'Other' };
+
+  function deckCategory(card) {
+    const t = primaryType(card.typeLine);
+    if (t === 'Instant' || t === 'Sorcery') return 'Spell';
+    if (DECK_CATEGORIES.includes(t)) return t;
+    return 'Other';
+  }
+
   function cardKey(card) {
     return card.name + '__' + card.set + '__' + (card.collectorNumber || '');
   }
@@ -396,46 +407,59 @@
     el.deckList.innerHTML = '';
     el.deckEmpty.hidden = map.size !== 0;
 
-    const rows = [...map.values()].sort((a, b) => a.card.name.localeCompare(b.card.name));
+    const entries = [...map.values()];
     const frag = document.createDocumentFragment();
 
-    rows.forEach(({ card, qty }) => {
-      const row = document.createElement('div');
-      row.className = 'db-deck-row';
+    DECK_CATEGORIES.forEach((cat) => {
+      const inCat = entries.filter((e) => deckCategory(e.card) === cat);
+      if (!inCat.length) return;
 
-      const qtyEl = document.createElement('span');
-      qtyEl.className = 'db-deck-row__qty';
-      qtyEl.textContent = qty + 'x';
-      row.appendChild(qtyEl);
+      inCat.sort((a, b) => a.card.name.localeCompare(b.card.name));
+      const total = inCat.reduce((sum, e) => sum + e.qty, 0);
 
-      const nameEl = document.createElement('span');
-      nameEl.className = 'db-deck-row__name';
-      nameEl.textContent = card.name;
-      nameEl.title = card.name;
-      row.appendChild(nameEl);
+      const header = document.createElement('div');
+      header.className = 'db-deck-category';
+      const countEl = document.createElement('span');
+      countEl.className = 'db-deck-category__count';
+      countEl.textContent = total;
+      header.appendChild(countEl);
+      const labelEl = document.createElement('span');
+      labelEl.textContent = DECK_CATEGORY_LABELS[cat];
+      header.appendChild(labelEl);
+      frag.appendChild(header);
 
-      const setEl = document.createElement('span');
-      setEl.className = 'db-deck-row__set';
-      setEl.textContent = card.set;
-      row.appendChild(setEl);
+      inCat.forEach(({ card, qty }) => {
+        const row = document.createElement('div');
+        row.className = 'db-deck-row';
+        row.title = 'Click to remove one copy';
 
-      const moveBtn = document.createElement('button');
-      moveBtn.className = 'db-deck-row__btn';
-      moveBtn.title = activeZone === 'main' ? 'Move to sideboard' : 'Move to main deck';
-      moveBtn.textContent = '⇄';
-      moveBtn.addEventListener('click', (e) => { e.stopPropagation(); moveZone(card, activeZone); });
-      row.appendChild(moveBtn);
+        const qtyEl = document.createElement('span');
+        qtyEl.className = 'db-deck-row__qty';
+        qtyEl.textContent = qty + 'x';
+        row.appendChild(qtyEl);
 
-      const removeBtn = document.createElement('button');
-      removeBtn.className = 'db-deck-row__btn';
-      removeBtn.title = 'Remove one copy';
-      removeBtn.textContent = '−';
-      removeBtn.addEventListener('click', (e) => { e.stopPropagation(); removeFromDeck(card, activeZone, false); });
-      row.appendChild(removeBtn);
+        const nameEl = document.createElement('span');
+        nameEl.className = 'db-deck-row__name';
+        nameEl.textContent = card.name;
+        row.appendChild(nameEl);
 
-      row.addEventListener('click', () => toggleFocus(card));
+        const setEl = document.createElement('span');
+        setEl.className = 'db-deck-row__set';
+        setEl.textContent = card.set;
+        row.appendChild(setEl);
 
-      frag.appendChild(row);
+        const moveBtn = document.createElement('button');
+        moveBtn.className = 'db-deck-row__btn';
+        moveBtn.title = activeZone === 'main' ? 'Move to sideboard' : 'Move to main deck';
+        moveBtn.textContent = '⇄';
+        moveBtn.addEventListener('click', (e) => { e.stopPropagation(); moveZone(card, activeZone); });
+        row.appendChild(moveBtn);
+
+        // The whole row removes one copy now - no separate minus button.
+        row.addEventListener('click', () => removeFromDeck(card, activeZone, false));
+
+        frag.appendChild(row);
+      });
     });
 
     el.deckList.appendChild(frag);
