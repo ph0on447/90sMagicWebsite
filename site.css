@@ -33,7 +33,7 @@ a { color: inherit; text-decoration: none; }
 .hero__image { position: absolute; inset: 0; z-index: -3; background: linear-gradient(90deg, rgba(7, 12, 23, .9) 0%, rgba(7, 12, 23, .43) 52%, rgba(7, 12, 23, .14)), url("Assets/Screenshots/hero-shop-workbench.webp") 62% center / cover; filter: saturate(1.15); }
 .hero__scanlines { position: absolute; inset: 0; z-index: -2; pointer-events: none; opacity: .22; background: repeating-linear-gradient(0deg, transparent 0 4px, rgba(255,255,255,.16) 5px, transparent 6px); mix-blend-mode: screen; }
 .hero__content { padding-top: clamp(150px, 28vh, 280px); }
-.eyebrow, .section__label { font: 700 13px/1.2 var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+.eyebrow, .section__label { font: 700 1.1rem/1.2 var(--mono); letter-spacing: .14em; text-transform: uppercase; }
 .eyebrow { color: var(--yellow); font-size: 11px; }
 h1, h2, h3, p { margin-top: 0; }
 h1, h2, h3 { font-family: var(--display); letter-spacing: 0; text-transform: uppercase; }
@@ -65,7 +65,7 @@ h1 em { color: var(--yellow); font-style: normal; }
 .section__head { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; }
 h2 { margin: 18px 0 0; font-size: clamp(58px, 9vw, 120px); line-height: .78; font-weight: 800; }
 h2 span { color: var(--red); }
-.text-link { display: inline-flex; align-items: center; gap: 16px; padding-bottom: 7px; color: var(--red); font: 700 13px var(--mono); border-bottom: 1px solid currentColor; text-transform: uppercase; white-space: nowrap; }
+.text-link { display: inline-flex; align-items: center; gap: 16px; padding-bottom: 7px; color: var(--red); font: 700 1.1rem var(--mono); border-bottom: 1px solid currentColor; text-transform: uppercase; white-space: nowrap; }
 .text-link span { font-size: 17px; }
 .about__grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 10%; margin-top: 70px; }
 .about__copy { padding-top: 12px; max-width: 430px; font-size: 13px; line-height: 1.8; }
@@ -101,11 +101,15 @@ h2 span { color: var(--red); }
 
 .section--yellow { background: var(--yellow); }
 .section--yellow .section__label { color: var(--ink); }
+.section--blue { background: var(--blue); }
+.section--blue .section__label { color: var(--white); }
+.forum .section__label { color: var(--ink); }
+.forum .section__head .text-link { color: var(--ink); }
 .forum__grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 10%; margin-top: 58px; }
 .forum__grid h2 span { color: var(--pink); }
-.forum__grid .lede { max-width: 300px; margin-top: 28px; font-size: 20px; }
-.forum-list { border-top: 1px solid var(--ink); }
-.forum-row { display: grid; grid-template-columns: 36px 1fr auto; align-items: center; gap: 14px; padding: 20px 0; border-bottom: 1px solid var(--ink); }
+.forum__grid .lede { max-width: 300px; margin-top: 28px; color: var(--white); font-size: 20px; }
+.forum-list { border-top: 1px solid var(--white); }
+.forum-row { display: grid; grid-template-columns: 36px 1fr auto; align-items: center; gap: 14px; padding: 20px 0; border-bottom: 1px solid var(--white); }
 .forum-row__icon { font-size: 22px; }
 .forum-row strong, .forum-row small { display: block; }
 .forum-row strong { font: 700 15px var(--display); letter-spacing: .02em; text-transform: uppercase; }
@@ -315,6 +319,8 @@ h2 span { color: var(--red); }
 .text-link, .footer__top, .site-nav__links a, .site-nav__status, .site-nav__brand, .footer__logo, .forum-row strong { transition: color .2s, transform .2s, opacity .2s; }
 .text-link:is(:hover, :focus-visible), .footer__top:is(:hover, :focus-visible), .site-nav__links a:is(:hover, :focus-visible), .site-nav__status:is(:hover, :focus-visible), .site-nav__brand:is(:hover, :focus-visible), .site-nav__brand:is(:hover, :focus-visible) span, .footer__logo:is(:hover, :focus-visible), .footer__logo:is(:hover, :focus-visible) span, .forum-row:is(:hover, :focus-visible) strong { color: var(--blue); opacity: 1; }
 .text-link:is(:hover, :focus-visible), .footer__top:is(:hover, :focus-visible), .site-nav__links a:is(:hover, :focus-visible), .site-nav__status:is(:hover, :focus-visible), .site-nav__brand:is(:hover, :focus-visible), .footer__logo:is(:hover, :focus-visible), .forum-row:is(:hover, :focus-visible) strong { transform: translate(3px, -3px); }
+.forum .section__head .text-link:is(:hover, :focus-visible),
+.forum-row:is(:hover, :focus-visible) strong { color: var(--white); }
 /* Brand colors for the social icons */
 .site-nav__links a.site-nav__icon[href*="youtube.com"]:is(:hover, :focus-visible) { color: var(--youtube); }
 .site-nav__links a.site-nav__icon[href*="discord.gg"]:is(:hover, :focus-visible) { color: var(--discord); }
