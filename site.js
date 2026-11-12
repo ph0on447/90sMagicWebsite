@@ -118,8 +118,6 @@ const gallery = document.querySelector('[data-gallery]');
 if (gallery) {
   const mainLink = gallery.querySelector('.gallery__open');
   const mainImg = mainLink.querySelector('img');
-  const capTitle = gallery.querySelector('.gallery__caption strong');
-  const capDesc = gallery.querySelector('.gallery__caption span');
   const thumbs = gallery.querySelectorAll('.gallery__thumb');
   thumbs.forEach((thumb) => {
     thumb.addEventListener('click', () => {
@@ -129,9 +127,7 @@ if (gallery) {
       mainImg.src = thumb.dataset.full;
       mainImg.width = thumb.dataset.w;
       mainImg.height = thumb.dataset.h;
-      mainImg.alt = `Screenshot: ${thumb.dataset.title}`;
-      capTitle.textContent = thumb.dataset.title;
-      capDesc.textContent = thumb.dataset.desc;
+      mainImg.alt = 'Gallery image';
     });
   });
 }
