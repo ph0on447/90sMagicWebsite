@@ -372,8 +372,21 @@
 
     const rarity = displayRarity(card);
     const rarityLabel = rarity.charAt(0).toUpperCase() + rarity.slice(1);
-    el.focusMeta.textContent = (card.setName || card.set.toUpperCase()) +
-      (card.collectorNumber ? ' #' + card.collectorNumber : '') + ' · ' + rarityLabel;
+    const setCode = (card.set || '').toLowerCase();
+    const setLabel = card.setName || card.set.toUpperCase();
+    el.focusMeta.innerHTML =
+      '<img class="db-focus__set-symbol" data-set-code="' + escapeHtml(setCode) + '" alt="" loading="lazy">' +
+      escapeHtml(setLabel) +
+      (card.collectorNumber ? ' #' + escapeHtml(String(card.collectorNumber)) : '') +
+      ' · ' + escapeHtml(rarityLabel);
+
+    // Scryfall's own set-symbol SVG - if a given set code has none (or the
+    // fetch fails), just drop the icon rather than leave anything broken.
+    const setSymbolImg = el.focusMeta.querySelector('img[data-set-code]');
+    if (setSymbolImg) {
+      setSymbolImg.addEventListener('error', () => setSymbolImg.remove(), { once: true });
+      setSymbolImg.src = 'https://svgs.scryfall.io/sets/' + encodeURIComponent(setCode) + '.svg';
+    }
   }
 
   function clearFocus() {

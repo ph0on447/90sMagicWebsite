@@ -500,6 +500,17 @@ select.db-input {
   color: var(--db-blue);
 }
 
+/* Set symbol - Scryfall's own SVG, forced to solid white regardless of its
+   native color (same treatment the game gives its own set-symbol art). */
+.db-focus__set-symbol {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+  vertical-align: -2px;
+  filter: brightness(0) invert(1);
+}
+
 /* Mana/tap/generic-cost symbols - real Scryfall art, same as the game. */
 .db-symbol {
   display: inline-block;
