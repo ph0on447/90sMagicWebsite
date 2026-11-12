@@ -445,10 +445,21 @@ select.db-input {
    .cs-inspector-*): blue bold name, italic white type line, a plain divider
    rule above and below the oracle text, body copy at a single readable size. */
 
-.db-focus__name {
+.db-focus__titlerow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
   margin: 0 0 4px;
+}
+
+.db-focus__name {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
   font-family: var(--display);
-  font-size: 22px;
+  font-size: 30px;
+  line-height: 1.05;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: .01em;
@@ -457,7 +468,7 @@ select.db-input {
 
 .db-focus__typeline {
   margin: 0 0 6px;
-  font-size: 15px;
+  font-size: 17px;
   font-style: italic;
   color: var(--db-white);
 }
@@ -465,10 +476,11 @@ select.db-input {
 .db-focus__manacost {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  justify-content: flex-end;
+  flex-shrink: 0;
   gap: 2px;
   min-height: 20px;
-  margin: 0 0 6px;
+  margin: 0;
   font-size: 15px;
   color: var(--db-white);
 }
@@ -496,7 +508,7 @@ select.db-input {
 
 .db-focus__meta {
   margin: 0;
-  font-size: 13px;
+  font-size: 15px;
   font-style: italic;
   color: var(--db-blue);
 }
@@ -543,10 +555,10 @@ select.db-input {
 
 .db-curve {
   display: flex;
-  align-items: flex-end;
+  align-items: stretch; /* bars must fill the height or the % fills below have nothing to resolve against */
   gap: 3px;
-  height: 56px;
-  margin-bottom: 12px;
+  height: 80px;
+  margin: 14px 0 12px;
   padding: 0 2px;
 }
 
@@ -554,19 +566,29 @@ select.db-input {
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
+  align-items: stretch;
   gap: 3px;
+  min-width: 0;
+}
+
+.db-curve__track {
+  position: relative;
+  flex: 1;
+  min-height: 0;
 }
 
 .db-curve__fill {
-  width: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: var(--db-blue);
   border-radius: 2px 2px 0 0;
   min-height: 2px;
 }
 
 .db-curve__label {
+  text-align: center;
   font-size: 10px;
   color: color-mix(in srgb, var(--db-white) 55%, transparent);
 }

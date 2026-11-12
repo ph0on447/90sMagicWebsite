@@ -353,7 +353,7 @@
       el.focusManacost.innerHTML = renderWithSymbols(card.manaCost, 'db-symbol');
       wireSymbolImages(el.focusManacost);
     } else {
-      el.focusManacost.textContent = '—';
+      el.focusManacost.textContent = '';
     }
 
     el.focusOracle.innerHTML = renderWithSymbols(card.oracleText || '', 'db-symbol');
@@ -594,7 +594,7 @@
     const buckets = [0, 0, 0, 0, 0, 0, 0]; // 0,1,2,3,4,5,6+
     let max = 0;
     deckMain.forEach(({ card, qty }) => {
-      if (isBasicLand(card)) return;
+      if (primaryType(card.typeLine) === 'Land') return; // lands aren't part of a curve
       const cmc = Math.max(0, Math.round(card.cmc || 0));
       const idx = Math.min(cmc, 6);
       buckets[idx] += qty;
@@ -605,14 +605,17 @@
     buckets.forEach((count, i) => {
       const bar = document.createElement('div');
       bar.className = 'db-curve__bar';
+      const track = document.createElement('div');
+      track.className = 'db-curve__track';
+      track.title = count + ' card' + (count === 1 ? '' : 's');
       const fill = document.createElement('div');
       fill.className = 'db-curve__fill';
       fill.style.height = Math.round((count / max) * 100) + '%';
-      fill.title = count + ' card' + (count === 1 ? '' : 's');
+      track.appendChild(fill);
       const label = document.createElement('div');
       label.className = 'db-curve__label';
       label.textContent = i === 6 ? '6+' : String(i);
-      bar.appendChild(fill);
+      bar.appendChild(track);
       bar.appendChild(label);
       el.curve.appendChild(bar);
     });

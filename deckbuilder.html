@@ -101,9 +101,11 @@
               <div class="db-focus__overlay" id="db-focus-overlay"><span>Add</span><span>to</span><span>Deck</span></div>
             </div>
             <div class="db-focus__info" id="db-focus-info" hidden>
-              <h3 class="db-focus__name" id="db-focus-name"></h3>
+              <div class="db-focus__titlerow">
+                <h3 class="db-focus__name" id="db-focus-name"></h3>
+                <p class="db-focus__manacost" id="db-focus-manacost"></p>
+              </div>
               <p class="db-focus__typeline" id="db-focus-typeline"></p>
-              <p class="db-focus__manacost" id="db-focus-manacost"></p>
               <p class="db-focus__pt" id="db-focus-pt" hidden></p>
               <div class="db-focus__divider"></div>
               <p class="db-focus__text" id="db-focus-oracle"></p>
@@ -124,8 +126,6 @@
             <button class="db-deck__tab" data-zone="side" id="db-tab-side">Sideboard (<span data-stat="side-count-tab">0</span>)</button>
           </div>
 
-          <div class="db-curve" id="db-curve" aria-label="Mana curve"></div>
-
           <div class="db-deck__actions">
             <button class="db-btn db-btn--ghost" id="db-clear-deck">Clear</button>
             <div class="db-export">
@@ -139,6 +139,8 @@
               </div>
             </div>
           </div>
+
+          <div class="db-curve" id="db-curve" aria-label="Mana curve"></div>
 
           <div class="db-deck__list" id="db-deck-list"></div>
         </section>
