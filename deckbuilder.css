@@ -194,13 +194,18 @@ select.db-input {
 .db-card {
   position: relative;
   cursor: pointer;
-  border-radius: 4px;
+  /* Matches the image's own clip (.db-card img) so the hover/focus border
+     follows the art's rounded corner instead of leaving a square gap of
+     container background showing behind it. Keep these two in sync. */
+  border-radius: 4%;
   /* No overflow:hidden here - the rarity marker pokes out past the right
      edge on purpose, so corner-rounding happens on the image itself instead. */
   background: var(--db-blue-darkest);
   border: 2px solid var(--db-blue-dark-hover);
   transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
 }
+
+.db-card--alpha { border-radius: 7%; }
 
 .db-card:hover {
   border-width: 4px; /* twice the resting 2px border */
@@ -352,8 +357,17 @@ select.db-input {
   width: 78%; /* ~30% larger than the original 60% */
   margin: 0 auto;
   background: var(--db-blue-darkest);
+  /* Same radius as the img inside it - without this the stage's own
+     square corners show its dark background behind the image's rounded
+     corner. Keep in sync with .db-focus__stage img below. overflow:hidden
+     also rounds the placeholder text and the "Add to Deck" hover overlay
+     to match, since those are plain rectangles otherwise. */
+  border-radius: 4%;
+  overflow: hidden;
   cursor: pointer;
 }
+
+.db-focus__stage--alpha { border-radius: 7%; }
 
 .db-focus__stage img {
   display: block;
