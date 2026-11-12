@@ -66,9 +66,11 @@
     return card.set === 'lea';
   }
 
-  // Deck-list grouping categories, in the fixed display order the panel uses.
-  const DECK_CATEGORIES = ['Land', 'Creature', 'Spell', 'Enchantment', 'Artifact', 'Other'];
-  const DECK_CATEGORY_LABELS = { Land: 'Lands', Creature: 'Creatures', Spell: 'Spells', Enchantment: 'Enchantments', Artifact: 'Artifacts', Other: 'Other' };
+  // Deck-list grouping categories, in the fixed display order the panel
+  // uses. No "Other" bucket - every type line in this card pool (1993-1999)
+  // already lands in one of these five, so it would always show empty.
+  const DECK_CATEGORIES = ['Land', 'Creature', 'Spell', 'Enchantment', 'Artifact'];
+  const DECK_CATEGORY_LABELS = { Land: 'Lands', Creature: 'Creatures', Spell: 'Spells', Enchantment: 'Enchantments', Artifact: 'Artifacts' };
 
   function deckCategory(card) {
     const t = primaryType(card.typeLine);
