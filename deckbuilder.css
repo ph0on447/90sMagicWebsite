@@ -219,8 +219,14 @@ select.db-input {
   aspect-ratio: 5 / 7;
   object-fit: cover;
   background: var(--db-blue-dark);
-  border-radius: 2px; /* corners the card itself used to clip via overflow:hidden */
+  /* Clips the white bleed around the scan art's own rounded corners. A
+     percentage keeps this proportional whether the tile is small (grid) or
+     large (inspector). Alpha's print run had rounder physical corners than
+     every set since, so it needs a bigger clip - see .db-card--alpha. */
+  border-radius: 4%;
 }
+
+.db-card--alpha img { border-radius: 7%; }
 
 .db-card__qty {
   position: absolute;
@@ -346,10 +352,6 @@ select.db-input {
   width: 78%; /* ~30% larger than the original 60% */
   margin: 0 auto;
   background: var(--db-blue-darkest);
-  border-radius: 3px 3px 0 0; /* the stage touches .db-focus's rounded top
-                                  edge; clip here instead of on the whole
-                                  panel, so the info text below is never cut off */
-  overflow: hidden;
   cursor: pointer;
 }
 
@@ -358,7 +360,13 @@ select.db-input {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Same clip as the grid tiles (.db-card img) - rounds all four corners to
+     hide the scan art's own white bleed, rather than just clipping the
+     stage's top edge. Keep this in sync with .db-card img's radius. */
+  border-radius: 4%;
 }
+
+.db-focus__stage--alpha img { border-radius: 7%; }
 
 /* Same specificity trap as the placeholder below: this selector ties with
    the browser's own [hidden] rule, so without this override a released

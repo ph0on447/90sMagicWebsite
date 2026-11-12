@@ -59,6 +59,13 @@
     return (card.typeLine || '').startsWith('Basic Land');
   }
 
+  // Alpha's print run had noticeably rounder physical corners than every
+  // set since - the scan art needs a bigger corner clip to hide the white
+  // bleed around them than any other printing does.
+  function isAlphaPrinting(card) {
+    return card.set === 'lea';
+  }
+
   // Deck-list grouping categories, in the fixed display order the panel uses.
   const DECK_CATEGORIES = ['Land', 'Creature', 'Spell', 'Enchantment', 'Artifact', 'Other'];
   const DECK_CATEGORY_LABELS = { Land: 'Lands', Creature: 'Creatures', Spell: 'Spells', Enchantment: 'Enchantments', Artifact: 'Artifacts', Other: 'Other' };
@@ -238,7 +245,9 @@
   function buildCardTile(card) {
     const key = cardKey(card);
     const tile = document.createElement('div');
-    tile.className = 'db-card' + (focusedCard && cardKey(focusedCard) === key ? ' db-card--focused' : '');
+    tile.className = 'db-card' +
+      (focusedCard && cardKey(focusedCard) === key ? ' db-card--focused' : '') +
+      (isAlphaPrinting(card) ? ' db-card--alpha' : '');
     tile.dataset.key = key;
 
     const img = document.createElement('img');
@@ -330,6 +339,7 @@
     el.focusImg.hidden = false;
     el.focusPlaceholder.hidden = true;
     el.focusStage.classList.add('db-focus__stage--active');
+    el.focusStage.classList.toggle('db-focus__stage--alpha', isAlphaPrinting(card));
 
     el.focusInfo.hidden = false;
     el.focusName.textContent = card.name;
@@ -370,6 +380,7 @@
     el.focusImg.hidden = true;
     el.focusPlaceholder.hidden = false;
     el.focusStage.classList.remove('db-focus__stage--active');
+    el.focusStage.classList.remove('db-focus__stage--alpha');
     el.focusInfo.hidden = true;
   }
 
