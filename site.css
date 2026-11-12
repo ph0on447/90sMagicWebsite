@@ -340,6 +340,8 @@ h2 span { color: var(--red); }
 .about-sec__fig { margin: 0; background: #000; }
 .about-sec__fig img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
 .about-sec__fig figcaption { padding: 10px 12px; color: var(--yellow); font: 11px var(--mono); text-transform: uppercase; letter-spacing: .08em; }
+.about-collection-images { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 1rem; margin-top: 1rem; }
+.about-collection-images img { flex: 0 1 calc((100% - 2rem) / 3); width: calc((100% - 2rem) / 3); height: auto; }
 @media (max-width: 960px) {
   .about-sec--fig .about-sec__body { grid-template-columns: 1fr; gap: 28px; }
   .about-sec--fig .about-sec__copy { padding-right: 0; }
@@ -348,6 +350,7 @@ h2 span { color: var(--red); }
   .about-sec { padding-top: 28px; margin-top: 28px; }
   .about-sec__label { margin-bottom: 16px; }
   .about-sec__copy p { font-size: 15px; }
+  .about-collection-images img { flex-basis: calc((100% - 1rem) / 2); width: calc((100% - 1rem) / 2); }
 }
 
 @media (min-width: 721px) {
