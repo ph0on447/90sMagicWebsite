@@ -17,7 +17,7 @@ const links = isHome
     };
 
 nav.innerHTML = `
-  <a class="site-nav__brand" href="https://wrongwaygames.com" aria-label="90s Magic home">'90s<span>MAGIC</span></a>
+  <a class="site-nav__brand" href="https://wrongwaygames.com" aria-label="90s Magic home"><img src="Assets/Logos/Logo%20Square3%20128.png" alt=""></a>
   <div class="site-nav__links">
     <a href="${links.about}">About</a>
     <a href="${links.blog}">Dev blog</a>
