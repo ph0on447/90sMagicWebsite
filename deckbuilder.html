@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Build a '90s Magic deck from the full 1993-1999 card pool, then export it for play or into the game.">
+  <link rel="canonical" href="https://wrongwaygames.com/deckbuilder">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="'90s Magic">
+  <meta property="og:title" content="'90s Magic | Deckbuilder">
+  <meta property="og:description" content="Build a '90s Magic deck from the full 1993-1999 card pool, then export it for play or into the game.">
+  <meta property="og:url" content="https://wrongwaygames.com/deckbuilder">
+  <meta property="og:image" content="https://wrongwaygames.com/Assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>'90s Magic | Deckbuilder</title>
+  <link rel="icon" type="image/x-icon" href="/Assets/Logos/Logo Square3 32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="deckbuilder.css">
+</head>
+<body>
+  <script src="site-nav.js" data-nav="page"></script>
+
+  <main class="db">
+    <div class="db__root">
+
+      <!-- Terminal header -->
+      <header class="db-header">
+        <div class="db-header__title">
+          <h1>Deckbuilder</h1>
+          <p>Every card, every set. Build it here, take it anywhere.</p>
+        </div>
+        <div class="db-header__stats">
+          <span><strong data-stat="deck-count">0</strong> / 60 main</span>
+          <span><strong data-stat="side-count">0</strong> / 15 side</span>
+        </div>
+      </header>
+
+      <div class="db-body">
+
+        <!-- Left: filters + card grid -->
+        <section class="db-browser">
+          <div class="db-filters">
+            <input type="search" class="db-input db-input--search" id="db-search" placeholder="Search card name or text&hellip;" autocomplete="off">
+
+            <select class="db-input" id="db-filter-set">
+              <option value="">All sets</option>
+            </select>
+
+            <select class="db-input" id="db-filter-color">
+              <option value="">All colors</option>
+              <option value="W">White</option>
+              <option value="U">Blue</option>
+              <option value="B">Black</option>
+              <option value="R">Red</option>
+              <option value="G">Green</option>
+              <option value="C">Colorless</option>
+              <option value="M">Multicolor</option>
+            </select>
+
+            <select class="db-input" id="db-filter-rarity">
+              <option value="">All rarities</option>
+              <option value="common">Common</option>
+              <option value="uncommon">Uncommon</option>
+              <option value="rare">Rare</option>
+              <option value="mythic">Mythic (Power Nine)</option>
+            </select>
+
+            <select class="db-input" id="db-filter-type">
+              <option value="">All types</option>
+            </select>
+
+            <select class="db-input" id="db-sort">
+              <option value="name">Sort: Name</option>
+              <option value="cmc">Sort: Mana value</option>
+              <option value="set">Sort: Set (chronological)</option>
+              <option value="rarity">Sort: Rarity</option>
+            </select>
+          </div>
+
+          <div class="db-grid" id="db-grid" aria-live="polite"></div>
+          <p class="db-grid__empty" id="db-grid-empty" hidden>No cards match these filters.</p>
+          <p class="db-grid__count" id="db-grid-count"></p>
+        </section>
+
+        <!-- Right: deck panel -->
+        <section class="db-deck">
+          <div class="db-deck__name-row">
+            <input type="text" class="db-input db-input--deckname" id="db-deck-name" value="New Deck" placeholder="Deck name" maxlength="60">
+          </div>
+
+          <div class="db-deck__tabs">
+            <button class="db-deck__tab db-deck__tab--active" data-zone="main" id="db-tab-main">Main (<span data-stat="deck-count-tab">0</span>)</button>
+            <button class="db-deck__tab" data-zone="side" id="db-tab-side">Sideboard (<span data-stat="side-count-tab">0</span>)</button>
+          </div>
+
+          <div class="db-curve" id="db-curve" aria-label="Mana curve"></div>
+
+          <div class="db-deck__list" id="db-deck-list"></div>
+          <p class="db-deck__empty" id="db-deck-empty">Click a card on the left to add it here.</p>
+
+          <div class="db-deck__actions">
+            <button class="db-btn db-btn--ghost" id="db-clear-deck">Clear</button>
+            <div class="db-export">
+              <button class="db-btn db-btn--primary" id="db-export-btn">Export &#9662;</button>
+              <div class="db-export__menu" id="db-export-menu" hidden>
+                <button data-format="game">90s Magic (game import)</button>
+                <button data-format="standard">Standard / MTGGoldfish (.txt)</button>
+                <button data-format="mtga">MTG Arena (.txt)</button>
+                <button data-format="mtgo">MTGO (.txt)</button>
+                <button data-format="csv">CSV (.csv)</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Card preview popover -->
+  <div class="db-preview" id="db-preview" hidden>
+    <img id="db-preview-img" alt="">
+  </div>
+
+  <script src="site-footer.js" data-top="https://wrongwaygames.com/deckbuilder#top"></script>
+  <script src="site.js"></script>
+  <script src="deckbuilder.js"></script>
+</body>
+</html>
