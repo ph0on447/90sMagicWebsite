@@ -157,7 +157,11 @@
       if (filters.type && primaryType(c.typeLine) !== filters.type) return false;
       if (filters.rarity && displayRarity(c) !== filters.rarity) return false;
       if (filters.color) {
-        const colors = c.colors || [];
+        // Scryfall's "colors" field only reflects colored mana symbols in the
+        // cost, so every land comes back colorless there even though Island
+        // is plainly blue. "colorIdentity" is what actually captures a land's
+        // (or any card's) color for filtering purposes, so use that instead.
+        const colors = c.colorIdentity || [];
         if (filters.color === 'C' && colors.length !== 0) return false;
         if (filters.color === 'M' && colors.length < 2) return false;
         if (filters.color !== 'C' && filters.color !== 'M' && !colors.includes(filters.color)) return false;
