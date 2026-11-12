@@ -493,7 +493,7 @@
 
         const qtyEl = document.createElement('span');
         qtyEl.className = 'db-deck-row__qty';
-        qtyEl.textContent = qty + 'x';
+        qtyEl.textContent = qty;
         row.appendChild(qtyEl);
 
         const nameEl = document.createElement('span');
