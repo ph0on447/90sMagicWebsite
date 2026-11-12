@@ -124,7 +124,10 @@
     focusManacost: document.getElementById('db-focus-manacost'),
     focusPt: document.getElementById('db-focus-pt'),
     focusOracle: document.getElementById('db-focus-oracle'),
-    focusMeta: document.getElementById('db-focus-meta')
+    focusMeta: document.getElementById('db-focus-meta'),
+    deck: document.getElementById('db-deck'),
+    rowPreview: document.getElementById('db-row-preview'),
+    rowPreviewImg: document.getElementById('db-row-preview-img')
   };
 
   const statEls = {
@@ -460,7 +463,44 @@
     document.querySelectorAll('[data-stat="side-count"], [data-stat="side-count-tab"]').forEach((n) => { n.textContent = sideTotal; });
   }
 
+  // Positions the floating row-preview to the left of the whole deck panel
+  // (.db-deck), vertically following the cursor - never over the list or
+  // the inspector above it, both of which live inside that same panel.
+  function positionRowPreview(clientY) {
+    const deckRect = el.deck.getBoundingClientRect();
+    const rect = el.rowPreview.getBoundingClientRect();
+    const width = rect.width || 200;
+    const height = rect.height || (width * 7 / 5);
+
+    let left = deckRect.left - width - 14;
+    if (left < 8) left = 8;
+
+    let top = clientY - height / 2;
+    const maxTop = window.innerHeight - height - 8;
+    top = Math.max(8, Math.min(top, maxTop));
+
+    el.rowPreview.style.left = left + 'px';
+    el.rowPreview.style.top = top + 'px';
+  }
+
+  function showRowPreview(card, clientY) {
+    el.rowPreviewImg.src = card.imgNormal || card.imgSmall || '';
+    el.rowPreviewImg.alt = card.name;
+    el.rowPreview.classList.toggle('db-row-preview--alpha', isAlphaPrinting(card));
+    el.rowPreview.hidden = false;
+    positionRowPreview(clientY);
+  }
+
+  function hideRowPreview() {
+    el.rowPreview.hidden = true;
+  }
+
   function renderDeckList() {
+    // The list is about to be torn down and rebuilt - if the cursor was
+    // mid-hover over a row, its mouseleave won't fire once that row is
+    // gone, so drop the preview explicitly instead of leaving it stuck.
+    hideRowPreview();
+
     const map = zoneMap(activeZone);
     el.deckList.innerHTML = '';
     el.deckEmpty.hidden = map.size !== 0;
@@ -515,6 +555,10 @@
 
         // The whole row removes one copy now - no separate minus button.
         row.addEventListener('click', () => removeFromDeck(card, activeZone, false));
+
+        row.addEventListener('mouseenter', (e) => showRowPreview(card, e.clientY));
+        row.addEventListener('mousemove', (e) => positionRowPreview(e.clientY));
+        row.addEventListener('mouseleave', hideRowPreview);
 
         frag.appendChild(row);
       });

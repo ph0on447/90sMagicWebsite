@@ -90,7 +90,7 @@
         </section>
 
         <!-- Right: deck panel -->
-        <section class="db-deck">
+        <section class="db-deck" id="db-deck">
 
           <!-- Card inspector - click a card in the grid to load it here.
                Hovering the big image is how a card actually gets added. -->
@@ -147,6 +147,13 @@
       </div>
     </div>
   </main>
+
+  <!-- Floating preview shown while hovering a card in the deck list - sits
+       to the left of the whole deck panel so it never covers the list it's
+       describing or the inspector above it. -->
+  <div class="db-row-preview" id="db-row-preview" hidden>
+    <img id="db-row-preview-img" alt="">
+  </div>
 
   <script src="site-footer.js" data-top="https://wrongwaygames.com/deckbuilder#top"></script>
   <script src="site.js"></script>
