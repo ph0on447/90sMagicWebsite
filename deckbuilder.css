@@ -558,7 +558,8 @@ select.db-input {
   align-items: stretch; /* bars must fill the height or the % fills below have nothing to resolve against */
   gap: 3px;
   height: 80px;
-  margin: 14px 0 12px;
+  flex-shrink: 0; /* .db-deck is a flex column that overflows once the inspector is open; without this the curve gets squashed to its labels' height and the bars vanish */
+  margin: 18px 0 4px;
   padding: 0 2px;
 }
 
