@@ -286,7 +286,7 @@ select.db-input {
   overflow-y: auto;
   background: var(--db-blue-darkest);
   border-left: 1px solid var(--db-blue-dark-hover);
-  padding: 18px 20px 14px 18px; /* a bit of extra right padding clears the scrollbar */
+  padding: 18px 20px 54px 18px; /* extra right padding clears the scrollbar; extra bottom padding lets the panel scroll a bit past the curve */
 }
 
 .db-deck__name-row {
@@ -586,6 +586,16 @@ select.db-input {
   background: var(--db-blue);
   border-radius: 2px 2px 0 0;
   min-height: 2px;
+}
+
+.db-curve__title {
+  margin: 0;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: color-mix(in srgb, var(--db-white) 55%, transparent);
 }
 
 .db-curve__label {
