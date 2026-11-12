@@ -256,13 +256,22 @@
   // ---------------------------------------------------------------------
   // Deck mutation
   // ---------------------------------------------------------------------
+  // Sums quantity across every printing of this name in the zone - the real
+  // 4-copy rule applies per card name, not per printing (otherwise 4 of one
+  // printing + 4 of a reprint would wrongly pass as 8 legal copies).
+  function nameTotalInZone(name, zone) {
+    let total = 0;
+    zoneMap(zone).forEach((e) => { if (e.card.name === name) total += e.qty; });
+    return total;
+  }
+
   function addToDeck(card, zone) {
     const key = cardKey(card);
     const map = zoneMap(zone);
     const existing = map.get(key);
     const currentQty = existing ? existing.qty : 0;
 
-    if (!isBasicLand(card) && currentQty >= 4) return; // standard 4-copy limit
+    if (!isBasicLand(card) && nameTotalInZone(card.name, zone) >= 4) return; // standard 4-copy limit
 
     map.set(key, { card, qty: currentQty + 1 });
     afterDeckChange();
