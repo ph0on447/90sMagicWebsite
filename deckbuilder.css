@@ -91,7 +91,7 @@
   .db__root { height: auto; min-height: 100svh; }
   .db-body { overflow: visible; }
   .db-browser, .db-deck { min-height: 0; }
-  .db-grid, .db-deck__list { flex: none; overflow-y: visible; max-height: none; }
+  .db-grid, .db-deck { flex: none; overflow-y: visible; max-height: none; padding-right: 18px; }
 }
 
 /* ---------------------------------- Filters ---------------------------------- */
@@ -186,7 +186,9 @@ select.db-input {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
-  padding-right: 4px;
+  padding-right: 18px; /* clears the scrollbar track so it doesn't sit over
+                           the rightmost column's cards and rarity markers,
+                           which poke a bit past the card's own edge */
 }
 
 .db-card {
@@ -270,9 +272,10 @@ select.db-input {
   flex-direction: column;
   min-width: 0;
   min-height: 0;
+  overflow-y: auto;
   background: var(--db-blue-darkest);
   border-left: 1px solid var(--db-blue-dark-hover);
-  padding: 18px 18px 14px;
+  padding: 18px 20px 14px 18px; /* a bit of extra right padding clears the scrollbar */
 }
 
 .db-deck__name-row {
@@ -330,10 +333,11 @@ select.db-input {
 
 .db-focus {
   margin-bottom: 12px;
+  flex-shrink: 0; /* let it take whatever height its content needs - the
+                     panel around it (.db-deck) scrolls, this never clips */
   background: var(--db-blue-dark);
   border: 1px solid var(--db-blue-dark-hover);
   border-radius: 4px;
-  overflow: hidden;
 }
 
 .db-focus__stage {
@@ -342,6 +346,10 @@ select.db-input {
   width: 78%; /* ~30% larger than the original 60% */
   margin: 0 auto;
   background: var(--db-blue-darkest);
+  border-radius: 3px 3px 0 0; /* the stage touches .db-focus's rounded top
+                                  edge; clip here instead of on the whole
+                                  panel, so the info text below is never cut off */
+  overflow: hidden;
   cursor: pointer;
 }
 
@@ -478,9 +486,7 @@ select.db-input {
 /* ---------------------------------- Deck list ---------------------------------- */
 
 .db-deck__list {
-  flex: 1;
-  overflow-y: auto;
-  min-height: 0;
+  flex-shrink: 0; /* .db-deck itself scrolls now, as one pane */
 }
 
 .db-deck-category {
@@ -632,24 +638,24 @@ select.db-input {
    blue-darkest track with a white hairline border, blue dragger with a
    blue-dark border. */
 
-.db-grid, .db-deck__list {
+.db-grid, .db-deck {
   scrollbar-width: thin;
   scrollbar-color: var(--db-blue) var(--db-blue-darkest);
 }
 
-.db-grid::-webkit-scrollbar, .db-deck__list::-webkit-scrollbar { width: 14px; }
+.db-grid::-webkit-scrollbar, .db-deck::-webkit-scrollbar { width: 14px; }
 
-.db-grid::-webkit-scrollbar-track, .db-deck__list::-webkit-scrollbar-track {
+.db-grid::-webkit-scrollbar-track, .db-deck::-webkit-scrollbar-track {
   background: var(--db-blue-darkest);
   border: 1px solid color-mix(in srgb, var(--db-white) 30%, transparent);
 }
 
-.db-grid::-webkit-scrollbar-thumb, .db-deck__list::-webkit-scrollbar-thumb {
+.db-grid::-webkit-scrollbar-thumb, .db-deck::-webkit-scrollbar-thumb {
   background: var(--db-blue);
   border: 1px solid var(--db-blue-dark);
   border-radius: 2px;
 }
 
-.db-grid::-webkit-scrollbar-thumb:hover, .db-deck__list::-webkit-scrollbar-thumb:hover {
+.db-grid::-webkit-scrollbar-thumb:hover, .db-deck::-webkit-scrollbar-thumb:hover {
   background: var(--db-blue-hover);
 }
