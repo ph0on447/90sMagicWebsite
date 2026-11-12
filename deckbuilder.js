@@ -72,7 +72,7 @@
   let activeZone = 'main';
   let focusedCard = null; // card currently shown in the inspector panel
 
-  const filters = { search: '', set: '', color: '', rarity: '', type: '', sort: 'name' };
+  const filters = { search: '', set: '', colors: new Set(), rarity: '', type: '', sort: 'name' };
 
   // ---------------------------------------------------------------------
   // DOM refs
@@ -83,7 +83,8 @@
     gridCount: document.getElementById('db-grid-count'),
     search: document.getElementById('db-search'),
     filterSet: document.getElementById('db-filter-set'),
-    filterColor: document.getElementById('db-filter-color'),
+    colorFilterBtn: document.getElementById('db-colorfilter-btn'),
+    colorFilterMenu: document.getElementById('db-colorfilter-menu'),
     filterRarity: document.getElementById('db-filter-rarity'),
     filterType: document.getElementById('db-filter-type'),
     sort: document.getElementById('db-sort'),
@@ -165,15 +166,19 @@
       if (filters.set && c.set !== filters.set) return false;
       if (filters.type && primaryType(c.typeLine) !== filters.type) return false;
       if (filters.rarity && displayRarity(c) !== filters.rarity) return false;
-      if (filters.color) {
+      if (filters.colors.size) {
         // Scryfall's "colors" field only reflects colored mana symbols in the
         // cost, so every land comes back colorless there even though Island
         // is plainly blue. "colorIdentity" is what actually captures a land's
         // (or any card's) color for filtering purposes, so use that instead.
-        const colors = c.colorIdentity || [];
-        if (filters.color === 'C' && colors.length !== 0) return false;
-        if (filters.color === 'M' && colors.length < 2) return false;
-        if (filters.color !== 'C' && filters.color !== 'M' && !colors.includes(filters.color)) return false;
+        // Multiple checked colors are OR'd together (matches any one of them).
+        const identity = c.colorIdentity || [];
+        const matchesAny = [...filters.colors].some((sel) => {
+          if (sel === 'C') return identity.length === 0;
+          if (sel === 'M') return identity.length >= 2;
+          return identity.includes(sel);
+        });
+        if (!matchesAny) return false;
       }
       if (q && !c.name.toLowerCase().includes(q) && !(c.oracleText || '').toLowerCase().includes(q)) return false;
       return true;
@@ -247,7 +252,7 @@
 
     // Clicking a grid card only inspects it now - adding happens by hovering
     // the big image in the inspector panel (see setFocusedCard / stage click).
-    tile.addEventListener('click', () => setFocusedCard(card));
+    tile.addEventListener('click', () => toggleFocus(card));
 
     return tile;
   }
@@ -295,6 +300,26 @@
     const rarityLabel = rarity.charAt(0).toUpperCase() + rarity.slice(1);
     el.focusMeta.textContent = (card.setName || card.set.toUpperCase()) +
       (card.collectorNumber ? ' #' + card.collectorNumber : '') + ' · ' + rarityLabel;
+  }
+
+  function clearFocus() {
+    if (!focusedCard) return;
+    const prevTile = el.grid.querySelector('[data-key="' + CSS.escape(cardKey(focusedCard)) + '"]');
+    if (prevTile) prevTile.classList.remove('db-card--focused');
+
+    focusedCard = null;
+    el.focusImg.hidden = true;
+    el.focusImg.src = '';
+    el.focusPlaceholder.hidden = false;
+    el.focusStage.classList.remove('db-focus__stage--active');
+    el.focusInfo.hidden = true;
+  }
+
+  // Clicking the already-focused card again releases focus instead of
+  // re-focusing it.
+  function toggleFocus(card) {
+    if (focusedCard && cardKey(focusedCard) === cardKey(card)) clearFocus();
+    else setFocusedCard(card);
   }
 
   // Hovering the big preview is the actual "add to deck" action now.
@@ -408,7 +433,7 @@
       removeBtn.addEventListener('click', (e) => { e.stopPropagation(); removeFromDeck(card, activeZone, false); });
       row.appendChild(removeBtn);
 
-      row.addEventListener('click', () => setFocusedCard(card));
+      row.addEventListener('click', () => toggleFocus(card));
 
       frag.appendChild(row);
     });
@@ -450,7 +475,28 @@
   // ---------------------------------------------------------------------
   el.search.addEventListener('input', () => { filters.search = el.search.value; renderGrid(); });
   el.filterSet.addEventListener('change', () => { filters.set = el.filterSet.value; renderGrid(); });
-  el.filterColor.addEventListener('change', () => { filters.color = el.filterColor.value; renderGrid(); });
+  const COLOR_LABELS = { W: 'White', U: 'Blue', B: 'Black', R: 'Red', G: 'Green', C: 'Colorless', M: 'Multicolor' };
+
+  function updateColorFilterButtonLabel() {
+    const n = filters.colors.size;
+    if (n === 0) el.colorFilterBtn.textContent = 'All colors';
+    else if (n <= 2) el.colorFilterBtn.textContent = [...filters.colors].map((c) => COLOR_LABELS[c]).join(', ');
+    else el.colorFilterBtn.textContent = n + ' colors';
+  }
+
+  el.colorFilterBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    el.colorFilterMenu.hidden = !el.colorFilterMenu.hidden;
+  });
+  el.colorFilterMenu.addEventListener('click', (e) => e.stopPropagation());
+  el.colorFilterMenu.querySelectorAll('input[type="checkbox"]').forEach((box) => {
+    box.addEventListener('change', () => {
+      if (box.checked) filters.colors.add(box.value);
+      else filters.colors.delete(box.value);
+      updateColorFilterButtonLabel();
+      renderGrid();
+    });
+  });
   el.filterRarity.addEventListener('change', () => { filters.rarity = el.filterRarity.value; renderGrid(); });
   el.filterType.addEventListener('change', () => { filters.type = el.filterType.value; renderGrid(); });
   el.sort.addEventListener('change', () => { filters.sort = el.sort.value; renderGrid(); });
@@ -476,7 +522,7 @@
     e.stopPropagation();
     el.exportMenu.hidden = !el.exportMenu.hidden;
   });
-  document.addEventListener('click', () => { el.exportMenu.hidden = true; });
+  document.addEventListener('click', () => { el.exportMenu.hidden = true; el.colorFilterMenu.hidden = true; });
   el.exportMenu.querySelectorAll('button').forEach((btn) => {
     btn.addEventListener('click', () => runExport(btn.dataset.format));
   });

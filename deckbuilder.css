@@ -124,11 +124,53 @@ select.db-input {
   padding-right: 28px;
 }
 
+/* ---------------------------------- Color filter (multi-select) ---------------------------------- */
+
+.db-colorfilter { position: relative; }
+
+.db-colorfilter__btn {
+  cursor: pointer;
+  text-align: left;
+  min-width: 110px;
+}
+
+.db-colorfilter__menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 20;
+  min-width: 150px;
+  background: var(--db-blue-darkest);
+  border: 1px solid var(--db-blue);
+  border-radius: 3px;
+  padding: 6px 0;
+  box-shadow: 0 6px 20px rgba(0,0,0,.5);
+}
+
+.db-colorfilter__menu label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.db-colorfilter__menu label:hover { background: var(--db-blue-dark-hover); }
+
+.db-colorfilter__menu input[type="checkbox"] {
+  accent-color: var(--db-green);
+  width: 14px;
+  height: 14px;
+  margin: 0;
+  flex-shrink: 0;
+}
+
 /* ---------------------------------- Card grid ---------------------------------- */
 
 .db-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
   gap: 12px;
   overflow-y: auto;
   padding-right: 4px;
@@ -264,7 +306,7 @@ select.db-input {
 .db-focus__stage {
   position: relative;
   aspect-ratio: 5 / 7;
-  width: 60%;
+  width: 78%; /* ~30% larger than the original 60% */
   margin: 0 auto;
   background: var(--db-blue-darkest);
   cursor: pointer;
@@ -289,6 +331,12 @@ select.db-input {
   font-size: 12px;
   color: color-mix(in srgb, var(--db-white) 45%, transparent);
 }
+
+/* The class above sets display:flex at the same specificity as the
+   browser's own [hidden] rule, which otherwise wins or loses by sheet
+   order alone - pin it explicitly so setting the hidden attribute always
+   actually hides this (and it doesn't sit on top of the loaded card). */
+.db-focus__placeholder[hidden] { display: none; }
 
 .db-focus__overlay {
   position: absolute;

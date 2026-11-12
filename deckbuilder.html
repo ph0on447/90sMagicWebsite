@@ -51,16 +51,18 @@
               <option value="">All sets</option>
             </select>
 
-            <select class="db-input" id="db-filter-color">
-              <option value="">All colors</option>
-              <option value="W">White</option>
-              <option value="U">Blue</option>
-              <option value="B">Black</option>
-              <option value="R">Red</option>
-              <option value="G">Green</option>
-              <option value="C">Colorless</option>
-              <option value="M">Multicolor</option>
-            </select>
+            <div class="db-colorfilter" id="db-colorfilter">
+              <button type="button" class="db-input db-colorfilter__btn" id="db-colorfilter-btn">All colors</button>
+              <div class="db-colorfilter__menu" id="db-colorfilter-menu" hidden>
+                <label><input type="checkbox" value="W"> White</label>
+                <label><input type="checkbox" value="U"> Blue</label>
+                <label><input type="checkbox" value="B"> Black</label>
+                <label><input type="checkbox" value="R"> Red</label>
+                <label><input type="checkbox" value="G"> Green</label>
+                <label><input type="checkbox" value="C"> Colorless</label>
+                <label><input type="checkbox" value="M"> Multicolor</label>
+              </div>
+            </div>
 
             <select class="db-input" id="db-filter-rarity">
               <option value="">All rarities</option>
