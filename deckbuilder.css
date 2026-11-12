@@ -140,13 +140,18 @@ select.db-input {
   border-radius: 4px;
   overflow: hidden;
   background: var(--db-blue-darkest);
-  border: 1px solid var(--db-blue-dark-hover);
-  transition: transform .12s ease, border-color .12s ease;
+  border: 2px solid var(--db-blue-dark-hover);
+  transition: transform .12s ease, border-color .12s ease, box-shadow .12s ease;
 }
 
 .db-card:hover {
-  border-color: var(--db-blue);
+  border-color: var(--db-green);
   transform: translateY(-2px);
+}
+
+.db-card--focused {
+  border-color: var(--db-green);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--db-green) 55%, transparent);
 }
 
 .db-card img {
@@ -245,6 +250,105 @@ select.db-input {
 
 .db-deck__tab:hover { background: var(--db-blue-dark-hover); }
 .db-deck__tab--active, .db-deck__tab--active:hover { background: var(--db-blue); }
+
+/* ---------------------------------- Card inspector ---------------------------------- */
+
+.db-focus {
+  margin-bottom: 12px;
+  background: var(--db-blue-dark);
+  border: 1px solid var(--db-blue-dark-hover);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.db-focus__stage {
+  position: relative;
+  aspect-ratio: 5 / 7;
+  width: 60%;
+  margin: 0 auto;
+  background: var(--db-blue-darkest);
+  cursor: pointer;
+}
+
+.db-focus__stage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.db-focus__placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 10px;
+  text-align: center;
+  font-size: 12px;
+  color: color-mix(in srgb, var(--db-white) 45%, transparent);
+}
+
+.db-focus__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10px;
+  background: color-mix(in srgb, var(--db-green) 55%, transparent);
+  color: var(--db-white);
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  opacity: 0;
+  transition: opacity .1s ease;
+  pointer-events: none;
+}
+
+/* Only shows the "Add to Deck" overlay once a card is actually loaded. */
+.db-focus__stage--active:hover .db-focus__overlay { opacity: 1; }
+
+.db-focus__info {
+  padding: 12px 14px 14px;
+}
+
+.db-focus__name {
+  margin: 0 0 4px;
+  font-family: var(--display);
+  font-size: 19px;
+  text-transform: uppercase;
+  letter-spacing: .01em;
+  color: var(--db-white);
+}
+
+.db-focus__line {
+  margin: 0 0 4px;
+  font-size: 12px;
+  color: color-mix(in srgb, var(--db-white) 75%, transparent);
+}
+
+.db-focus__text {
+  margin: 8px 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--db-white) 85%, transparent);
+  white-space: pre-line;
+}
+
+.db-focus__meta {
+  margin: 8px 0 0;
+  padding-top: 8px;
+  border-top: 1px solid color-mix(in srgb, var(--db-white) 10%, transparent);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  color: color-mix(in srgb, var(--db-white) 50%, transparent);
+}
 
 /* ---------------------------------- Mana curve ---------------------------------- */
 
@@ -407,21 +511,6 @@ select.db-input {
 
 .db-export__menu button:hover { background: var(--db-blue-dark-hover); }
 
-/* ---------------------------------- Card preview popover ---------------------------------- */
-
-.db-preview {
-  position: fixed;
-  pointer-events: none;
-  z-index: 50;
-  width: 240px;
-  filter: drop-shadow(0 8px 20px rgba(0,0,0,.6));
-}
-
-.db-preview img {
-  display: block;
-  width: 100%;
-  border-radius: 10px;
-}
 
 /* ---------------------------------- Scrollbars ---------------------------------- */
 

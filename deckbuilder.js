@@ -70,6 +70,7 @@
   const deckMain = new Map(); // key -> { card, qty }
   const deckSide = new Map();
   let activeZone = 'main';
+  let focusedCard = null; // card currently shown in the inspector panel
 
   const filters = { search: '', set: '', color: '', rarity: '', type: '', sort: 'name' };
 
@@ -95,8 +96,16 @@
     clearBtn: document.getElementById('db-clear-deck'),
     exportBtn: document.getElementById('db-export-btn'),
     exportMenu: document.getElementById('db-export-menu'),
-    preview: document.getElementById('db-preview'),
-    previewImg: document.getElementById('db-preview-img')
+    focusStage: document.getElementById('db-focus-stage'),
+    focusImg: document.getElementById('db-focus-img'),
+    focusPlaceholder: document.getElementById('db-focus-placeholder'),
+    focusInfo: document.getElementById('db-focus-info'),
+    focusName: document.getElementById('db-focus-name'),
+    focusTypeline: document.getElementById('db-focus-typeline'),
+    focusManacost: document.getElementById('db-focus-manacost'),
+    focusPt: document.getElementById('db-focus-pt'),
+    focusOracle: document.getElementById('db-focus-oracle'),
+    focusMeta: document.getElementById('db-focus-meta')
   };
 
   const statEls = {
@@ -170,12 +179,16 @@
       return true;
     });
 
+    // Every sort ties ultimately down to name, then printing age (oldest
+    // first) - so when the same card shows up from several sets, its
+    // printings stay grouped together in release order instead of whatever
+    // order they happened to sit in the source data.
     list.sort((a, b) => {
       switch (filters.sort) {
-        case 'cmc': return (a.cmc - b.cmc) || a.name.localeCompare(b.name);
+        case 'cmc': return (a.cmc - b.cmc) || a.name.localeCompare(b.name) || (setRank(a.set) - setRank(b.set));
         case 'set': return (setRank(a.set) - setRank(b.set)) || a.name.localeCompare(b.name);
-        case 'rarity': return (RARITY_RANK[displayRarity(b)] - RARITY_RANK[displayRarity(a)]) || a.name.localeCompare(b.name);
-        default: return a.name.localeCompare(b.name);
+        case 'rarity': return (RARITY_RANK[displayRarity(b)] - RARITY_RANK[displayRarity(a)]) || a.name.localeCompare(b.name) || (setRank(a.set) - setRank(b.set));
+        default: return a.name.localeCompare(b.name) || (setRank(a.set) - setRank(b.set));
       }
     });
 
@@ -209,7 +222,7 @@
   function buildCardTile(card) {
     const key = cardKey(card);
     const tile = document.createElement('div');
-    tile.className = 'db-card';
+    tile.className = 'db-card' + (focusedCard && cardKey(focusedCard) === key ? ' db-card--focused' : '');
     tile.dataset.key = key;
 
     const img = document.createElement('img');
@@ -232,30 +245,63 @@
       tile.appendChild(qty);
     }
 
-    tile.addEventListener('click', () => addToDeck(card, activeZone));
-    tile.addEventListener('mouseenter', (e) => showPreview(card, e));
-    tile.addEventListener('mousemove', positionPreview);
-    tile.addEventListener('mouseleave', hidePreview);
+    // Clicking a grid card only inspects it now - adding happens by hovering
+    // the big image in the inspector panel (see setFocusedCard / stage click).
+    tile.addEventListener('click', () => setFocusedCard(card));
 
     return tile;
   }
 
-  function showPreview(card, e) {
-    el.previewImg.src = card.imgNormal || card.imgSmall || '';
-    el.preview.hidden = false;
-    positionPreview(e);
+  function formatManaCost(manaCost) {
+    return (manaCost || '').replace(/[{}]/g, '');
   }
-  function positionPreview(e) {
-    if (el.preview.hidden) return;
-    const margin = 16;
-    let x = e.clientX + 20;
-    let y = e.clientY + 20;
-    if (x + 240 > window.innerWidth) x = e.clientX - 260;
-    if (y + 340 > window.innerHeight) y = Math.max(margin, window.innerHeight - 340 - margin);
-    el.preview.style.left = x + 'px';
-    el.preview.style.top = y + 'px';
+
+  function setFocusedCard(card) {
+    const previousKey = focusedCard ? cardKey(focusedCard) : null;
+    focusedCard = card;
+
+    // Re-stamp the focus highlight on currently-rendered tiles without a
+    // full regrid (cheap - at most two tiles change).
+    if (previousKey) {
+      const prevTile = el.grid.querySelector('[data-key="' + CSS.escape(previousKey) + '"]');
+      if (prevTile) prevTile.classList.remove('db-card--focused');
+    }
+    const newTile = el.grid.querySelector('[data-key="' + CSS.escape(cardKey(card)) + '"]');
+    if (newTile) newTile.classList.add('db-card--focused');
+
+    el.focusImg.src = card.imgNormal || card.imgSmall || '';
+    el.focusImg.alt = card.name;
+    el.focusImg.hidden = false;
+    el.focusPlaceholder.hidden = true;
+    el.focusStage.classList.add('db-focus__stage--active');
+
+    el.focusInfo.hidden = false;
+    el.focusName.textContent = card.name;
+    el.focusTypeline.textContent = card.typeLine || '';
+    el.focusManacost.textContent = formatManaCost(card.manaCost) || '—';
+    el.focusOracle.textContent = card.oracleText || '';
+
+    if (card.power != null || card.toughness != null) {
+      el.focusPt.textContent = (card.power || '0') + ' / ' + (card.toughness || '0');
+      el.focusPt.hidden = false;
+    } else if (card.loyalty != null) {
+      el.focusPt.textContent = 'Loyalty: ' + card.loyalty;
+      el.focusPt.hidden = false;
+    } else {
+      el.focusPt.hidden = true;
+    }
+
+    const rarity = displayRarity(card);
+    const rarityLabel = rarity.charAt(0).toUpperCase() + rarity.slice(1);
+    el.focusMeta.textContent = (card.setName || card.set.toUpperCase()) +
+      (card.collectorNumber ? ' #' + card.collectorNumber : '') + ' · ' + rarityLabel;
   }
-  function hidePreview() { el.preview.hidden = true; }
+
+  // Hovering the big preview is the actual "add to deck" action now.
+  el.focusStage.addEventListener('click', () => {
+    if (!focusedCard) return;
+    addToDeck(focusedCard, activeZone);
+  });
 
   // ---------------------------------------------------------------------
   // Deck mutation
@@ -362,9 +408,7 @@
       removeBtn.addEventListener('click', (e) => { e.stopPropagation(); removeFromDeck(card, activeZone, false); });
       row.appendChild(removeBtn);
 
-      row.addEventListener('mouseenter', (e) => showPreview(card, e));
-      row.addEventListener('mousemove', positionPreview);
-      row.addEventListener('mouseleave', hidePreview);
+      row.addEventListener('click', () => setFocusedCard(card));
 
       frag.appendChild(row);
     });
