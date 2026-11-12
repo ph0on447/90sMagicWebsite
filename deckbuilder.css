@@ -756,7 +756,7 @@ select.db-input {
 .db-row-preview {
   position: fixed;
   z-index: 100;
-  width: 200px;
+  width: 250px; /* 25% larger than the original 200px */
   aspect-ratio: 5 / 7;
   border-radius: 4%;
   overflow: hidden;

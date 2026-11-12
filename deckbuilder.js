@@ -469,7 +469,7 @@
   function positionRowPreview(clientY) {
     const deckRect = el.deck.getBoundingClientRect();
     const rect = el.rowPreview.getBoundingClientRect();
-    const width = rect.width || 200;
+    const width = rect.width || 250;
     const height = rect.height || (width * 7 / 5);
 
     let left = deckRect.left - width - 14;
@@ -510,7 +510,8 @@
 
     DECK_CATEGORIES.forEach((cat) => {
       const inCat = entries.filter((e) => deckCategory(e.card) === cat);
-      if (!inCat.length) return;
+      // Categories always show, even empty (0 total, no rows underneath),
+      // so the deck's whole shape is visible at a glance.
 
       inCat.sort((a, b) => a.card.name.localeCompare(b.card.name));
       const total = inCat.reduce((sum, e) => sum + e.qty, 0);
