@@ -30,7 +30,7 @@
 .db__root {
   display: flex;
   flex-direction: column;
-  min-height: 100svh;
+  height: 100svh;
 }
 
 /* ---------------------------------- Header ---------------------------------- */
@@ -79,10 +79,19 @@
   grid-template-columns: 1fr 420px;
   flex: 1;
   min-height: 0;
+  overflow: hidden;
 }
 
 @media (max-width: 980px) {
   .db-body { grid-template-columns: 1fr; }
+
+  /* Below the breakpoint the grid and deck panel stack instead of sitting
+     side by side, so there's no reason to pin the page to one viewport
+     height here - let the whole page scroll normally like before. */
+  .db__root { height: auto; min-height: 100svh; }
+  .db-body { overflow: visible; }
+  .db-browser, .db-deck { min-height: 0; }
+  .db-grid, .db-deck__list { flex: none; overflow-y: visible; max-height: none; }
 }
 
 /* ---------------------------------- Filters ---------------------------------- */
@@ -91,6 +100,7 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  min-height: 0;
   padding: 18px 20px;
 }
 
@@ -171,7 +181,10 @@ select.db-input {
 .db-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+  align-content: start;
   gap: 12px;
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
   padding-right: 4px;
 }
@@ -256,6 +269,7 @@ select.db-input {
   display: flex;
   flex-direction: column;
   min-width: 0;
+  min-height: 0;
   background: var(--db-blue-darkest);
   border-left: 1px solid var(--db-blue-dark-hover);
   padding: 18px 18px 14px;
@@ -337,6 +351,11 @@ select.db-input {
   height: 100%;
   object-fit: cover;
 }
+
+/* Same specificity trap as the placeholder below: this selector ties with
+   the browser's own [hidden] rule, so without this override a released
+   focus leaves a broken-image icon sitting in the stage. */
+.db-focus__stage img[hidden] { display: none; }
 
 .db-focus__placeholder {
   position: absolute;
@@ -609,10 +628,28 @@ select.db-input {
 
 
 /* ---------------------------------- Scrollbars ---------------------------------- */
+/* Matches the in-game Computer Terminal scroller (CardGridShared.uss):
+   blue-darkest track with a white hairline border, blue dragger with a
+   blue-dark border. */
 
-.db-grid::-webkit-scrollbar, .db-deck__list::-webkit-scrollbar { width: 8px; }
-.db-grid::-webkit-scrollbar-thumb, .db-deck__list::-webkit-scrollbar-thumb {
-  background: var(--db-blue-dark-hover);
-  border-radius: 4px;
+.db-grid, .db-deck__list {
+  scrollbar-width: thin;
+  scrollbar-color: var(--db-blue) var(--db-blue-darkest);
 }
-.db-grid::-webkit-scrollbar-track, .db-deck__list::-webkit-scrollbar-track { background: transparent; }
+
+.db-grid::-webkit-scrollbar, .db-deck__list::-webkit-scrollbar { width: 14px; }
+
+.db-grid::-webkit-scrollbar-track, .db-deck__list::-webkit-scrollbar-track {
+  background: var(--db-blue-darkest);
+  border: 1px solid color-mix(in srgb, var(--db-white) 30%, transparent);
+}
+
+.db-grid::-webkit-scrollbar-thumb, .db-deck__list::-webkit-scrollbar-thumb {
+  background: var(--db-blue);
+  border: 1px solid var(--db-blue-dark);
+  border-radius: 2px;
+}
+
+.db-grid::-webkit-scrollbar-thumb:hover, .db-deck__list::-webkit-scrollbar-thumb:hover {
+  background: var(--db-blue-hover);
+}

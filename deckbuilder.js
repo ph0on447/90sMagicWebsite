@@ -320,7 +320,6 @@
 
     focusedCard = null;
     el.focusImg.hidden = true;
-    el.focusImg.src = '';
     el.focusPlaceholder.hidden = false;
     el.focusStage.classList.remove('db-focus__stage--active');
     el.focusInfo.hidden = true;
