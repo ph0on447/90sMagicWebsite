@@ -31,13 +31,13 @@
       <!-- Terminal header -->
       <header class="db-header">
         <div class="db-header__title">
-          <h1>Deckbuilder</h1>
-          <p>Every card, every set. Build it here, take it anywhere.</p>
+          <h1 style="font-size: 4rem;">Deckbuilder</h1>
+          <p style="font-family: Carolingia; font-size: 1.6rem; color: var(--white)"><span style="color: var(--blue)">Every card, every set.</span> Build it here, take it anywhere.</p>
         </div>
         <div class="db-header__right">
           <div class="db-header__stats">
-            <span><strong data-stat="deck-count">0</strong> / 60 main</span>
-            <span><strong data-stat="side-count">0</strong> / 15 side</span>
+            <span><strong data-stat="deck-count">0</strong> / 60 MAIN</span>
+            <span><strong data-stat="side-count">0</strong> / 15 SIDE</span>
           </div>
           <!-- Transient status/feedback line (see setStatus in deckbuilder.js) -->
           <p class="db-status" id="db-status" role="status" aria-live="polite"></p>
@@ -49,14 +49,14 @@
         <!-- Left: filters + card grid -->
         <section class="db-browser">
           <div class="db-filters">
-            <input type="search" class="db-input db-input--search" id="db-search" placeholder="Search card name or text&hellip;" autocomplete="off">
+            <input type="search" class="db-input db-input--search" id="db-search" placeholder="Search card name or text" autocomplete="off">
 
             <select class="db-input" id="db-filter-set">
-              <option value="">All sets</option>
+              <option value="">All Sets</option>
             </select>
 
             <div class="db-colorfilter" id="db-colorfilter">
-              <button type="button" class="db-input db-colorfilter__btn" id="db-colorfilter-btn">All colors</button>
+              <button type="button" class="db-input db-colorfilter__btn" id="db-colorfilter-btn">All Colors</button>
               <div class="db-colorfilter__menu" id="db-colorfilter-menu" hidden>
                 <label><input type="checkbox" value="W"> White</label>
                 <label><input type="checkbox" value="U"> Blue</label>
@@ -69,7 +69,7 @@
             </div>
 
             <select class="db-input" id="db-filter-rarity">
-              <option value="">All rarities</option>
+              <option value="">All Rarities</option>
               <option value="common">Common</option>
               <option value="uncommon">Uncommon</option>
               <option value="rare">Rare</option>
@@ -77,13 +77,13 @@
             </select>
 
             <select class="db-input" id="db-filter-type">
-              <option value="">All types</option>
+              <option value="">All Types</option>
             </select>
 
             <select class="db-input" id="db-sort">
               <option value="name">Sort: Name</option>
-              <option value="cmc">Sort: Mana value</option>
-              <option value="set">Sort: Set (chronological)</option>
+              <option value="cmc">Sort: Mana Value</option>
+              <option value="set">Sort: Set (Chronological)</option>
               <option value="rarity">Sort: Rarity</option>
             </select>
           </div>
