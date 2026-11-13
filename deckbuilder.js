@@ -90,6 +90,7 @@
   const deckMain = new Map(); // key -> { card, qty }
   const deckSide = new Map();
   let activeZone = 'main';
+  let draggedCard = null; // grid card currently being dragged toward the deck panel
   let focusedCard = null; // card currently shown in the inspector panel
 
   const filters = { search: '', set: '', colors: new Set(), rarity: '', type: '', sort: 'name' };
@@ -278,6 +279,21 @@
     // the big image in the inspector panel (see setFocusedCard / stage click).
     tile.addEventListener('click', () => toggleFocus(card));
 
+    // Second way to add: drag the tile onto the deck panel (see the drop
+    // wiring near the inspector's stage click). The img itself is not
+    // draggable so the whole tile is the drag source.
+    img.draggable = false;
+    tile.draggable = true;
+    tile.addEventListener('dragstart', (e) => {
+      draggedCard = card;
+      e.dataTransfer.effectAllowed = 'copy';
+      e.dataTransfer.setData('text/plain', card.name); // Firefox won't start a drag without data
+    });
+    tile.addEventListener('dragend', () => {
+      draggedCard = null;
+      el.deck.classList.remove('db-deck--dropping');
+    });
+
     return tile;
   }
 
@@ -409,6 +425,26 @@
   }
 
   // Hovering the big preview is the actual "add to deck" action now.
+  // Drop target: the whole deck panel. Drops add one copy to whichever zone
+  // (Main/Sideboard) is active, same as clicking the inspector's image.
+  el.deck.addEventListener('dragover', (e) => {
+    if (!draggedCard) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'copy';
+    el.deck.classList.add('db-deck--dropping');
+  });
+  el.deck.addEventListener('dragleave', (e) => {
+    if (!el.deck.contains(e.relatedTarget)) el.deck.classList.remove('db-deck--dropping');
+  });
+  el.deck.addEventListener('drop', (e) => {
+    if (!draggedCard) return;
+    e.preventDefault();
+    const card = draggedCard;
+    draggedCard = null;
+    el.deck.classList.remove('db-deck--dropping');
+    addToDeck(card, activeZone);
+  });
+
   el.focusStage.addEventListener('click', () => {
     if (!focusedCard) return;
     addToDeck(focusedCard, activeZone);

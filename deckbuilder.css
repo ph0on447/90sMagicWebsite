@@ -823,3 +823,12 @@ select.db-input {
   height: 100%;
   object-fit: cover;
 }
+
+/* ---------------------------------- Drag-to-add ---------------------------------- */
+/* While a grid card is dragged over the deck panel, outline it in the same
+   green the game uses for "add". */
+.db-deck--dropping {
+  outline: 3px solid var(--db-green);
+  outline-offset: -3px;
+  background: color-mix(in srgb, var(--db-green) 8%, var(--db-blue-darkest));
+}
