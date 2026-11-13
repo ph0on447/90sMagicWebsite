@@ -27,9 +27,16 @@
 
 .db { padding-top: 0; }
 
+/* This page never scrolls as a whole: the sticky site nav (84px) plus this
+   root add up to exactly one screen, and only the two columns scroll
+   (each on its own). No footer on this page. */
+html:has(.db), body:has(.db) { overflow: hidden; }
+
 .db__root {
   display: flex;
   flex-direction: column;
+  height: calc(100svh - 84px);
+  overflow: hidden;
 }
 
 /* ---------------------------------- Header ---------------------------------- */
@@ -76,11 +83,7 @@
 .db-body {
   display: grid;
   grid-template-columns: 1fr 420px;
-  /* Deliberately taller than the window: viewport height + 200px (never
-     under 1000px), so the footer stays well below the fold on any screen.
-     Change the 200px to taste. */
-  height: max(calc(100svh + 200px), 1000px);
-  flex: none;
+  flex: 1;
   min-height: 0;
   overflow: hidden;
 }
@@ -91,7 +94,8 @@
   /* Below the breakpoint the grid and deck panel stack instead of sitting
      side by side, so there's no reason to pin the page to one viewport
      height here - let the whole page scroll normally like before. */
-  .db__root { height: auto; min-height: 100svh; }
+  html:has(.db), body:has(.db) { overflow: visible; }
+  .db__root { height: auto; min-height: 100svh; overflow: visible; }
   .db-body { overflow: visible; height: auto; }
   .db-browser, .db-deck { min-height: 0; }
   .db-grid, .db-deck { flex: none; overflow-y: visible; max-height: none; padding-right: 18px; }
