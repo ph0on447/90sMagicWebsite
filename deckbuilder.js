@@ -1,6 +1,6 @@
 /* '90s Magic - standalone web deckbuilder
    Loads Assets/Deckbuilder/cards.json (a slimmed export of the game's own
-   90s_cards_eng_25sets_ath_wc.json) and lets a visitor build a deck from the
+   90s_cards_eng_25sets_ath_wc.json plus the game's itp and ptc sets) and lets a visitor build a deck from the
    same card pool used in-game, with no collection/progress gating. No
    accounts, no server: everything lives in page memory for the session.
 
@@ -30,7 +30,7 @@
   const SET_ORDER = [
     'lea', 'leb', '2ed', 'arn', 'atq',
     'leg', '3ed', 'drk', 'fem',
-    'ice', 'chr', 'hml', 'all',
+    'ice', 'chr', 'hml', 'all', 'itp', 'ptc',
     'mir', 'vis', '4ed',
     'wth', '5ed', 'tmp', 'wc97',
     'sth', 'exo', 'usg', 'wc98',
@@ -148,7 +148,7 @@
   // ---------------------------------------------------------------------
   // Load data
   // ---------------------------------------------------------------------
-  fetch('Assets/Deckbuilder/cards.json')
+  fetch('Assets/Deckbuilder/cards.json?v=20261112e')
     .then((r) => r.json())
     .then((data) => {
       allCards = data;
