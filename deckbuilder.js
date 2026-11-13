@@ -115,6 +115,7 @@
     tabMain: document.getElementById('db-tab-main'),
     tabSide: document.getElementById('db-tab-side'),
     clearBtn: document.getElementById('db-clear-deck'),
+    status: document.getElementById('db-status'),
     exportBtn: document.getElementById('db-export-btn'),
     exportMenu: document.getElementById('db-export-menu'),
     focusStage: document.getElementById('db-focus-stage'),
@@ -462,16 +463,72 @@
     return total;
   }
 
+  // ---------------------------------------------------------------------
+  // Status line (header, pink italic) - same behavior as the game's
+  // StatusLabelUiKit: full opacity for 2.2s, then a 1s CSS fade.
+  // ---------------------------------------------------------------------
+  const DECK_MAX = 60;
+  const SIDE_MAX = 15;
+  const STATUS_HOLD_MS = 2200;
+  const STATUS_FADE_MS = 1000;
+  let statusTimer = null;
+  // Running "x2, x3..." tally for repeated adds/removes of the same card
+  // while its message is still on screen.
+  const statusTally = { kind: null, name: null, count: 0, until: 0 };
+
+  function showStatus(text) {
+    clearTimeout(statusTimer);
+    el.status.textContent = text;
+    if (!text) { el.status.style.opacity = 0; return; }
+    el.status.style.opacity = 1;
+    statusTimer = setTimeout(() => { el.status.style.opacity = 0; }, STATUS_HOLD_MS);
+  }
+
+  // Any non-card message ("Limit reached", "Deck list exported", ...) also
+  // ends the running tally.
+  function setStatus(text) {
+    statusTally.kind = null;
+    showStatus(text);
+  }
+
+  function announceCardChange(kind, card) {
+    const now = Date.now();
+    const same = statusTally.kind === kind && statusTally.name === card.name && now < statusTally.until;
+    statusTally.kind = kind;
+    statusTally.name = card.name;
+    statusTally.count = same ? statusTally.count + 1 : 1;
+    statusTally.until = now + STATUS_HOLD_MS + STATUS_FADE_MS; // while any of the text is still visible
+    showStatus((kind === 'add' ? 'Added ' : 'Removed ') + card.name + ' x' + statusTally.count);
+  }
+
+  // Max 4 copies of a card across all printings, main + sideboard combined
+  // (same as the game); only basic lands are exempt.
+  function copiesInDeckByName(name) {
+    return nameTotalInZone(name, 'main') + nameTotalInZone(name, 'side');
+  }
+
+  function zoneFullMessage(zone) {
+    return zone === 'main' ? 'Limit reached' : 'Sideboard full';
+  }
+
   function addToDeck(card, zone) {
     const key = cardKey(card);
     const map = zoneMap(zone);
     const existing = map.get(key);
     const currentQty = existing ? existing.qty : 0;
 
-    if (!isBasicLand(card) && nameTotalInZone(card.name, zone) >= 4) return; // standard 4-copy limit
+    if (zoneTotal(zone) >= (zone === 'main' ? DECK_MAX : SIDE_MAX)) {
+      setStatus(zoneFullMessage(zone));
+      return;
+    }
+    if (!isBasicLand(card) && copiesInDeckByName(card.name) >= 4) {
+      setStatus('Limit reached');
+      return;
+    }
 
     map.set(key, { card, qty: currentQty + 1 });
     afterDeckChange();
+    announceCardChange('add', card);
   }
 
   function removeFromDeck(card, zone, all) {
@@ -485,6 +542,7 @@
       existing.qty -= 1;
     }
     afterDeckChange();
+    announceCardChange('remove', card);
   }
 
   function moveZone(card, fromZone) {
@@ -493,11 +551,16 @@
     const key = cardKey(card);
     const entry = fromMap.get(key);
     if (!entry) return;
+    if (zoneTotal(toZone) + entry.qty > (toZone === 'main' ? DECK_MAX : SIDE_MAX)) {
+      setStatus(zoneFullMessage(toZone));
+      return;
+    }
     fromMap.delete(key);
     const toMap = zoneMap(toZone);
     const existing = toMap.get(key);
     toMap.set(key, { card, qty: (existing ? existing.qty : 0) + entry.qty });
     afterDeckChange();
+    setStatus('Moved ' + card.name + ' to ' + (toZone === 'main' ? 'Main' : 'Sideboard'));
   }
 
   function afterDeckChange() {
@@ -703,6 +766,7 @@
     if (!confirm('Clear the ' + (activeZone === 'main' ? 'main deck' : 'sideboard') + '?')) return;
     zoneMap(activeZone).clear();
     afterDeckChange();
+    setStatus(activeZone === 'main' ? 'Deck cleared' : 'Sideboard cleared');
   });
 
   el.exportBtn.addEventListener('click', (e) => {
@@ -737,6 +801,7 @@
     a.click();
     a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 2000);
+    setStatus('Deck list exported');
   }
 
   function runExport(format) {
@@ -746,7 +811,7 @@
     const side = sortedEntries('side');
 
     if (main.length === 0 && side.length === 0) {
-      alert('Add some cards to your deck before exporting.');
+      setStatus('Add some cards before exporting.');
       return;
     }
 

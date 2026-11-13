@@ -67,10 +67,29 @@ html:has(.db), body:has(.db) { overflow: hidden; }
   font-size: 13px;
 }
 
+.db-header__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
 .db-header__stats {
   display: flex;
   gap: 20px;
   font-size: 15px;
+}
+
+/* Status / feedback line - pink italic, same as the game's .db-status-label:
+   shows at full opacity, then JS drops it to 0 and this transition fades it. */
+.db-status {
+  min-height: 26px; /* reserved so the header doesn't jump when text appears */
+  margin: 4px 0 0;
+  color: var(--db-pink);
+  font-size: 18px;
+  font-style: italic;
+  text-align: right;
+  opacity: 0;
+  transition: opacity 1s ease-out;
 }
 
 .db-header__stats strong {
