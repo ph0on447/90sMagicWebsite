@@ -30,7 +30,6 @@
 .db__root {
   display: flex;
   flex-direction: column;
-  height: 100svh;
 }
 
 /* ---------------------------------- Header ---------------------------------- */
@@ -77,7 +76,11 @@
 .db-body {
   display: grid;
   grid-template-columns: 1fr 420px;
-  flex: 1;
+  /* The two columns fill the whole viewport below the sticky site nav
+     (84px), so once the header has scrolled away they own the screen and
+     the footer stays further down the page. */
+  height: calc(100svh - 84px);
+  flex: none;
   min-height: 0;
   overflow: hidden;
 }
@@ -89,7 +92,7 @@
      side by side, so there's no reason to pin the page to one viewport
      height here - let the whole page scroll normally like before. */
   .db__root { height: auto; min-height: 100svh; }
-  .db-body { overflow: visible; }
+  .db-body { overflow: visible; height: auto; }
   .db-browser, .db-deck { min-height: 0; }
   .db-grid, .db-deck { flex: none; overflow-y: visible; max-height: none; padding-right: 18px; }
 }
