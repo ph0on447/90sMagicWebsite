@@ -875,3 +875,9 @@ select.db-input {
   outline-offset: -3px;
   background: color-mix(in srgb, var(--db-green) 8%, var(--db-blue-darkest));
 }
+
+/* Dropping onto the sideboard: pink instead of green. */
+.db-deck--dropping.db-deck--side {
+  outline-color: var(--db-pink);
+  background: color-mix(in srgb, var(--db-pink) 8%, var(--db-blue-darkest));
+}
