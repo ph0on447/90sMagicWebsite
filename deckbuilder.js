@@ -163,7 +163,7 @@
   // ---------------------------------------------------------------------
   // Load data
   // ---------------------------------------------------------------------
-  fetch('Assets/Deckbuilder/cards.json?v=20261113e')
+  fetch('Assets/Deckbuilder/cards.json?v=20261113f')
     .then((r) => r.json())
     .then((data) => {
       allCards = data;
@@ -268,6 +268,27 @@
       if (i < list.length) requestAnimationFrame(renderChunk);
     }
     renderChunk();
+  }
+
+  // Updates the quantity badge on every existing tile in place. Used after a
+  // deck change or zone switch instead of renderGrid(), which rebuilds the whole
+  // grid and so snaps the scroll position back to the top.
+  function refreshGridBadges() {
+    const map = zoneMap(activeZone);
+    el.grid.querySelectorAll('.db-card').forEach((tile) => {
+      const entry = map.get(tile.dataset.key);
+      let badge = tile.querySelector('.db-card__qty');
+      if (!entry) {
+        if (badge) badge.remove();
+        return;
+      }
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'db-card__qty';
+        tile.appendChild(badge);
+      }
+      badge.textContent = entry.qty;
+    });
   }
 
   function buildCardTile(card) {
@@ -609,7 +630,7 @@
     updateStats();
     updateFocusOverlay();
     renderDeckList();
-    renderGrid(); // refresh qty badges on tiles
+    refreshGridBadges(); // update qty badges in place (keeps the grid's scroll position)
   }
 
   function updateStats() {
@@ -804,7 +825,7 @@
     el.deck.classList.toggle('db-deck--side', zone === 'side');
     updateFocusOverlay();
     renderDeckList();
-    renderGrid();
+    refreshGridBadges();
   }
 
   el.clearBtn.addEventListener('click', () => {
