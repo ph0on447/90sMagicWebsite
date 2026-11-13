@@ -76,10 +76,10 @@
 .db-body {
   display: grid;
   grid-template-columns: 1fr 420px;
-  /* The two columns fill the whole viewport below the sticky site nav
-     (84px), so once the header has scrolled away they own the screen and
-     the footer stays further down the page. */
-  height: calc(100svh - 84px);
+  /* The two columns fill the viewport below the sticky site nav (84px) but
+     never get shorter than 1000px, so on short windows they stay tall and
+     the footer stays further down the page. Change 1000px to taste. */
+  height: max(calc(100svh - 84px), 1000px);
   flex: none;
   min-height: 0;
   overflow: hidden;
