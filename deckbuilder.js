@@ -133,6 +133,7 @@
     exportBtn: document.getElementById('db-export-btn'),
     exportMenu: document.getElementById('db-export-menu'),
     focusStage: document.getElementById('db-focus-stage'),
+    focusOverlay: document.getElementById('db-focus-overlay'),
     focusImg: document.getElementById('db-focus-img'),
     focusPlaceholder: document.getElementById('db-focus-placeholder'),
     focusInfo: document.getElementById('db-focus-info'),
@@ -162,7 +163,7 @@
   // ---------------------------------------------------------------------
   // Load data
   // ---------------------------------------------------------------------
-  fetch('Assets/Deckbuilder/cards.json?v=20261112h')
+  fetch('Assets/Deckbuilder/cards.json?v=20261113e')
     .then((r) => r.json())
     .then((data) => {
       allCards = data;
@@ -382,6 +383,7 @@
     el.focusPlaceholder.hidden = true;
     el.focusStage.classList.add('db-focus__stage--active');
     el.focusStage.classList.toggle('db-focus__stage--alpha', isAlphaPrinting(card));
+    updateFocusOverlay();
 
     el.focusInfo.hidden = false;
     el.focusName.textContent = card.name;
@@ -436,6 +438,7 @@
     el.focusPlaceholder.hidden = false;
     el.focusStage.classList.remove('db-focus__stage--active');
     el.focusStage.classList.remove('db-focus__stage--alpha');
+    el.focusStage.classList.remove('db-focus__stage--limit');
     el.focusInfo.hidden = true;
   }
 
@@ -532,17 +535,35 @@
     return zone === 'main' ? 'Limit reached' : 'Sideboard full';
   }
 
+  // True when another copy of this card can't go into the zone: the zone is
+  // full, or the card already has 4 copies across main + sideboard.
+  function addBlocked(card, zone) {
+    if (zoneTotal(zone) >= (zone === 'main' ? DECK_MAX : SIDE_MAX)) return 'zone';
+    if (!isBasicLand(card) && copiesInDeckByName(card.name) >= 4) return 'copies';
+    return null;
+  }
+
+  // Keeps the inspector's hover overlay in step with what clicking it would do:
+  // "Add to Deck" (green) / "Add to Sideboard" (pink) / "Limit reached" (red).
+  function updateFocusOverlay() {
+    const blocked = !!focusedCard && !!addBlocked(focusedCard, activeZone);
+    el.focusStage.classList.toggle('db-focus__stage--limit', blocked);
+    const words = blocked ? ['Limit', 'reached'] : (activeZone === 'main' ? ['Add', 'to', 'Deck'] : ['Add', 'to', 'Sideboard']);
+    el.focusOverlay.innerHTML = words.map((w) => '<span>' + w + '</span>').join('');
+  }
+
   function addToDeck(card, zone) {
     const key = cardKey(card);
     const map = zoneMap(zone);
     const existing = map.get(key);
     const currentQty = existing ? existing.qty : 0;
 
-    if (zoneTotal(zone) >= (zone === 'main' ? DECK_MAX : SIDE_MAX)) {
+    const blocked = addBlocked(card, zone);
+    if (blocked === 'zone') {
       setStatus(zoneFullMessage(zone));
       return;
     }
-    if (!isBasicLand(card) && copiesInDeckByName(card.name) >= 4) {
+    if (blocked === 'copies') {
       setStatus('Limit reached');
       return;
     }
@@ -586,6 +607,7 @@
 
   function afterDeckChange() {
     updateStats();
+    updateFocusOverlay();
     renderDeckList();
     renderGrid(); // refresh qty badges on tiles
   }
@@ -780,6 +802,7 @@
     el.tabMain.classList.toggle('db-deck__tab--active', zone === 'main');
     el.tabSide.classList.toggle('db-deck__tab--active', zone === 'side');
     el.deck.classList.toggle('db-deck--side', zone === 'side');
+    updateFocusOverlay();
     renderDeckList();
     renderGrid();
   }

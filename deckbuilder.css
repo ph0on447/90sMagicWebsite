@@ -469,7 +469,12 @@ select.db-input {
   line-height: 1.05;
 }
 
-/* Only shows the "Add to Deck" overlay once a card is actually loaded. */
+/* Sideboard zone: pink instead of green. A card that can't be added (zone
+   full or 4 copies) shows red; keep this rule last so it wins. */
+.db-deck--side .db-focus__overlay { background: color-mix(in srgb, var(--db-pink) 55%, transparent); }
+.db-focus__stage--limit .db-focus__overlay { background: color-mix(in srgb, var(--db-red) 60%, transparent); }
+
+/* Only shows the hover overlay once a card is actually loaded. */
 .db-focus__stage--active:hover .db-focus__overlay { opacity: 1; }
 
 .db-focus__info {
