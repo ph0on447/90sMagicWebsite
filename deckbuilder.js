@@ -162,7 +162,7 @@
   // ---------------------------------------------------------------------
   // Load data
   // ---------------------------------------------------------------------
-  fetch('Assets/Deckbuilder/cards.json?v=20261112g')
+  fetch('Assets/Deckbuilder/cards.json?v=20261112h')
     .then((r) => r.json())
     .then((data) => {
       allCards = data;
@@ -186,7 +186,7 @@
       el.filterSet.appendChild(opt);
     });
 
-    const types = ['Land', 'Creature', 'Instant', 'Interrupt', 'Sorcery', 'Artifact', 'Enchantment', 'Legend'];
+    const types = ['Land', 'Creature', 'Wall', 'Instant', 'Interrupt', 'Sorcery', 'Artifact', 'Enchantment', 'Legend'];
     types.forEach((t) => {
       const opt = document.createElement('option');
       opt.value = t;
@@ -205,6 +205,7 @@
       if (filters.type) {
         // "Legend" is a supertype, so it matches any card whose type line is Legendary (a Legendary Creature shows under both Creature and Legend).
         const typeOk = filters.type === 'Legend' ? (c.typeLine || '').includes('Legendary')
+          : filters.type === 'Wall' ? (c.typeLine || '').includes('Wall')
           : filters.type === 'Interrupt' ? INTERRUPT_NAMES.has((c.name || '').toLowerCase())
           : primaryType(c.typeLine) === filters.type;
         if (!typeOk) return false;
