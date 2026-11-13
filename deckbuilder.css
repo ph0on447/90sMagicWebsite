@@ -76,10 +76,10 @@
 .db-body {
   display: grid;
   grid-template-columns: 1fr 420px;
-  /* The two columns fill the viewport below the sticky site nav (84px) but
-     never get shorter than 1000px, so on short windows they stay tall and
-     the footer stays further down the page. Change 1000px to taste. */
-  height: max(calc(100svh - 84px), 1000px);
+  /* Deliberately taller than the window: viewport height + 200px (never
+     under 1000px), so the footer stays well below the fold on any screen.
+     Change the 200px to taste. */
+  height: max(calc(100svh + 200px), 1000px);
   flex: none;
   min-height: 0;
   overflow: hidden;
