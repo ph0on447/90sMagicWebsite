@@ -1,22 +1,25 @@
 /* Deckbuilder - styled to match the in-game Computer Terminal screens
-   (CardGridShared.uss / CardMarkers.uss). Scoped entirely under .db so it
-   never leans on or clashes with site.css's marketing palette. */
+   (CardGridShared.uss / CardMarkers.uss). Scoped under .db; colors come
+   from site.css's palette variables. */
 
 .db {
-  --db-blue-darkest:    rgb(0, 23, 42);
-  --db-blue-dark:       rgb(15, 43, 66);
-  --db-blue-dark-hover: rgb(31, 54, 73);
-  --db-blue:            rgb(66, 170, 255);
-  --db-blue-hover:      rgb(31, 154, 255);
-  --db-green:           rgb(12, 194, 6);
-  --db-green-hover:     rgb(7, 222, 0);
-  --db-red:             rgb(154, 0, 0);
-  --db-red-hover:       rgb(192, 0, 0);
-  --db-pink:            rgb(255, 93, 236);
+  /* Palette is driven by the site's own variables (site.css :root) so the
+     website and deckbuilder stay in sync. Hovers/the lighter dark blue are
+     derived from them. */
+  --db-blue-darkest:    var(--ink);
+  --db-blue-dark:       color-mix(in srgb, var(--white) 6%, var(--ink));
+  --db-blue-dark-hover: color-mix(in srgb, var(--white) 13%, var(--ink));
+  --db-blue:            var(--blue);
+  --db-blue-hover:      color-mix(in srgb, var(--white) 18%, var(--blue));
+  --db-green:           var(--green);
+  --db-green-hover:     color-mix(in srgb, var(--white) 18%, var(--green));
+  --db-red:             var(--red);
+  --db-red-hover:       color-mix(in srgb, var(--white) 18%, var(--red));
+  --db-pink:            var(--pink);
   --db-white:           rgb(255, 255, 255);
 
   --db-c-common:        rgb(128, 139, 149);
-  --db-c-uncommon:      rgb(66, 170, 255);
+  --db-c-uncommon:      var(--db-blue);
   --db-c-rare:          rgb(110, 69, 210);
   --db-c-mythic:        rgb(208, 181, 0);
 
@@ -368,10 +371,10 @@ select.db-input {
 
 .db-deck__tab:hover { background: var(--db-blue-dark-hover); }
 .db-deck__tab--active, .db-deck__tab--active:hover { background: var(--db-blue); }
-.db-deck__tab[data-zone="side"] { background: color-mix(in srgb, var(--db-red) 35%, var(--db-blue-dark)); }
-.db-deck__tab[data-zone="side"]:not(.db-deck__tab--active):hover { background: color-mix(in srgb, var(--db-red) 50%, var(--db-blue-dark)); }
+.db-deck__tab[data-zone="side"] { background: color-mix(in srgb, var(--db-pink) 35%, var(--db-blue-dark)); }
+.db-deck__tab[data-zone="side"]:not(.db-deck__tab--active):hover { background: color-mix(in srgb, var(--db-pink) 50%, var(--db-blue-dark)); }
 .db-deck__tab[data-zone="side"].db-deck__tab--active,
-.db-deck__tab[data-zone="side"].db-deck__tab--active:hover { background: var(--db-red); }
+.db-deck__tab[data-zone="side"].db-deck__tab--active:hover { background: var(--db-pink); }
 
 /* ---------------------------------- Card inspector ---------------------------------- */
 
@@ -664,8 +667,7 @@ select.db-input {
 }
 
 .db-deck--side .db-deck-category,
-.db-deck--side .db-deck-category__count,
-.db-deck--side .db-deck-row__qty { color: var(--db-red); }
+.db-deck--side .db-deck-category__count { color: var(--db-pink); }
 
 .db-deck-row {
   display: flex;
@@ -680,7 +682,7 @@ select.db-input {
 .db-deck-row:hover { background: color-mix(in srgb, var(--db-red) 35%, transparent); }
 
 .db-deck-row__qty {
-  color: var(--db-blue);
+  color: var(--db-green);
   font-weight: 700;
   width: 26px;
   text-align: right;
