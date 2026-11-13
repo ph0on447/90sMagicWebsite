@@ -368,6 +368,10 @@ select.db-input {
 
 .db-deck__tab:hover { background: var(--db-blue-dark-hover); }
 .db-deck__tab--active, .db-deck__tab--active:hover { background: var(--db-blue); }
+.db-deck__tab[data-zone="side"] { background: color-mix(in srgb, var(--db-red) 35%, var(--db-blue-dark)); }
+.db-deck__tab[data-zone="side"]:not(.db-deck__tab--active):hover { background: color-mix(in srgb, var(--db-red) 50%, var(--db-blue-dark)); }
+.db-deck__tab[data-zone="side"].db-deck__tab--active,
+.db-deck__tab[data-zone="side"].db-deck__tab--active:hover { background: var(--db-red); }
 
 /* ---------------------------------- Card inspector ---------------------------------- */
 
@@ -647,17 +651,21 @@ select.db-input {
   font-size: 18px; /* a few px larger than the 15px card rows */
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--db-green);
+  color: var(--db-blue);
   border-bottom: 1px solid color-mix(in srgb, var(--db-white) 12%, transparent);
 }
 
 .db-deck-category__count {
-  color: var(--db-green);
+  color: var(--db-blue);
   font-weight: 700;
   width: 24px;
   text-align: right;
   flex-shrink: 0;
 }
+
+.db-deck--side .db-deck-category,
+.db-deck--side .db-deck-category__count,
+.db-deck--side .db-deck-row__qty { color: var(--db-red); }
 
 .db-deck-row {
   display: flex;

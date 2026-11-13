@@ -779,6 +779,7 @@
     activeZone = zone;
     el.tabMain.classList.toggle('db-deck__tab--active', zone === 'main');
     el.tabSide.classList.toggle('db-deck__tab--active', zone === 'side');
+    el.deck.classList.toggle('db-deck--side', zone === 'side');
     renderDeckList();
     renderGrid();
   }
