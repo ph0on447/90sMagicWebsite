@@ -44,6 +44,20 @@
 
   const RARITY_RANK = { common: 0, uncommon: 1, rare: 2, mythic: 3 };
 
+  // The 6th Edition rules update (April 1999) errata'd every Interrupt to Instant, so
+  // current type lines never say "Interrupt". Same hardcoded name list as the game's
+  // CardGridUiKit.InterruptCardNames; an Interrupt also still matches Instant.
+  const INTERRUPT_NAMES = new Set([
+    'Abjure', 'Annul', 'Arcane Denial', 'Artifact Blast', 'Avoid Fate', 'Blue Elemental Blast',
+    'Burnout', 'Burnt Offering', 'Chaoslace', 'Counterspell', 'Dark Ritual', 'Deathlace',
+    'Deflection', 'Denied!', 'Desertion', 'Dismiss', 'Disrupt', 'Dissipate', "Ertai's Meddling",
+    'Flash Counter', 'Forbid', 'Force of Will', 'Force Spike', 'Force Void', 'Fork', 'Hydroblast',
+    'Illumination', 'Interdict', 'Intervene', 'Lifelace', 'Magical Hack', 'Mana Drain', 'Mana Leak',
+    'Meddle', 'Memory Lapse', 'Miscalculation', 'Power Sink', 'Purelace', 'Pyroblast', 'Rebound',
+    'Red Elemental Blast', 'Remove Soul', 'Reset', 'Rewind', 'Rust', 'Sacrifice', 'Sleight of Mind',
+    'Songs of the Damned', 'Spell Blast', 'Spoils of Evil', 'Thoughtlace', 'Withering Boon'
+  ].map((n) => n.toLowerCase()));
+
   function primaryType(typeLine) {
     const t = typeLine || '';
     if (t.includes('Land')) return 'Land';
@@ -148,7 +162,7 @@
   // ---------------------------------------------------------------------
   // Load data
   // ---------------------------------------------------------------------
-  fetch('Assets/Deckbuilder/cards.json?v=20261112e')
+  fetch('Assets/Deckbuilder/cards.json?v=20261112g')
     .then((r) => r.json())
     .then((data) => {
       allCards = data;
@@ -172,7 +186,7 @@
       el.filterSet.appendChild(opt);
     });
 
-    const types = ['Land', 'Creature', 'Instant', 'Sorcery', 'Artifact', 'Enchantment', 'Other'];
+    const types = ['Land', 'Creature', 'Instant', 'Interrupt', 'Sorcery', 'Artifact', 'Enchantment', 'Legend'];
     types.forEach((t) => {
       const opt = document.createElement('option');
       opt.value = t;
@@ -188,7 +202,13 @@
     const q = filters.search.trim().toLowerCase();
     let list = allCards.filter((c) => {
       if (filters.set && c.set !== filters.set) return false;
-      if (filters.type && primaryType(c.typeLine) !== filters.type) return false;
+      if (filters.type) {
+        // "Legend" is a supertype, so it matches any card whose type line is Legendary (a Legendary Creature shows under both Creature and Legend).
+        const typeOk = filters.type === 'Legend' ? (c.typeLine || '').includes('Legendary')
+          : filters.type === 'Interrupt' ? INTERRUPT_NAMES.has((c.name || '').toLowerCase())
+          : primaryType(c.typeLine) === filters.type;
+        if (!typeOk) return false;
+      }
       if (filters.rarity && displayRarity(c) !== filters.rarity) return false;
       if (filters.colors.size) {
         // Scryfall's "colors" field only reflects colored mana symbols in the
