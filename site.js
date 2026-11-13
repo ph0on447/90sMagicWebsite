@@ -91,6 +91,81 @@ if (blogList) {
   loadLatestBlogPosts();
 }
 
+const forumList = document.querySelector('[data-forum-feed]');
+if (forumList) {
+  const forumIcons = ['✦', '◎', '▣'];
+
+  function showForumLoadError() {
+    const status = document.createElement('p');
+    status.className = 'forum-list__status';
+    status.textContent = 'Recent forum threads could not be loaded. Please visit the forum.';
+    forumList.replaceChildren(status);
+    forumList.setAttribute('aria-busy', 'false');
+  }
+
+  async function loadLatestForumThreads() {
+    try {
+      const response = await fetch(forumList.dataset.forumFeed);
+      if (!response.ok) {
+        throw new Error(`Forum feed request failed with status ${response.status}.`);
+      }
+
+      const threads = await response.json();
+      if (!Array.isArray(threads) || threads.length === 0) {
+        throw new Error('The forum feed did not contain any threads.');
+      }
+
+      const rows = threads.slice(0, 3).map((thread, index) => {
+        const url = new URL(thread.url);
+        const date = new Date(thread.date);
+        if (url.hostname !== '90smagic.proboards.com' || !url.pathname.startsWith('/thread/')) {
+          throw new Error('The forum feed contains an invalid thread URL.');
+        }
+        if (typeof thread.title !== 'string' || !thread.title.trim() || Number.isNaN(date.getTime())) {
+          throw new Error('The forum feed contains an invalid thread title or date.');
+        }
+
+        const row = document.createElement('a');
+        row.className = 'forum-row';
+        row.href = url.href;
+        row.target = '_blank';
+        row.rel = 'noopener';
+
+        const icon = document.createElement('span');
+        icon.className = 'forum-row__icon';
+        icon.setAttribute('aria-hidden', 'true');
+        icon.textContent = forumIcons[index % forumIcons.length];
+
+        const details = document.createElement('span');
+        const title = document.createElement('strong');
+        title.textContent = thread.title;
+        const description = document.createElement('small');
+        description.textContent = 'Latest forum discussion';
+        details.append(title, description);
+
+        const timestamp = document.createElement('time');
+        timestamp.dateTime = date.toISOString();
+        timestamp.textContent = new Intl.DateTimeFormat('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric'
+        }).format(date);
+
+        row.append(icon, details, timestamp);
+        return row;
+      });
+
+      forumList.replaceChildren(...rows);
+      forumList.setAttribute('aria-busy', 'false');
+    } catch (error) {
+      console.error('Unable to load the latest forum threads:', error);
+      showForumLoadError();
+    }
+  }
+
+  loadLatestForumThreads();
+}
+
 document.querySelectorAll('[data-youtube]').forEach((link) => {
   link.addEventListener('click', (event) => {
     event.preventDefault();

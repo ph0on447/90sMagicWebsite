@@ -1,0 +1,28 @@
+name: Update forum feed
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch latest forum threads
+        run: python3 scripts/update_forum_feed.py
+      - name: Commit feed updates
+        run: |
+          git add forum-feed.json
+          if git diff --cached --quiet; then
+            echo "Forum feed is already up to date."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git commit -m "Refresh forum feed"
+            git push
+          fi

@@ -115,6 +115,7 @@ h2 span { color: var(--red); }
 .forum__grid h2 span { color: var(--pink); }
 .forum__grid .lede { max-width: 300px; margin-top: 28px; color: var(--white); font-size: 20px; }
 .forum-list { border-top: 1px solid var(--white); }
+.forum-list__status { margin: 0; padding: 20px 0; color: var(--white); font: 13px/1.7 var(--mono); }
 .forum-row { display: grid; grid-template-columns: 36px 1fr auto; align-items: center; gap: 14px; padding: 20px 0; border-bottom: 1px solid var(--white); }
 .forum-row__icon { font-size: 22px; }
 .forum-row strong, .forum-row small { display: block; }
