@@ -169,6 +169,32 @@
     $('summary').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
+  // Share: native share sheet where available (phones), otherwise copy the text to the clipboard.
+  async function shareResult() {
+    var btn = $('shareBtn'), setName = setInfo ? setInfo.name : '';
+    var total = $('total').textContent;
+    var lines = ["Radicle! | '90s MtG Pack Opener \u2013 " + (setName ? setName + ' booster' : 'Daily booster') + ': ' + total + ' value'];
+    var pr = $('rankPack').textContent.replace(/^Your pack: /, '').trim();
+    if (pr) lines.push('Pack ' + pr.replace(' today', ''));
+    var best = $('best').textContent.replace(/^Best pull: /, '').trim();
+    if (best) lines.push('Best pull: ' + best);
+    lines.push('Think you can do better? Open yours at wrongwaygames.com/radicle');
+    var text = lines.join('\n');
+    if (navigator.share) {
+      try { await navigator.share({ text: text }); return; } catch (e) { if (e && e.name === 'AbortError') return; }
+    }
+    var ok = false;
+    try { await navigator.clipboard.writeText(text); ok = true; } catch (e) {
+      var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { ok = document.execCommand('copy'); } catch (e2) {}
+      document.body.removeChild(ta);
+    }
+    var old = btn.textContent;
+    btn.textContent = ok ? 'Copied!' : 'Copy failed';
+    setTimeout(function () { btn.textContent = old; }, 2000);
+  }
+
   function rankOf(list, key, mineVal) {
     var higher = list.filter(function (e) { return e[key] > mineVal; }).length;
     return higher + 1;
@@ -409,7 +435,7 @@
     if (!session) {
       displayName = null; alreadyOpened = false;
       openBtn.textContent = 'Sign in with Discord';
-      setMsg('Sign in to open your free pack for the day.');
+      setMsg('Sign in with Discord to open your free pack. Discord shares your username and email with this site\'s sign-in only; only your Discord display name appears on the leaderboards.');
       return;
     }
     try {
@@ -481,5 +507,6 @@
   openBtn.addEventListener('click', openPack);
   $('cardBtn').addEventListener('click', onCardClick);
   $('againBtn').addEventListener('click', reset);
+  $('shareBtn').addEventListener('click', shareResult);
   init();
 })();

@@ -84,6 +84,7 @@
 
 .daily__summary { padding: 1.5rem 0 0; text-align: center; color: var(--white); }
 .daily__summary[hidden] { display: none; }
+.daily__actions { display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center; }
 .daily__result { display: flex; flex-wrap: wrap; gap: 1rem 3rem; justify-content: center; align-items: flex-end; margin-bottom: 1.25rem; }
 .daily__total { font-family: var(--display); font-size: clamp(2.5rem, 8vw, 4.5rem); line-height: 1; color: var(--green); margin: 0; }
 .daily__ranks { text-align: left; font-family: var(--mono); font-size: .85rem; }
