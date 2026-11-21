@@ -1,0 +1,162 @@
+.daily-body { background-color: var(--ink); }
+
+.daily { padding-bottom: 4rem; }
+.daily__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 22px 28px 12px;
+  background: var(--ink);
+  border-bottom: 6px solid var(--blue);
+}
+.daily__title { min-width: 0; }
+.daily__header h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(3rem, 8vw, 5rem);
+  line-height: .8;
+  text-transform: uppercase;
+  color: var(--white);
+}
+.daily__tagline {
+  margin: 4px 0 0;
+  font-family: Carolingia, sans-serif;
+  font-size: clamp(1.3rem, 3.2vw, 2rem);
+  color: var(--white);
+}
+.daily__tagline span:first-child { color: var(--blue); }
+.daily__tagline span:last-child { color: var(--pink); }
+.daily__today {
+  margin: 0;
+  margin-left: auto;
+  color: var(--white);
+  font-size: 15px;
+  text-align: right;
+}
+.daily__today strong {
+  color: var(--blue);
+  font-size: 20px;
+}
+.daily__stage { position: relative; background: var(--ink); color: var(--paper); border-radius: 12px; min-height: 616px; margin-top: 0; padding: 28px 0; box-sizing: border-box; overflow: hidden; }
+.daily__pack { position: relative; height: 560px; }
+.daily__pack model-viewer { width: 100%; height: 100%; --poster-color: transparent; background: transparent; }
+.daily__loading { display: grid; place-items: center; height: 100%; font-family: var(--mono); }
+.daily__open { position: absolute; left: 0; right: 0; bottom: 1.25rem; width: fit-content; margin-inline: auto; }
+.daily__open[disabled] { opacity: .5; cursor: progress; }
+
+.daily__reveal[hidden], .daily__summary[hidden], .daily__pack[hidden] { display: none !important; }
+/* Reveal sits on top of the stage; JS sizes/positions .daily__card-wrap to match the 3D card's final pose. */
+.daily__reveal { position: absolute; inset: 28px 0; }   /* same box as the 3D viewer (stage padding gives the breathing room) */
+.daily__counter { position: absolute; top: 14px; left: 0; right: 0; text-align: center; font-family: var(--mono); font-size: .85rem; letter-spacing: .08em; }
+.daily__card-wrap { position: absolute; left: 50%; top: 50%; height: var(--card-h, 435px); aspect-ratio: 63 / 88; transform: translate(-50%, -50%); perspective: 1200px; }
+.daily__card { all: unset; cursor: pointer; display: block; width: 100%; height: 100%; }
+.daily__card-inner { position: relative; display: block; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .5s ease; }
+.daily__card.is-flipped .daily__card-inner { transform: rotateY(180deg); }
+.daily__face { position: absolute; inset: 0; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 4.2%; object-fit: cover; }
+.daily__face--back { display: grid; place-items: center; background: url("Assets/Daily/card-back.png") center / 100% 100% no-repeat; border-radius: 6.8% / 4.9%; overflow: hidden; }
+.daily__face--back::before { content: ""; position: absolute; inset: 0; background: color-mix(in srgb, var(--green) 55%, transparent); animation: daily-tint-in .45s ease both; transition: background .2s; }
+.daily__card:hover .daily__face--back::before { background: color-mix(in srgb, var(--green) 68%, transparent); }
+.daily__label { position: relative; font-family: var(--display); font-weight: 800; font-size: clamp(1.4rem, 3vw, 2rem); letter-spacing: .04em; text-transform: uppercase; color: #fff; text-shadow: 0 2px 8px rgba(0,0,0,.45); animation: daily-tint-in .45s ease both; }
+@keyframes daily-tint-in { from { opacity: 0; } to { opacity: 1; } }
+.daily__face--front { transform: rotateY(180deg); }
+.daily__card.is-alpha .daily__face--front { border-radius: 7%; }
+.daily__price { position: absolute; left: 0; right: 0; bottom: 8px; font-family: var(--mono); min-height: 2.4rem; text-align: center; }
+.daily__price b { color: var(--green); font-size: 1.4rem; }
+
+.daily__parked-layer { position: absolute; inset: 0; pointer-events: none; }
+.daily__card-wrap { z-index: 2; }
+.daily__parked { position: absolute; aspect-ratio: 63 / 88; pointer-events: auto; cursor: zoom-in; will-change: left, top, height, transform; }
+.daily__parked.is-hopping { pointer-events: none; }
+.daily__parked:hover { z-index: 3; }
+.daily__parked:hover img, .daily__card.is-done:hover .daily__face--front { box-shadow: 0 0 0 3px var(--green); }
+.daily__parked img { display: block; width: 100%; height: 100%; border-radius: 4.2%; }
+.daily__parked.is-alpha img { border-radius: 7%; }
+.daily__ptag { position: absolute; left: 50%; bottom: 3%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; max-width: 94%; padding: .12em .5em .15em; border-radius: .6em; background: rgba(16,21,34,.88); font-family: var(--mono); line-height: 1.15; }
+.daily__ptag small { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: .78em; color: #fff; opacity: .85; }
+.daily__ptag b { color: var(--green); }
+/* Rarity marker: same tab as the deckbuilder's .db-marker (point aimed in, poking past the right edge), scaled with the card via --mk (14px at the deckbuilder's ~185px tile). */
+.daily__badge { position: absolute; top: 13%; right: -.5em; z-index: 3; height: 1.786em; padding: 0 .643em 0 .929em; display: flex; align-items: center; font-size: var(--mk, 14px); font-weight: 700; color: var(--white); clip-path: polygon(100% 0, .714em 0, 0 50%, .714em 100%, 100% 100%); box-shadow: 0 1px 2px rgba(0,0,0,.5); pointer-events: none; }
+.daily__badge[hidden] { display: none; }
+.r-c { background: rgb(128, 139, 149); } .r-u { background: var(--blue); } .r-r { background: rgb(110, 69, 210); } .r-m { background: rgb(208, 181, 0); }
+.daily__card.is-done { cursor: default; }
+
+.daily__summary { padding: 1.5rem 0 0; text-align: center; color: var(--white); }
+.daily__summary[hidden] { display: none; }
+.daily__result { display: flex; flex-wrap: wrap; gap: 1rem 3rem; justify-content: center; align-items: flex-end; margin-bottom: 1.25rem; }
+.daily__total { font-family: var(--display); font-size: clamp(2.5rem, 8vw, 4.5rem); line-height: 1; color: var(--green); margin: 0; }
+.daily__ranks { text-align: left; font-family: var(--mono); font-size: .85rem; }
+.daily__rank, .daily__best { margin: .2rem 0; }
+.daily__rank b { color: var(--yellow); }
+.daily__preview { position: fixed; z-index: 50; width: 300px; pointer-events: none; filter: drop-shadow(0 12px 28px rgba(0,0,0,.55)); }
+.daily__preview[hidden] { display: none; }
+.daily__preview img { display: block; width: 100%; border-radius: 4.2%; }
+.daily__preview.is-alpha img { border-radius: 7%; }
+
+.daily__boards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; margin-top: 2.5rem; color: var(--white); }
+.daily__board h2 { margin: 0 0 .75rem; font-family: var(--display); font-size: clamp(1.6rem, 3vw, 2.2rem); text-transform: uppercase; }
+.daily__board ol { list-style: none; margin: 0; padding: 0; }
+.daily__board li { box-sizing: border-box; height: 42px; display: grid; grid-template-columns: 2.6rem minmax(0, 1fr) auto; align-items: center; gap: .6rem; padding: .4rem .5rem; border-bottom: 1px solid rgba(255,255,255,.12); font-family: var(--mono); font-size: .8rem; }
+.daily__board .rk { color: var(--yellow); font-weight: 700; }
+.daily__board .who { min-width: 0; display: flex; align-items: center; gap: .5rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.daily__board .who img { width: 24px; border-radius: 3px; flex: none; }
+.daily__board .who small { opacity: .6; }
+.daily__board .val { color: var(--green); font-weight: 700; }
+.daily__board li.has-preview { cursor: zoom-in; }
+.daily__board li.has-preview:hover { background: rgba(255,255,255,.07); }
+.daily__board li.is-clickable { cursor: pointer; }
+.daily__board li.is-clickable:hover { background: rgba(255,255,255,.07); }
+.daily__board li.is-focus { outline: 2px solid var(--green); outline-offset: -2px; background: rgba(255,255,255,.07); }
+.daily__board li.is-empty { opacity: .3; }
+
+/* Focused leaderboard pack: the clicked player's cards and values. */
+.daily__focus { margin-top: 2.5rem; padding: 1rem 1rem 1.25rem; border: 2px solid var(--green); color: var(--white); }
+.daily__focus[hidden] { display: none; }
+.daily__focus h2 { margin: 0 0 .75rem; font-family: var(--display); font-size: clamp(1.4rem, 2.6vw, 1.9rem); text-transform: uppercase; }
+.daily__focus h2 small { font: .8rem var(--mono); opacity: .6; text-transform: none; margin-left: .5rem; }
+.daily__focus ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .9rem; }
+.daily__focus li { width: 110px; text-align: center; font: .72rem var(--mono); cursor: zoom-in; }
+.daily__focus li img { display: block; width: 100%; border-radius: 4.2%; margin-bottom: .3rem; }
+.daily__focus li.is-alpha img { border-radius: 7%; }
+.daily__focus li .nm { display: block; opacity: .7; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.daily__focus li b { color: var(--green); }
+.daily__board li.is-you { background: rgba(245,212,59,.16); outline: 1px solid var(--yellow); }
+.daily__board .sep { height: 1.4rem; border-bottom: 0; justify-content: center; opacity: .5; display: block; text-align: center; padding: .1rem; }
+.daily__board-note { margin: .6rem 0 0; font-family: var(--mono); font-size: .72rem; opacity: .6; }
+.daily__note { margin-top: 2.5rem; white-space: normal; line-height: 1.5; }
+@media (max-width: 640px) { .daily__pack { height: 440px; } .daily__stage { min-height: 496px; } .daily__boards { grid-template-columns: 1fr; } }
+
+/* Sign-in / account message line (reuses the status-note look). */
+.daily__msg { margin-top: 1rem; white-space: normal; pointer-events: auto; user-select: text; }
+.daily__msg[hidden] { display: none !important; }
+.daily__msg a { color: inherit; text-decoration: underline; }
+
+/* Rarity glow behind revealed cards: uncommon = neon blue, rare = neon purple, mythic = gold + purple with rotating light beams.
+   .has-glow sits on the card wrapper / parked card; .glow-on turns it on once the card is face-up. */
+.has-glow::before, .has-glow::after { content: ""; position: absolute; pointer-events: none; z-index: -1; opacity: 0; }
+.has-glow::before { inset: 0; border-radius: 5%; }
+.has-glow.glow-on::before { animation: glow-in .5s ease both, glow-pulse 2.8s ease-in-out .5s infinite; }   /* same size, pulsing intensity + saturation */
+.has-glow.glow-on::after { animation: glow-in .8s ease both, beams-spin 26s linear infinite, gold-beat 4.2s ease-in-out infinite, purple-beat 4.2s ease-in-out -1.3s infinite; }
+.has-glow:not(.g-m)::after { display: none; }
+
+.g-u::before { box-shadow: 0 0 22px 3px color-mix(in srgb, var(--blue) 75%, transparent), 0 0 64px 12px color-mix(in srgb, var(--blue) 32%, transparent); }
+.g-r::before { box-shadow: 0 0 26px 7px rgba(155, 95, 255, .85), 0 0 84px 26px rgba(110, 69, 210, .55), 0 0 170px 54px rgba(110, 69, 210, .24); }
+.g-m::before { box-shadow: 0 0 28px 8px rgba(255, 214, 70, .9), 0 0 90px 28px rgba(230, 180, 20, .55), 0 0 180px 60px rgba(135, 80, 235, .38); }
+.g-m::after {
+  inset: -80%; border-radius: 50%; mix-blend-mode: screen;
+  background:
+    repeating-conic-gradient(from 0deg, rgba(255, 220, 100, calc(var(--ga) * .6)) 0deg 2.5deg, transparent 2.5deg 14deg),
+    repeating-conic-gradient(from 7deg, rgba(175, 115, 255, calc(var(--pa) * .45)) 0deg 3.5deg, transparent 3.5deg 22deg);
+  -webkit-mask: radial-gradient(circle, #000 0 16%, transparent 62%);
+  mask: radial-gradient(circle, #000 0 16%, transparent 62%);
+}
+@keyframes glow-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes glow-pulse { 0%, 100% { opacity: .55; filter: saturate(.7) brightness(.85); } 50% { opacity: 1; filter: saturate(1.7) brightness(1.15); } }
+/* Gold and purple beams fade between bright and invisible on slightly offset beats. */
+@property --ga { syntax: '<number>'; inherits: false; initial-value: 1; }
+@property --pa { syntax: '<number>'; inherits: false; initial-value: 1; }
+@keyframes gold-beat { 0%, 100% { --ga: 0; } 50% { --ga: 1; } }
+@keyframes purple-beat { 0%, 100% { --pa: 0; } 50% { --pa: 1; } }
+@keyframes beams-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .has-glow.glow-on::before, .has-glow.glow-on::after { animation: glow-in .5s ease both; } .g-m::after { --ga: .7; --pa: .7; } }

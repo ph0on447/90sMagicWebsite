@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Open one free '90s Magic booster pack a day, with real card prices.">
+  <link rel="canonical" href="https://wrongwaygames.com/daily">
+  <title>'90s Magic | Daily Pack</title>
+  <link rel="icon" type="image/x-icon" href="/Assets/Logos/Logo Square3 32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="site.css">
+  <link rel="stylesheet" href="daily.css">
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+</head>
+<body>
+  <div class="daily-body">
+  <script src="site-nav.js" data-nav="page"></script>
+
+  <main class="daily">
+    <header class="daily__header">
+      <div class="daily__title">
+        <h1>'90s Magicle</h1>
+        <p class="daily__tagline"><span>Your daily chance to pull</span> some sweet, sweet <span>'90s heat.</span></p>
+      </div>
+      <p class="daily__today"><span>Today's Set:</span> <strong id="dailySetName">&hellip;</strong><br><span>Tomorrow:</span> <strong id="tomorrowSetName">&hellip;</strong></p>
+    </header>
+
+    <div class="daily__body page-width">
+    <section class="daily__stage" id="stage" aria-live="polite">
+      <div class="daily__pack" id="packView">
+        <model-viewer id="pack" alt="A '90s Magic booster pack"
+          camera-controls disable-zoom disable-pan disable-tap interpolation-decay="100" interaction-prompt="auto" shadow-intensity="0.8" exposure="1.1"
+          field-of-view="30deg" min-field-of-view="30deg" max-field-of-view="30deg" camera-target="0m 0m 0m"
+          animation-name="Animation" camera-orbit="0deg 80deg 316m" min-camera-orbit="-180deg 55deg 316m"
+          max-camera-orbit="180deg 110deg 316m" loading="eager">
+          <div class="daily__loading" slot="poster">Loading pack&hellip;</div>
+        </model-viewer>
+        <button class="button button--yellow daily__open" id="openBtn" type="button" disabled>Open pack</button>
+      </div>
+
+      <div class="daily__reveal" id="reveal" hidden>
+        <div class="daily__counter" id="counter"></div>
+        <div class="daily__parked-layer" id="parked"></div>
+        <div class="daily__card-wrap" id="cardWrap">
+          <button class="daily__card" id="cardBtn" type="button" aria-label="Reveal next card">
+            <span class="daily__card-inner">
+              <span class="daily__face daily__face--back"><span class="daily__label">Click to reveal</span></span>
+              <img class="daily__face daily__face--front" id="cardImg" alt="">
+            </span>
+          </button>
+          <span class="daily__badge" id="cardBadge" hidden></span>
+        </div>
+        <div class="daily__price" id="cardPrice"></div>
+      </div>
+    </section>
+
+    <section class="daily__summary" id="summary" hidden>
+      <div class="daily__result">
+        <div>
+          <p class="section__label">Pack total</p>
+          <p class="daily__total" id="total"></p>
+        </div>
+        <div class="daily__ranks">
+          <p class="daily__rank" id="rankPack"></p>
+          <p class="daily__rank" id="rankCard"></p>
+          <p class="daily__best" id="best"></p>
+        </div>
+      </div>
+      <button class="button" id="againBtn" type="button">Replay pack</button>
+    </section>
+
+    <section class="daily__focus" id="focusPanel" aria-label="Pack contents" hidden>
+      <h2 id="focusTitle"></h2>
+      <ul id="focusCards"></ul>
+    </section>
+
+    <section class="daily__boards" aria-label="Today's leaderboards">
+      <div class="daily__board">
+        <h2>Top 25 packs today</h2>
+        <ol id="boardPacks"></ol>
+      </div>
+      <div class="daily__board">
+        <h2>Top 25 pulls today</h2>
+        <ol id="boardCards"></ol>
+      </div>
+    </section>
+
+    <p class="status-note daily__msg" id="dailyMsg" hidden></p>
+
+    <p class="status-note daily__note">Prices are Scryfall's USD market prices (updated daily), or Cardmarket prices converted to USD where no US price exists. Resets at midnight EST.</p>
+    </div>
+  </main>
+  </div>
+  <div class="daily__preview" id="preview" hidden><img alt=""></div>
+  <script src="site-footer.js" data-top="https://wrongwaygames.com/daily#top"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="daily-roller.js"></script>
+  <script src="daily-api.js"></script>
+  <script src="daily-boards.js"></script>
+  <script src="daily.js"></script>
+  <script src="site.js"></script>
+</body>
+</html>
