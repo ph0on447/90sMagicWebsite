@@ -16,6 +16,9 @@ if (navigation && hero) {
   updateNavigation();
 }
 
+// A post's anchor is its id, or else its "Dev log NNN" label slugged (Dev log 004 -> dev-log-004).
+const blogSlug = (text) => text.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
 const blogList = document.querySelector('[data-blog-source]');
 if (blogList) {
   const postCardClasses = ['post-card--featured', 'post-card--blue', 'post-card--pink'];
@@ -54,7 +57,7 @@ if (blogList) {
 
         const card = document.createElement('a');
         card.className = `post-card ${postCardClasses[index % postCardClasses.length]}`;
-        card.href = blogList.dataset.blogSource;
+        card.href = `${blogList.dataset.blogSource}#${entry.id || blogSlug(log)}`;
         card.setAttribute('aria-label', `Read ${title}`);
 
         const meta = document.createElement('div');
@@ -89,6 +92,26 @@ if (blogList) {
   }
 
   loadLatestBlogPosts();
+}
+
+// Blog page: give every post an anchor and open the one named in the URL hash (homepage cards link here).
+const blogEntryList = document.querySelectorAll('.blog-entries > .blog-entry');
+if (blogEntryList.length) {
+  blogEntryList.forEach((entry) => {
+    const label = entry.querySelector('.blog-entry__meta span')?.textContent;
+    if (!entry.id && label) entry.id = blogSlug(label);
+  });
+
+  function openBlogEntryFromHash() {
+    const target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (target?.matches('.blog-entry')) {
+      target.open = true;
+      target.scrollIntoView();
+    }
+  }
+
+  window.addEventListener('hashchange', openBlogEntryFromHash);
+  openBlogEntryFromHash();
 }
 
 const forumList = document.querySelector('[data-forum-feed]');

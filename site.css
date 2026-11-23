@@ -423,3 +423,4 @@ h2 span { color: var(--red); }
 .lightbox::backdrop { background: color-mix(in srgb, var(--ink) 92%, transparent); }
 .lightbox img { display: block; max-width: 96vw; max-height: 96vh; width: auto; height: auto; cursor: zoom-out; }
 .lightbox__close { position: fixed; top: 16px; right: 20px; border: 0; background: none; color: var(--white); font: 700 40px/1 var(--mono); cursor: pointer; }
+.blog-entry { scroll-margin-top: 90px; }
