@@ -142,6 +142,7 @@
   var preview = $('preview'), previewImg = preview.querySelector('img');
   function showPreview(card, x, y) {
     previewImg.src = card.imgNormal;
+    preview._key = card.imgNormal;
     preview.classList.toggle('is-alpha', card.set === 'lea');
     preview.hidden = false;
     var w = 300, h = w * 88 / 63;
@@ -149,7 +150,20 @@
     preview.style.left = Math.max(8, left) + 'px';
     preview.style.top = Math.min(Math.max(8, y - h / 2), window.innerHeight - h - 8) + 'px';
   }
-  function hidePreview() { preview.hidden = true; preview._i = null; }
+  function hidePreview() { preview.hidden = true; preview._i = null; preview._key = null; }
+
+  // Touch screens have no hover: a tap shows the preview (via the synthesized mouse events), and tapping the same
+  // card again hides it. Scrolling also dismisses it.
+  var lastTouch = false, openKeyAtTouch = null;
+  document.addEventListener('pointerdown', function (e) {
+    lastTouch = e.pointerType === 'touch';
+    openKeyAtTouch = lastTouch && !preview.hidden ? preview._key : null;
+  }, true);
+  document.addEventListener('click', function () {
+    if (lastTouch && openKeyAtTouch && !preview.hidden && preview._key === openKeyAtTouch) hidePreview();
+    openKeyAtTouch = null;
+  }, true);
+  window.addEventListener('scroll', function () { if (lastTouch && !preview.hidden) hidePreview(); }, { passive: true });
 
   function showSummary() {
     if ($('cardBtn').classList.contains('is-done')) return;
@@ -378,8 +392,18 @@
     $('packView').hidden = true;   // the DOM card takes over from the 3D one in the same frame
   }
 
+  // A tab left open past midnight (Eastern) would still show the old day's set: reload once the day changes.
+  function checkDay() {
+    if (!serverInfo || (opened && !revealed)) return false;
+    if (R.easternDate() !== serverInfo.day) { location.reload(); return true; }
+    return false;
+  }
+  setInterval(checkDay, 30000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) checkDay(); });
+
   async function openPack() {
     if (opened) return;
+    if (checkDay()) return;
     var session = await API.getSession();
     if (!session) return API.signIn();
     opened = true; revealed = false; openBtn.disabled = true;
