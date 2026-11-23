@@ -117,7 +117,14 @@
     $('cardBadge').hidden = true;
     $('cardImg').src = card.imgNormal; $('cardImg').alt = card.name;
     $('cardPrice').innerHTML = '';
-    $('counter').textContent = 'Card ' + (idx + 1) + ' / ' + pack.length;
+    updateCounter();
+  }
+
+  // "Card 3 / 15 \u00b7 Total $12.34": the total only counts cards already flipped face-up.
+  function updateCounter() {
+    var upto = idx + ($('cardBtn').classList.contains('is-flipped') ? 1 : 0), sum = 0;
+    for (var k = 0; k < upto; k++) sum += pack[k].value > 0 ? pack[k].value : 0;
+    $('counter').textContent = 'Card ' + (idx + 1) + ' / ' + pack.length + ' \u00b7 Total $' + sum.toFixed(2);
   }
 
   function onCardClick() {
@@ -126,6 +133,7 @@
     if (!btn.classList.contains('is-flipped')) {
       var i = idx, card = pack[i];
       btn.classList.add('is-flipped');
+      updateCounter();
       $('cardWrap').classList.add('glow-on');
       var b = $('cardBadge'); b.outerHTML = badgeHTML(card).replace('class="daily__badge', 'id="cardBadge" class="daily__badge');
       if (i === pack.length - 1) { var r0 = run; setTimeout(function () { if (r0 === run) showSummary(); }, 1000); }   // last card: move on by itself
@@ -400,6 +408,18 @@
   }
   setInterval(checkDay, 30000);
   document.addEventListener('visibilitychange', function () { if (!document.hidden) checkDay(); });
+
+  // Countdown to the next midnight in Eastern time (the daily reset).
+  var etClock = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hourCycle: 'h23', hour: 'numeric', minute: 'numeric', second: 'numeric' });
+  function tickReset() {
+    var el = $('resetTimer'); if (!el) return;
+    var p = {}; etClock.formatToParts(new Date()).forEach(function (x) { p[x.type] = +x.value; });
+    var left = 86400 - (p.hour * 3600 + p.minute * 60 + p.second);
+    var h = Math.floor(left / 3600), m = Math.floor(left % 3600 / 60), s = left % 60;
+    el.textContent = h + ':' + (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    if (left >= 86399) checkDay();
+  }
+  tickReset(); setInterval(tickReset, 1000);
 
   async function openPack() {
     if (opened) return;

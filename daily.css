@@ -39,6 +39,7 @@
   color: var(--blue);
   font-size: 20px;
 }
+.daily__reset { color: var(--pink); font-size: 13px; letter-spacing: .04em; font-variant-numeric: tabular-nums; }
 .daily__stage { position: relative; background: var(--ink); color: var(--paper); border-radius: 12px; min-height: 616px; margin-top: 0; padding: 28px 0; box-sizing: border-box; overflow: hidden; }
 .daily__pack { position: relative; height: 560px; }
 .daily__pack model-viewer { width: 100%; height: 100%; --poster-color: transparent; background: transparent; }
