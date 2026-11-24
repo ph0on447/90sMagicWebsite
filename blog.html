@@ -47,6 +47,23 @@
         </div>
         <div class="blog-entries">
 
+      <details class="blog-entry blog-entry--blue" id="dev-log-008">
+        <summary>
+          <div class="blog-entry__meta"><span>Dev log 008</span><span>09.11.26</span></div>
+          <div class="blog-entry__row">
+            <h2>MAKE 'EM SAY UHHHH</h2>
+            <span class="blog-entry__toggle" aria-hidden="true">Expand entry</span>
+          </div>
+          <p>The store is primed and ready to be taken over by my gang of capsule people, if they could just stop standing around doing nothing all day. It's time to get these loitering freeloaders some basic interactions.</p>
+        </summary>
+        <div class="blog-entry__content">
+          <img src="https://media1.tenor.com/m/PAc5hDGwK9UAAAAd/bro-is-just-straight-up-yapping-yap.gif" alt="Yapping nugget" width="50%" height="auto" style="margin-bottom: 1rem; float: right; margin-left: 1rem;">
+          <p>Using the same 'press E' interaction set up with the singles counter, I made each NPC approachable and interactive. Pressing 'E' triggers a line of dialogue to show in the game console, since I don't have the dialogue system fully implemented yet. They just say random lines of flavor text for now based on their roles in the shop.</p>
+          <p>For the NPC that's waiting to be challenged, you can interact with them and make one of three choices: win match, lose match, or draw. These will help for testing as I start to make the basics of the match/play system work. For now, all I want to focus on is getting lands, creatures, and direct damage spells working. I had Claude put together 2 small 40-card decks for testing purposes consisting of only those card types, and then create a simple rules engine to get the basics working. It looks ugly as shit and everything's way too small, but you can at least draw a hand of cards, play lands, creatures, and spells. The basic phase order system is in place, and the basics of the card stack prio system are working. Each player correctly starts with 20 life and life gets deducted when damage is successfully dealt. Mana cost, tapping, power and toughness values are all implemented and interact properly. He also created a bare-minimum AI opponent that plays the cards it's capable of playing. He put all this together in a matter of a couple minutes, of course.</p>
+          <p>Lastly, I had Claude set up a save slot metadata layer so the player can save their progress. We're getting closer to being able to prototype and test the progression system of the campaign. It's going to take some work to clean up the terrible gameplay UI while playing Magic, but I have some ideas cooking for it.</p>
+        </div>
+      </details>
+
       <details class="blog-entry blog-entry--pink" id="dev-log-007">
         <summary>
           <div class="blog-entry__meta"><span>Dev log 007</span><span>09.10.26</span></div>
