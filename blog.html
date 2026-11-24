@@ -47,6 +47,29 @@
         </div>
         <div class="blog-entries">
 
+      <details class="blog-entry blog-entry--blue" id="dev-log-005">
+        <summary>
+          <div class="blog-entry__meta"><span>Dev log 005</span><span>09.08.26</span></div>
+          <div class="blog-entry__row">
+            <h2>FIXING THE ODDS</h2>
+            <span class="blog-entry__toggle" aria-hidden="true">Expand entry</span>
+          </div>
+          <p>I've narrowed the project's scope down to 25 editions and some extra printings, so it's time to figure out how each set handled its booster packs. They all feature booster packs of varying card quantities and rarities, and I want to be sure that opening a pack in the game is just like opening one in real life.</p>
+        </summary>
+        <div class="blog-entry__content">
+          <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTJndHV1ZnM2MWhqYjZib2l5MnBwM2llbjI0dWMxOXBsZnFsc3BpaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1QdNRW77hbA4lGhdRl/giphy.gif" alt="Lock and Load" width="50%" height="auto" style="margin-bottom: 1rem; float: right; margin-left: 1rem;">
+          <p>After doing a lot of research, it looks like there are three main pack sizes in the game's scope: 8-, 12-, and 15-card packs. Here's the full breakdown:</p>
+          <ul style="padding-left: 1rem; margin-top: 1rem; font-size: 13px;">
+            <li style="padding-bottom: 10px;"><b>8-card Packs (5):</b> Arabian Nights, Antiquities, The Dark, Fallen Empires, Homelands</li>
+            <li style="padding-bottom: 10px;"><b>12-card Packs (2):</b> Chronicles, Alliances</li>
+            <li><b>15-card Packs (18):</b> Alpha, Beta, Unlimited, Revised, Legends, Fourth, Ice Age, Mirage, Visions, Fifth, Weatherlight, Tempest, Stronghold, Exodus, Urza's Saga, Urza's Legacy, Classic Sixth, Urza's Destiny</li>
+          </ul>
+          <p>All of the 15-card packs consist of 11 commons, 3 uncommons, and 1 rare. All of the 8-card packs consist of 6 commons and 2 cards from a shared pool of the uncommons and rares, with at most one rare in a pack. The two 12-card packs are a little weird. Alliances packs consist of 9 commons, 2 uncommons, and 1 rare. Chronicles, however, have 9 commons and 3 cards from the shared uncommon/rare pool, and can include anywhere from zero to three rares in one pack. That would be pretty cool getting three rares in one pack, too bad it's...<em>Chronicles</em>.</p>
+          <p>There are other quirks about basic lands as well as snow covered lands in Ice Age. I had Claude take a quick pass at the real world data of how these should be distributed and applied all of this logic to the pack roller script in the game.</p>
+          <p>Now that things are starting to come together, my project planning document had gotten pretty unwieldy. I've decided to split it into two distinct docs now that some progress is being made; a project knowledge doc and a development doc. This will make things easier for me to keep track of, as well as for Claude to make running edits to. I've been typically attaching the doc to a new conversation and having him make running edits as we work, but I'm finding Claude loves to journal. I have to keep a close eye on his edits to the docs as he tends to try to capture every little detail and append information chronologically rather than keeping it organized in sections. I usually have to tell him to capture only crucial information, skip revisions and story telling about my decision making process, and to fold info into appropriate sections rather than appending chronologically. Splitting the doc into more purposeful sub documents should hopefully help.</p>
+        </div>
+      </details>
+      
       <details class="blog-entry blog-entry--pink" id="dev-log-004">
         <summary>
           <div class="blog-entry__meta"><span>Dev log 004</span><span>09.07.26</span></div>
