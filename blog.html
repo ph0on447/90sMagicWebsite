@@ -47,6 +47,25 @@
         </div>
         <div class="blog-entries">
 
+      <details class="blog-entry blog-entry--yellow" id="dev-log-009">
+        <summary>
+          <div class="blog-entry__meta"><span>Dev log 009</span><span>09.13.26</span></div>
+          <div class="blog-entry__row">
+            <h2>GOTTA CATCH 'EM ALL, OR SOMETHING</h2>
+            <span class="blog-entry__toggle" aria-hidden="true">Expand entry</span>
+          </div>
+          <p>Now that the capsule gang can talk and (sort of) play Magic, I'm, naturally, pivoting to something completely different &ndash; the card purchasing, deckbuilding, and collection systems.</p>
+        </summary>
+        <div class="blog-entry__content">
+          <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExODl4M21scTkwZmtwZmFrMTd0bnFiYzFvcTNlajhqNDQzYXczeG9yNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/13hzdQ3QCID172/giphy.gif" alt="Gotta catch 'em all" width="50%" height="auto" style="margin-bottom: 1rem; float: right; margin-left: 1rem;">
+          <p>Walking up to the singles counter and pressing 'E' on individual cards is chaotic and makes it hard to pick the right card amongst the rows. I started sketching some UI screens with pen and paper to sort out a computer terminal UI interface that will handle singles purchasing, your card collection, deckbuilding, and pack opening.</p>
+          <p>After talking through the plan with Claude, I decided to start building the UI using Unity's UI Toolkit with USS since it's so much like the CSS I use all the time. This will let me have full control over the styling of the UI and potentially export some of the tools I make to the web with minimal effort. I also decided to create a basic info panel using the same UI toolkit and USS for when the player approaches a challenger NPC. Now when you walk close enough to one, you see a small box floating beside them that shows their name, reputation number (faked for now), deck type, and difficulty level.</p>
+          <p>This brought up a need to design a basic reputation and difficulty system, so I talked one through with ChatGPT. The plan I decided on is based around five difficulty tiers; <strong>easy</strong>, <strong>average</strong>, and <strong>difficult</strong> for regular challenger NPCs, <strong>very hard</strong> for the yearly 'boss' challenger NPC, and <strong>insanity</strong> for the Time Wizard's final challenge. For now, the rep system works in increments of 50 &ndash; a win against an easy opponent rewards 50 rep, average rewards 100, difficult rewards 150, and very hard rewards 200. I split each of the seven years covered in the game into multiple phases based on when new sets are released, turning the 7 major game phases into 19 phases. Each phase requires the player reaches a certain rep threshold to advance, and the player must also defeat a 'boss' NPC at the end of each year. Each phase takes progressively more rep to advance through matched (for now) to a certain amount of wins against the other challengers in the shop. In the last year of the game, the final challenge is to beat the Time Wizard's insanity deck, which is how you beat the campaign and unlock Free Mode. He'll only challenge you once you've proven yourself worthy with a steep rep requirement.</p>
+          <p>The phases are built around new Magic sets being released to make sure each time you come back to the shop, there are new products on the shelves. The phase breakdown, for now, is: 1993 - p1: Alpha + Beta, p2: Unlimited + Arabian Nights | 1994 - p1: Antiquities + Revised, p2: Legends + The Dark, p3: Fallen Empires | 1995 - p1: Fourth, p2: Ice Age, p3: Chronicles + Homelands | 1996 - p1: Alliances, p2: Mirage | 1997 - p1: Visions + Fifth, p2: Weatherlight, p3: Tempest | 1998 - p1: Stronghold, p2: Exodus, p3: Urza's Saga | 1999 - p1: Urza's Legacy + Sixth, p2: Urza's Destiny, p3: Time Wizard.</p>
+          <p>Finally, I added a boss capsule to the game room in the shop and wired up the info panel to test it out. After playing around with the styling and positioning, it's looking good enough to move on. I've split my development project doc into two smaller docs since it was starting to get pretty long &ndash; a dev log of active and finished entries and a development roadmap of milestones for the near future. Now there are three running project docs, but I think keeping the information focused and separated will help keep the project from turning into a mess.</p>
+        </div>
+      </details>
+
       <details class="blog-entry blog-entry--blue" id="dev-log-008">
         <summary>
           <div class="blog-entry__meta"><span>Dev log 008</span><span>09.11.26</span></div>
