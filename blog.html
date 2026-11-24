@@ -47,9 +47,25 @@
         </div>
         <div class="blog-entries">
 
+      <details class="blog-entry blog-entry--pink" id="dev-log-004">
+        <summary>
+          <div class="blog-entry__meta"><span>Dev log 004</span><span>09.07.26</span></div>
+          <div class="blog-entry__row">
+            <h2>HACKING THE DATABASE</h2>
+            <span class="blog-entry__toggle" aria-hidden="true">Expand entry</span>
+          </div>
+          <p>Wizards of the Coast has an public database and API called Scryfall that they provide for developers to use in their fan projects. They also provide a downloadable card database for every card ever made since 1993. The only issue: it's a <em>little</em> large for my game at 2.9GB.</p>
+        </summary>
+        <div class="blog-entry__content">
+          <img src="https://media1.tenor.com/m/TbTe1Nc6j34AAAAC/hacker-hackerman.gif" alt="Lock and Load" width="50%" height="auto" style="margin-bottom: 1rem; float: right; margin-left: 1rem;">
+          <p>There's always the option of pulling art directly from the API while playng, but that would impact the game's performance pretty drastically, especially when looking at the wall of singles sitting on their shelves. When I saw that the database file was a JSON file, I figured I could somehow edit its contents and filter it down to only the cards I needed. I explained to Claude which sets I wanted to include and he made me a Python script to run in VS Code to filter the database.</p>
+          <p>I had to go through a few rounds of this process since we kept missing certain unexpected database contents. Eventually, I was able to create a filtered version of the database that only included the cards I need for the game &ndash; 25 core and expansion editions from Alpha through Urza's Destiny; the Anthologies card printings; the 1996 Pro Tour card printings; the 1997-99 World Championship card printings; no Portal editions; no Unglued; no Renaissance; English language cards only; no extras like play tokens or blank cards. I also set up a runtime parsing script to load the filtered data at game launch. With the list filtered down to a mere 6,792 cards, I can start making them do stuff.</p>
+        </div>
+      </details>
+
       <details class="blog-entry blog-entry--yellow" id="dev-log-003">
         <summary>
-          <div class="blog-entry__meta"><span>Dev log 003</span><span>09.07.26</span></div>
+          <div class="blog-entry__meta"><span>Dev log 003</span><span>09.06.26</span></div>
           <div class="blog-entry__row">
             <h2>LOCKED AND LOADED</h2>
             <span class="blog-entry__toggle" aria-hidden="true">Expand entry</span>
