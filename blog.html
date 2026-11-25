@@ -47,6 +47,29 @@
         </div>
         <div class="blog-entries">
 
+      <details class="blog-entry blog-entry--pink" id="dev-log-010">
+        <summary>
+          <div class="blog-entry__meta"><span>Dev log 010</span><span>09.14.26</span></div>
+          <div class="blog-entry__row">
+            <h2>I AM <em>NOT</em> THE WALRUS</h2>
+            <span class="blog-entry__toggle" aria-hidden="true">Expand entry</span>
+          </div>
+          <p>Though I've grown pretty fond of my hopping walrus and his funky capsule bunch, it would be cool to have some real character models in the game. Luckily, it's a big day &ndash; there's a huge sale happening on the asset store starting today.</p>
+        </summary>
+        <div class="blog-entry__content">
+          <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExZDVjaTd5a2FxY2dhM3BrdW03c3Y0eDl6a3Y3YXJkem80ZzJzNXNmdCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/RhPvGbWK78A0/giphy.gif" alt="Very interesting" width="50%" height="auto" style="margin-bottom: 1rem; float: right; margin-left: 1rem;">
+          <p>So I bought some deeply discounted stuff from my wish list. The stuff:</p>
+          <ul style="padding-left: 1rem; margin: 1rem 0; font-size: 13px;">
+            <li style="padding-bottom: 10px;"><a href="https://assetstore.unity.com/packages/tools/behavior-ai/dialogue-system-for-unity-11672" style="text-decoration: underline;">Pixel Crushers Dialogue System for Unity</a></li>
+            <li style="padding-bottom: 10px;"><a href="https://assetstore.unity.com/packages/3d/characters/humanoids/cute-characters-modular-animated-pack-218181" style="text-decoration: underline;">ithappy Cute Characters Modular Animated Pack</a></li>
+            <li style="padding-bottom: 10px;"><a href="https://assetstore.unity.com/packages/3d/environments/urban/polygon-town-pack-art-by-synty-121115" style="text-decoration: underline;">Synty Polygon Town Pack</a></li>
+            <li><a href="https://assetstore.unity.com/packages/3d/environments/urban/polygon-city-pack-art-by-synty-95214" style="text-decoration: underline;">Synty Polygon City Pack</a></li>
+          </ul>
+          <p>After importing everything into the project, I spent some time exploring the Synty demo scenes and the Cute Characters demo scenes. I put together a few basic characters using the included character builder and saved them as prefabs for the yearly boss characters, shop owner, time wizard, and a couple generic shoppers/challengers. I had Claude replace the capsules with the new character models and added all 7 boss characters to the game room. I had Claude create them 7 temporary decks to test their info panels and Magic gameplay.</p>
+          <p>The characters don't look super '90s for now, but they're definitely better than my capsule army was. I'll be able to go in and create custom items and styles for them since they're modular anyway, so that's an issue for another time. The characters come with a few basic animations and facial expressions, so my next goal is to get them moving.</p>
+        </div>
+      </details>
+
       <details class="blog-entry blog-entry--yellow" id="dev-log-009">
         <summary>
           <div class="blog-entry__meta"><span>Dev log 009</span><span>09.13.26</span></div>
@@ -62,7 +85,7 @@
           <p>After talking through the plan with Claude, I decided to start building the UI using Unity's UI Toolkit with USS since it's so much like the CSS I use all the time. This will let me have full control over the styling of the UI and potentially export some of the tools I make to the web with minimal effort. I also decided to create a basic info panel using the same UI toolkit and USS for when the player approaches a challenger NPC. Now when you walk close enough to one, you see a small box floating beside them that shows their name, reputation number (faked for now), deck type, and difficulty level.</p>
           <p>This brought up a need to design a basic reputation and difficulty system, so I talked one through with ChatGPT. The plan I decided on is based around five difficulty tiers; <strong>easy</strong>, <strong>average</strong>, and <strong>difficult</strong> for regular challenger NPCs, <strong>very hard</strong> for the yearly 'boss' challenger NPC, and <strong>insanity</strong> for the Time Wizard's final challenge. For now, the rep system works in increments of 50 &ndash; a win against an easy opponent rewards 50 rep, average rewards 100, difficult rewards 150, and very hard rewards 200. I split each of the seven years covered in the game into multiple phases based on when new sets are released, turning the 7 major game phases into 19 phases. Each phase requires the player reaches a certain rep threshold to advance, and the player must also defeat a 'boss' NPC at the end of each year. Each phase takes progressively more rep to advance through matched (for now) to a certain amount of wins against the other challengers in the shop. In the last year of the game, the final challenge is to beat the Time Wizard's insanity deck, which is how you beat the campaign and unlock Free Mode. He'll only challenge you once you've proven yourself worthy with a steep rep requirement.</p>
           <p>The phases are built around new Magic sets being released to make sure each time you come back to the shop, there are new products on the shelves. The phase breakdown, for now, is: 1993 - p1: Alpha + Beta, p2: Unlimited + Arabian Nights | 1994 - p1: Antiquities + Revised, p2: Legends + The Dark, p3: Fallen Empires | 1995 - p1: Fourth, p2: Ice Age, p3: Chronicles + Homelands | 1996 - p1: Alliances, p2: Mirage | 1997 - p1: Visions + Fifth, p2: Weatherlight, p3: Tempest | 1998 - p1: Stronghold, p2: Exodus, p3: Urza's Saga | 1999 - p1: Urza's Legacy + Sixth, p2: Urza's Destiny, p3: Time Wizard.</p>
-          <p>Finally, I added a boss capsule to the game room in the shop and wired up the info panel to test it out. After playing around with the styling and positioning, it's looking good enough to move on. I've split my development project doc into two smaller docs since it was starting to get pretty long &ndash; a dev log of active and finished entries and a development roadmap of milestones for the near future. Now there are three running project docs, but I think keeping the information focused and separated will help keep the project from turning into a mess.</p>
+          <p>Finally, I added a boss capsule to the game room in the shop and wired up the info panel to test it out. After playing around with the styling and positioning, it's looking good enough to move on. I've split my development project doc into two smaller docs since it was starting to get pretty long &ndash; a dev log of active and finished entries and a development roadmap of milestones for the near future. Now there are three running project docs, but I think keeping the information focused and separated will help keep the project from turning into a shit mess.</p>
         </div>
       </details>
 
