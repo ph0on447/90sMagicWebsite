@@ -103,8 +103,8 @@ if (blogEntryList.length) {
   });
 
   function openBlogEntryFromHash() {
-    const target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
-    if (target?.matches('.blog-entry')) {
+    const target = location.hash.length > 1 ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null;
+    if (target && target.matches('.blog-entry')) {
       target.open = true;
       target.scrollIntoView();
     }
