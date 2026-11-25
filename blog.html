@@ -47,11 +47,40 @@
         </div>
         <div class="blog-entries">
 
+      <details class="blog-entry blog-entry--blue" id="dev-log-011">
+        <summary>
+          <div class="blog-entry__meta"><span>Dev log 011</span><span>09.21.26</span></div>
+          <div class="blog-entry__row">
+            <h2>MY TIME IN UI HELL</h2>
+            <span class="blog-entry__toggle" aria-hidden="true">Expand entry</span>
+          </div>
+          <p>I must have gotten bored with the character and NPC work I was doing last week because I promptly wandered off and wound up plunging myself straight into UI hell. But, I dug my way out and brought back unholy singles shopping, collection, and deckbuilding systems.</p>
+        </summary>
+        <div class="blog-entry__content">
+          <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzQ5dmhwZGxodDd0dHY2ZGYzejZkY3djOTd1bGFpNmFscWN2dmZ1ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/DWo6beGJTTqFi/giphy.gif" alt="Oopsie" width="50%" height="auto" style="margin-bottom: 1rem; float: right; margin-left: 1rem;">
+          <p>I spent a couple days building on the sketching I had already done for the singles purchasing screen, and making sure I thought through the collection and deckbuilding systems. I made a list of filters and sorting options, came up with the deckbuilding systems for starting fresh versus from an existing deck/template, sketched out the shared header and tab system, and took the opportunity to draw some weird shit while I was at it.</p>
+          <p>The Collection, Deckbuilding, and Packs screens are all part of the same shared computer terminal UI, and a second terminal UI covers the Boosters, Decks, and Singles screens. Both terminals start with a player profile section that will show an avatar, your name, and your current rep level. Each also shows your current wallet balance in the top right at all times. The subsections are divided into tabs so the screens can share the same header and styling. I also sketched out the plans I used to make a potato gun when I was younger for reasons unknown. The creep made me do it.</p>
+          <div class="blog-entry__image-gallery" aria-label="Collection screen designs" style="margin-bottom: 1.5rem;">
+            <a href="Assets/Blog/CollectionSetPicker.jpeg" data-lightbox-image><img src="Assets/Blog/CollectionSetPicker.jpeg" alt="Collection set picker screen" loading="lazy"></a>
+            <a href="Assets/Blog/CollectionSteps.jpeg" data-lightbox-image><img src="Assets/Blog/CollectionSteps.jpeg" alt="Collection screen steps" loading="lazy"></a>
+            <a href="Assets/Blog/CollectionFilters.jpeg" data-lightbox-image><img src="Assets/Blog/CollectionFilters.jpeg" alt="Collection filters screen" loading="lazy"></a>
+            <a href="Assets/Blog/CollectionHeader.jpeg" data-lightbox-image><img src="Assets/Blog/CollectionHeader.jpeg" alt="Collection screen header" loading="lazy"></a>
+            <a href="Assets/Blog/CollectionCreep.jpeg" data-lightbox-image><img src="Assets/Blog/CollectionCreep.jpeg" alt="A creep" loading="lazy"></a>
+          </div>
+          <p>I built out the singles shopping screen first since it had already gone through the initial design phase. I added the filtering and sorting functionality that would carry over to the deckbuilding and collection screens.I added the ability to click a card in the card grid to inspect it in an inspector pane to the right of the grid, and added the option to purchase the inspected card. I also gave the screen some pink status and error messages for certain scenarios, like not having enough money, etc. I made sure the cards in the grid and the inspector window had round corners, and that Alpha corners were properly extra round.</p>
+          <div class="blog-entry__image-gallery blog-entry__image-gallery--two-up" aria-label="Collection screen designs" style="margin-bottom: 1.5rem;">
+            <a href="Assets/Screenshots/Screenshot 2026-09-21 at 11.41.50 PM.jpg" data-lightbox-image><img src="Assets/Screenshots/Screenshot 2026-09-21 at 11.41.50 PM.jpg" alt="Collection set picker screen" loading="lazy"></a>
+            <a href="Assets/Screenshots/Screenshot 2026-09-21 at 11.42.37 PM.jpg" data-lightbox-image><img src="Assets/Screenshots/Screenshot 2026-09-21 at 11.42.37 PM.jpg" alt="Collection screen steps" loading="lazy"></a>
+          </div>
+          <p>Next came the deckbuilding screen, since it's just a modified version of the singles shopping screen. I added the ability to load existing decks and create and save new decks, and removed the option to purchase cards that was left over from the singles screen. I made some basic designs for rarity badges and had Claude make them in USS. I went through revision after revision for days until the deckbuilder worked properly and tested it by making, saving, editing, and deleting multiple decks. Now all we need are some decks. I had Claude give my save four copies of every card in the game and 20 copies of each basic land, and called it a week.</p>
+        </div>
+      </details>
+
       <details class="blog-entry blog-entry--pink" id="dev-log-010">
         <summary>
           <div class="blog-entry__meta"><span>Dev log 010</span><span>09.14.26</span></div>
           <div class="blog-entry__row">
-            <h2>I AM <em>NOT</em> THE WALRUS</h2>
+            <h2>I AM NOT THE WALRUS</h2>
             <span class="blog-entry__toggle" aria-hidden="true">Expand entry</span>
           </div>
           <p>Though I've grown pretty fond of my hopping walrus and his funky capsule bunch, it would be cool to have some real character models in the game. Luckily, it's a big day &ndash; there's a huge sale happening on the asset store starting today.</p>
@@ -66,7 +95,7 @@
             <li><a href="https://assetstore.unity.com/packages/3d/environments/urban/polygon-city-pack-art-by-synty-95214" style="text-decoration: underline;">Synty Polygon City Pack</a></li>
           </ul>
           <p>After importing everything into the project, I spent some time exploring the Synty demo scenes and the Cute Characters demo scenes. I put together a few basic characters using the included character builder and saved them as prefabs for the yearly boss characters, shop owner, time wizard, and a couple generic shoppers/challengers. I had Claude replace the capsules with the new character models and added all 7 boss characters to the game room. I had Claude create them 7 temporary decks to test their info panels and Magic gameplay.</p>
-          <p>The characters don't look super '90s for now, but they're definitely better than my capsule army was. I'll be able to go in and create custom items and styles for them since they're modular anyway, so that's an issue for another time. The characters come with a few basic animations and facial expressions, so my next goal is to get them moving.</p>
+          <p>The characters don't look super '90s for now, but they're definitely better than my capsule army was. I'll be able to go in and create custom items and styles for them since they're modular anyway, so that's an issue for another time. The characters come with a few basic animations and facial expressions, so my next goal is to get one moving &ndash; myself. I spent some time with Claude applying the run and jump animations to the player rig. It took a little back and forth to get the feet synced up with the floor and for the jump gravity to make sense, but it all looks pretty good now.</p>
         </div>
       </details>
 
@@ -245,6 +274,7 @@
     </div>
   </div>
 
+  <dialog class="lightbox" data-lightbox aria-label="Full-size image"><button type="button" class="lightbox__close" aria-label="Close">×</button><img alt=""></dialog>
   <script src="site-footer.js" data-top="https://wrongwaygames.com/blog#top"></script>
   
   <script src="site.js"></script>
