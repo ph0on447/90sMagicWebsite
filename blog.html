@@ -47,9 +47,27 @@
         </div>
         <div class="blog-entries">
 
+      <details class="blog-entry blog-entry--yellow" id="dev-log-012">
+        <summary>
+          <div class="blog-entry__meta"><span>Dev log 012</span><span>09.21.26</span></div>
+          <div class="blog-entry__row">
+            <h2>DECKBUILDING FUN TIME</h2>
+            <span class="blog-entry__toggle" aria-hidden="true">Expand entry</span>
+          </div>
+          <p>I like the new deckbuilder system and UI. I like it so much, I decided it would be a great idea to build sixty different decks with it in one afternoon. It's pretty rad, but it could use a few final touches to make it even better.</p>
+        </summary>
+        <div class="blog-entry__content">
+          <img src="https://media1.tenor.com/m/uTbnmJOqT2IAAAAC/tayne-oh.gif" alt="NUDE TAYNE" width="50%" height="auto" style="margin-bottom: 1rem; float: right; margin-left: 1rem;">
+          <p>I ran into a couple odd issues with the filter and sorting system at first and dealt with them right away before continuing to make the decks. I decided to include a few filters I hadn't before, like legends, interrupts, colorless for things that don't specify a mana color, and multicolor for things like gold cards and dual lands. I also had to fix certain cards not showing up with multiple filters selected, like lands.</p>
+          <p>With the card grid working properly, it was time to make some decks. I've been looking up as many era-specific deck lists as I can find and compiling a collection of them to use as templates in the game. I decided to make the all of the preconstructed theme decks and the 1997-99 World Championship decks. There were 4 decks included in each World Championship set, and 4 theme decks released for six different sets during the game's scope: Tempest, Stronghold, Exodus, Urza's Saga, Urza's Legacy, and Urza's Destiny. Each of them came with a guide on how to build an 'advanced' version of the deck by swapping out some better cards, and I'm including each in the game as well for a total of 60 decks, many with sideboards (all but the basic versions of the theme decks). Which brings up an issue...I forgot to account for sideboards.</p>
+          <p>I also realized I didn't include the gold bordered &amp; signed cards for the World Champ decks and had to build them out of other sets, which then raised the issue of Anthologies having its own printings of already existing cards that I didn't include, either. I decided to refilter the Scryfall database to include these printings, then had Claude convert the World Champ decks' contents over to the correct printings for me. I also had him create a quick sideboard system for the deckbuilder and then went back and put together all of the missing sideboards.</p>
+          <p>All sixty decks are now complete and ready to use. They can be used as templates when making a new deck, or used as-is once the player has acquired the necessary cards. All of them now have their proper printings, sideboards, and signatures. These are just a fraction of the decks that I've managed to find, so there's still more work to be done.</p>
+        </div>
+      </details>
+
       <details class="blog-entry blog-entry--blue" id="dev-log-011">
         <summary>
-          <div class="blog-entry__meta"><span>Dev log 011</span><span>09.21.26</span></div>
+          <div class="blog-entry__meta"><span>Dev log 011</span><span>09.19.26</span></div>
           <div class="blog-entry__row">
             <h2>MY TIME IN UI HELL</h2>
             <span class="blog-entry__toggle" aria-hidden="true">Expand entry</span>
@@ -57,7 +75,7 @@
           <p>I must have gotten bored with the character and NPC work I was doing last week because I promptly wandered off and wound up plunging myself straight into UI hell. But, I dug my way out and brought back unholy singles shopping, collection, and deckbuilding systems.</p>
         </summary>
         <div class="blog-entry__content">
-          <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzQ5dmhwZGxodDd0dHY2ZGYzejZkY3djOTd1bGFpNmFscWN2dmZ1ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/DWo6beGJTTqFi/giphy.gif" alt="Oopsie" width="50%" height="auto" style="margin-bottom: 1rem; float: right; margin-left: 1rem;">
+          <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNW9jdTAyem16M216djRlcDl0M2Rwa2JkM2F0bW4yOHJhM2U4bGl0NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/0saxF4eNE7x2fEqrN6/giphy.gif" alt="Send help" width="50%" height="auto" style="margin-bottom: 1rem; float: right; margin-left: 1rem;">
           <p>I spent a couple days building on the sketching I had already done for the singles purchasing screen, and making sure I thought through the collection and deckbuilding systems. I made a list of filters and sorting options, came up with the deckbuilding systems for starting fresh versus from an existing deck/template, sketched out the shared header and tab system, and took the opportunity to draw some weird shit while I was at it.</p>
           <p>The Collection, Deckbuilding, and Packs screens are all part of the same shared computer terminal UI, and a second terminal UI covers the Boosters, Decks, and Singles screens. Both terminals start with a player profile section that will show an avatar, your name, and your current rep level. Each also shows your current wallet balance in the top right at all times. The subsections are divided into tabs so the screens can share the same header and styling. I also sketched out the plans I used to make a potato gun when I was younger for reasons unknown. The creep made me do it.</p>
           <div class="blog-entry__image-gallery" aria-label="Collection screen designs" style="margin-bottom: 1.5rem;">
